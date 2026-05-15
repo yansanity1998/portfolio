@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import ianImg from '../assets/ian.jpg';
 
-const devSkills = ["Next.js", "Tailwind", "React", "Javascript", "CSS", "Node.js", "Python", "SpringBoot", "FlutterFlow", "Firebase", "Supabase", "MySQL"];
+const devSkills = ["React", "TypeScript", "Tailwind", "JavaScript", "HTML", "CSS", "PHP", "Laravel", "Firebase", "Supabase", "Vercel", "Netlify", "MySQL"];
 const createSkills = ["Figma", "Canva", "Capcut", "Adobe Premiere Pro", "Adobe Illustrator"];
 
 const containerVariants: Variants = {
@@ -32,7 +32,7 @@ export default function Home() {
   const yTransform = useTransform(scrollYProgress, [0, 1], [80, -80]);
 
   return (
-    <section ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-32 px-6 md:px-16 flex items-center justify-center relative overflow-hidden">
+    <section ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-32 px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
       
       {/* Background Subtle Glow */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-900/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
@@ -60,7 +60,7 @@ export default function Home() {
               <span className="h-[1px] flex-1 bg-gradient-to-r from-gray-700 to-transparent"></span>
             </h3>
             <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
-              Started creating mobile applications using Flutter, FlutterFlow, and Firebase and eventually switched to Web Development using NextJS, React, and Tailwind.
+              Building modern web applications with React, TypeScript, and Tailwind, backed by PHP and Laravel for robust server-side solutions.
             </p>
             <h4 className="text-emerald-400 text-sm font-bold mb-4 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">Skillset & tools</h4>
             <div className="flex flex-wrap gap-3">
@@ -108,7 +108,7 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-[6rem] font-bold mb-12 tracking-tighter text-right leading-none text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-600"
+            className="text-5xl md:text-7xl lg:text-[6rem] font-bold mb-12 tracking-tighter text-right leading-none text-white"
           >
             What I do
           </motion.h2>
