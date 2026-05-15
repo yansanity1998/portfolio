@@ -1,4 +1,5 @@
 import Hero from './pages/Hero'
+import Home from './pages/Home'
 import CustomCursor from './components/CustomCursor'
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <>
       <CustomCursor />
       <Hero />
+      <Home />
     </>
   )
 }

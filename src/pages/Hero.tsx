@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MonitorPlay } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa';
 
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
@@ -143,20 +143,14 @@ export default function Hero() {
         transition={{ delay: 0.6 }}
         className="absolute bottom-10 right-10 z-50 flex flex-col gap-6"
       >
-        <a href="#" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z" />
-          </svg>
+        <a href="https://github.com/yansanity1998" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+          <FaGithub size={24} />
         </a>
-        <a href="#" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zM7.119 20.452H3.554V9h3.565v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
+        <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+          <FaLinkedin size={24} />
         </a>
-        <a href="#" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.5441 11.4528C13.5441 15.0506 10.6358 17.9678 7.04207 17.9678C3.44837 17.9678 0.539062 15.0506 0.539062 11.4528C0.539062 7.85494 3.44837 4.93781 7.04207 4.93781C10.6358 4.93781 13.5441 7.85494 13.5441 11.4528ZM21.3283 11.4528C21.3283 14.8519 19.8601 17.608 18.0494 17.608C16.2387 17.608 14.7705 14.8519 14.7705 11.4528C14.7705 8.05362 16.2387 5.29759 18.0494 5.29759C19.8601 5.29759 21.3283 8.05362 21.3283 11.4528ZM23.4619 11.4528C23.4619 14.3316 22.9568 16.6669 22.3339 16.6669C21.7109 16.6669 21.2058 14.3316 21.2058 11.4528C21.2058 8.57393 21.7109 6.2386 22.3339 6.2386C22.9568 6.2386 23.4619 8.57393 23.4619 11.4528Z" />
-          </svg>
+        <a href="https://www.facebook.com/jesper.ian.villacorte.barila" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+          <FaFacebook size={24} />
         </a>
       </motion.div>
 
