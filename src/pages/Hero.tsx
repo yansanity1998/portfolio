@@ -54,7 +54,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           className="text-white font-bold text-3xl tracking-tighter cursor-pointer"
         >
-          L7
+          Jesper
         </motion.div>
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -74,7 +74,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-[4rem] sm:text-6xl md:text-8xl lg:text-[8rem] font-bold tracking-tight mb-4 text-center pointer-events-auto"
+          className="text-[4rem] sm:text-6xl md:text-8xl lg:text-[8rem] font-bold tracking-tight mb-4 text-center pointer-events-auto bg-clip-text text-transparent bg-[length:200%_100%] bg-gradient-to-r from-white/20 via-white to-white/20 animate-shimmer"
           style={{ textShadow: "0 10px 40px rgba(255,255,255,0.15)" }}
         >
           Jesper Ian V. Barila
@@ -134,20 +134,6 @@ export default function Hero() {
         transition={{ delay: 0.6 }}
         className="absolute bottom-10 left-10 z-50 flex items-center justify-center cursor-pointer"
       >
-        <div className="relative w-24 h-24 flex items-center justify-center group">
-          {/* Rotating Text/Circle */}
-          <motion.div 
-            animate={{ rotate: 360 }} 
-            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border border-gray-600 border-dashed opacity-50 group-hover:opacity-100 transition-opacity"
-          />
-          <motion.div 
-            animate={{ rotate: -360 }} 
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-2 rounded-full border border-gray-800 border-dashed"
-          />
-          <span className="text-white font-bold text-xl tracking-tighter">L7</span>
-        </div>
       </motion.div>
 
       {/* Bottom Right Socials */}
