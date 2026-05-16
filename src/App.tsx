@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
 import SplashScreen from './components/SplashScreen'
 import Hero from './pages/Hero'
 import Home from './pages/Home'
@@ -46,6 +47,7 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Analytics />
     </ThemeProvider>
   )
 }
