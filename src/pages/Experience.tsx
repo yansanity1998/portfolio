@@ -9,19 +9,22 @@ const experiences = [
         year: "2026",
         title: "OJT",
         company: "Pixzel Digital Service",
-        description: "Undertaking my OJT at Pixzel Digital Service, gaining valuable hands-on experience in the tech industry.",
+        description: "Working hands-on with real-world clients at Pixzel Digital Service, building and maintaining websites while learning industry workflows, team collaboration, and modern development practices under professional mentorship.",
+        logo: pixzelLogo,
     },
     {
         year: "2023 - 2025",
         title: "Project Development",
         company: "School Projects",
-        description: "Started building up some school projects, applying new technologies and continuously expanding my developer toolkit.",
+        description: "Developed multiple academic projects ranging from web applications to database-driven systems, exploring React, Laravel, and Firebase while sharpening problem-solving skills through iterative design and team-based development.",
+        logo: spcLogo,
     },
     {
         year: "2022",
         title: "Hello World!",
         company: "The Beginning",
-        description: "Hello World! Because I just started school and took my very first steps into the world of programming.",
+        description: "Took my first steps into programming by learning the fundamentals of Python, HTML, CSS, and JavaScript. Built simple console apps and static websites that sparked a lasting passion for software development.",
+        logo: spcLogo,
     }
 ];
 
@@ -83,15 +86,17 @@ export default function Experience() {
                                         whileInView={{ borderColor: "#34d399", boxShadow: "0 0 20px rgba(52,211,153,1)" }}
                                         viewport={{ margin: "0px 0px -50% 0px" }}
                                         transition={{ duration: 0.3 }}
-                                        className="absolute left-1/2 top-0 -translate-x-1/2 mt-1.5 w-5 h-5 rounded-full bg-[#050505] border-2 z-20 flex items-center justify-center"
+                                        className="absolute left-1/2 top-0 -translate-x-1/2 -mt-2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border-2 z-20 flex items-center justify-center overflow-hidden"
                                     >
-                                        <motion.div
-                                            initial={{ scale: 0 }}
-                                            whileInView={{ scale: 1 }}
+                                        <motion.img
+                                            src={exp.logo}
+                                            alt={`${exp.company} logo`}
+                                            initial={{ scale: 0, opacity: 0 }}
+                                            whileInView={{ scale: 1, opacity: 1 }}
                                             viewport={{ margin: "0px 0px -50% 0px" }}
-                                            transition={{ duration: 0.3, delay: 0.1 }}
-                                            className="w-2.5 h-2.5 rounded-full bg-emerald-400"
-                                        ></motion.div>
+                                            transition={{ duration: 0.4, delay: 0.1 }}
+                                            className="w-full h-full object-cover"
+                                        />
                                     </motion.div>
 
                                     {/* Left Side Panel */}
@@ -108,17 +113,13 @@ export default function Experience() {
                                                     whileInView={{ borderColor: "#34d399", boxShadow: "0 0 25px rgba(52,211,153,0.6)" }}
                                                     viewport={{ margin: "0px 0px -50% 0px" }}
                                                     transition={{ duration: 0.4 }}
-                                                    className="w-12 h-12 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
+                                                    className="w-20 h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
                                                 >
-                                                    {index === 0 ? (
-                                                        <img src={pixzelLogo} alt="Pixzel" className="w-full h-full object-cover" />
-                                                    ) : (
-                                                        <img src={spcLogo} alt="SPC" className="w-full h-full object-cover" />
-                                                    )}
+                                                    <img src={exp.logo} alt={exp.company} className="w-full h-full object-cover" />
                                                 </motion.div>
                                             </>
                                         ) : (
-                                            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-sm mt-1">
+                                            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-sm mt-1 text-justify">
                                                 {exp.description}
                                             </p>
                                         )}
@@ -136,19 +137,15 @@ export default function Experience() {
                                                 <motion.div
                                                     initial={{ borderColor: "#374151", boxShadow: "0 0 15px rgba(0,0,0,0.5)" }}
                                                     whileInView={{ borderColor: "#34d399", boxShadow: "0 0 25px rgba(52,211,153,0.6)" }}
-                                                    viewport={{ margin: "-50% 0px -50% 0px" }}
+                                                    viewport={{ margin: "0px 0px -50% 0px" }}
                                                     transition={{ duration: 0.4 }}
-                                                    className="w-12 h-12 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
+                                                    className="w-20 h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
                                                 >
-                                                    {index === 0 ? (
-                                                        <img src={pixzelLogo} alt="Pixzel" className="w-full h-full object-cover" />
-                                                    ) : (
-                                                        <img src={spcLogo} alt="SPC" className="w-full h-full object-cover" />
-                                                    )}
+                                                    <img src={exp.logo} alt={exp.company} className="w-full h-full object-cover" />
                                                 </motion.div>
                                             </>
                                         ) : (
-                                            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-sm mt-1">
+                                            <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-sm mt-1 text-justify">
                                                 {exp.description}
                                             </p>
                                         )}
