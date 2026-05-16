@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import LightDarkMode from '../components/LightDarkMode';
 import { scrollToSection } from '../components/ScrollAnimation';
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,24 +51,29 @@ export default function NavBar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full px-8 md:px-16 py-4 flex justify-between items-center z-[100] transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full px-6 md:px-16 py-4 flex justify-between items-center z-[100] transition-all duration-300 ${
         isScrolled ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-2 shadow-lg' : 'bg-transparent'
       }`}
     >
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-white text-4xl tracking-wide cursor-pointer"
+        className="text-white text-3xl md:text-4xl tracking-wide cursor-pointer z-50 relative"
         style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setIsMobileMenuOpen(false);
+        }}
       >
         Ian
       </motion.div>
+
+      {/* Desktop Navigation */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="flex gap-2 md:gap-4 items-center flex-wrap justify-end"
+        className="hidden md:flex gap-4 items-center justify-end"
       >
         {navLinks.map((link) => (
           <a
@@ -89,6 +96,55 @@ export default function NavBar() {
           <LightDarkMode />
         </div>
       </motion.div>
+
+      {/* Mobile Menu Toggle & Theme Toggle */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="flex md:hidden items-center gap-4 z-50 relative"
+      >
+        <LightDarkMode />
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="text-white p-2 focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </motion.div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-full left-0 w-full bg-[#050505]/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center py-6 gap-4 md:hidden shadow-2xl overflow-hidden"
+          >
+            {navLinks.map((link) => (
+              <a
+                key={link.id}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(link.id);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`text-lg font-medium transition-all duration-300 px-6 py-3 rounded-full w-[80%] text-center ${
+                  activeSection === link.id
+                    ? 'bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {link.name}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
