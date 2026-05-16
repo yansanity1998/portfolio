@@ -6,13 +6,26 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @utility animate-shimmer {
   animation: shimmer 4s ease-in-out infinite;
+}
+
+html, body {
+  background-color: #050505;
+  color: #ffffff;
 }
 
 html.light {
@@ -25,7 +38,7 @@ html.light {
   --card-bg: #ffffff;
 }
 
-html.light body {
+html.light, html.light body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
@@ -95,23 +108,23 @@ html.light .from-gray-700 {
 }
 
 html.light .bg-black\/80 {
-  background-color: rgba(255,255,255,0.8) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
 }
 
 html.light .bg-black\/60 {
-  background-color: rgba(255,255,255,0.6) !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
 }
 
 html.light .shadow-\[0_30px_60px_rgba\(0\,0\,0\,0\.8\)\] {
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
 }
 
 html.light .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.8\)\] {
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
 }
 
 html.light .shadow-\[0_15px_40px_rgba\(0\,0\,0\,0\.8\)\] {
-  box-shadow: 0 5px 20px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06) !important;
 }
 
 html.light button,
@@ -121,7 +134,7 @@ html.light [role="button"] {
 }
 
 html.light .bg-white\/10 {
-  background-color: rgba(0,0,0,0.05) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 html.light .text-gray-600 {
@@ -133,17 +146,52 @@ html.light .text-emerald-400 {
 }
 
 html.light .border-emerald-400\/20 {
-  border-color: rgba(5,150,105,0.2) !important;
+  border-color: rgba(5, 150, 105, 0.2) !important;
 }
 
 html.light .border-emerald-900\/50 {
-  border-color: rgba(5,150,105,0.3) !important;
+  border-color: rgba(5, 150, 105, 0.3) !important;
 }
 
 html.light .bg-emerald-900\/10 {
-  background-color: rgba(5,150,105,0.08) !important;
+  background-color: rgba(5, 150, 105, 0.08) !important;
 }
 
 html.light .bg-white\/5 {
-  background-color: rgba(0,0,0,0.03) !important;
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .bg-\[\#050505\]\/80 {
+  background-color: rgba(248, 250, 252, 0.8) !important;
+}
+
+html.light .border-white\/10 {
+  border-color: rgba(226, 232, 240, 0.5) !important;
+}
+
+/* View Transitions API for theme toggle splash */
+html.theme-transition::view-transition {
+  background-color: #050505;
+}
+
+html.light.theme-transition::view-transition {
+  background-color: #f8fafc;
+}
+
+html.theme-transition::view-transition-group(root) {
+  animation: none;
+}
+
+html.theme-transition::view-transition-old(root),
+html.theme-transition::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.theme-transition::view-transition-old(root) {
+  z-index: 1;
+}
+
+html.theme-transition::view-transition-new(root) {
+  z-index: 2;
 }

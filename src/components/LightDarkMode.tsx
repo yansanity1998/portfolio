@@ -1,11 +1,57 @@
 import { useTheme } from '../context/ThemeContext'
+import { flushSync } from 'react-dom'
 
 export default function LightDarkMode() {
   const { theme, toggleTheme } = useTheme()
 
+  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const x = e.clientX
+    const y = e.clientY
+
+    if (!document.startViewTransition) {
+      toggleTheme()
+      return
+    }
+
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    )
+
+    document.documentElement.classList.add('theme-transition')
+
+    const transition = document.startViewTransition(() => {
+      flushSync(() => {
+        toggleTheme()
+      })
+    })
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
+      ]
+
+      document.documentElement.animate(
+        {
+          clipPath: clipPath,
+        },
+        {
+          duration: 600,
+          easing: 'ease-out',
+          pseudoElement: '::view-transition-new(root)',
+        }
+      )
+    })
+
+    transition.finished.finally(() => {
+      document.documentElement.classList.remove('theme-transition')
+    })
+  }
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={handleToggle}
       className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 cursor-pointer"
       aria-label="Toggle theme"
     >

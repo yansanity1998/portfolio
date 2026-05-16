@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useContext, useLayoutEffect, useState, type ReactNode } from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -15,7 +15,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return (stored === 'light' || stored === 'dark') ? stored : 'dark'
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     localStorage.setItem('theme', theme)
     document.documentElement.classList.toggle('light', theme === 'light')
     document.documentElement.classList.toggle('dark', theme === 'dark')

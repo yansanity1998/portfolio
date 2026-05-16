@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import ianImg from '../assets/ian.jpg';
+import { useTheme } from '../context/ThemeContext';
 
 const devSkills = ["React", "TypeScript", "Tailwind", "JavaScript", "HTML", "CSS", "PHP", "Laravel", "Firebase", "Supabase", "Vercel", "Netlify", "MySQL"];
 const createSkills = ["Figma", "Canva", "Capcut", "Adobe Premiere Pro", "Adobe Illustrator"];
@@ -23,6 +24,7 @@ const itemVariants: Variants = {
 
 export default function Home() {
   const sectionRef = useRef(null);
+  const { theme } = useTheme();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -120,7 +122,11 @@ export default function Home() {
             </div>
             
             {/* Floating Stamp UI */}
-            <div className="absolute -bottom-4 -left-6 text-white/80 px-8 py-3.5 rounded-lg font-bold text-[15px] tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed border-white/30 uppercase bg-white/5 backdrop-blur-[1px] group-hover:text-white group-hover:border-white/80 group-hover:bg-white/20">
+            <div className={`absolute -bottom-4 -left-6 px-8 py-3.5 rounded-lg font-bold text-[15px] tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed uppercase backdrop-blur-[4px]
+              ${theme === 'light' 
+                ? 'text-slate-800 border-slate-400 bg-white/60 group-hover:text-black group-hover:border-slate-800 group-hover:bg-white/90 shadow-md' 
+                : 'text-white/80 border-white/30 bg-white/5 group-hover:text-white group-hover:border-white/80 group-hover:bg-white/20'}`}
+            >
               Passionate Builder
             </div>
           </motion.div>

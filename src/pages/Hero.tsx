@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa';
+import { useTheme } from '../context/ThemeContext';
 
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(2);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,7 +33,7 @@ export default function Hero() {
                  key={i}
                   d={`M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`}
                   fill="none"
-                  stroke={`rgba(255,255,255,${0.02 + i * 0.005})`}
+                  stroke={theme === 'light' ? `rgba(15,23,42,${0.02 + i * 0.005})` : `rgba(255,255,255,${0.02 + i * 0.005})`}
                   strokeWidth={1}
                   animate={{
                     d: [
@@ -53,8 +55,8 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-[4rem] sm:text-6xl md:text-8xl lg:text-[8rem] font-bold tracking-tight mb-4 text-center pointer-events-auto bg-clip-text text-transparent bg-[length:200%_100%] bg-gradient-to-r from-white/20 via-white to-white/20 animate-shimmer"
-          style={{ textShadow: "0 10px 40px rgba(255,255,255,0.15)" }}
+          className={`text-[4rem] sm:text-6xl md:text-8xl lg:text-[8rem] font-bold tracking-tight mb-4 text-center pointer-events-auto bg-clip-text text-transparent bg-[length:200%_100%] bg-gradient-to-r ${theme === 'light' ? 'from-slate-900/40 via-slate-900 to-slate-900/40' : 'from-white/20 via-white to-white/20'} animate-shimmer`}
+          style={{ textShadow: theme === 'light' ? "0 10px 40px rgba(15,23,42,0.15)" : "0 10px 40px rgba(255,255,255,0.15)" }}
         >
           Jesper Ian V. Barila
         </motion.h1>

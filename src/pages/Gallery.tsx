@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 import img1 from '../assets/gallery/gallery1.jpg';
 import img2 from '../assets/gallery/gallery2.jpg';
@@ -26,6 +27,7 @@ const textArray = rawText.split(" ").map(word => {
 
 export default function Gallery() {
     const [brokenWords, setBrokenWords] = useState<number[]>([]);
+    const { theme } = useTheme();
 
     const handleWordHover = (index: number) => {
         if (!brokenWords.includes(index)) {
@@ -111,8 +113,8 @@ export default function Gallery() {
                                             rotate: isWordBroken ? item.rotate : 0,
                                             scale: isWordBroken ? (item.isHighlight ? 1.1 : 0.9) : 1,
                                             color: isWordBroken
-                                                ? (item.isHighlight ? '#34d399' : '#ffffff')
-                                                : (item.isHighlight ? '#6ee7b7' : '#9ca3af')
+                                                ? (item.isHighlight ? '#34d399' : (theme === 'light' ? '#0f172a' : '#ffffff'))
+                                                : (item.isHighlight ? '#6ee7b7' : (theme === 'light' ? '#64748b' : '#9ca3af'))
                                         }}
                                         transition={{ type: "spring", stiffness: 120, damping: 12, mass: 0.8 }}
                                         className="inline-block whitespace-pre select-none cursor-crosshair"
