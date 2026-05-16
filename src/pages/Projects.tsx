@@ -91,7 +91,7 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
   return (
     <div 
       onClick={onClick}
-      className="relative aspect-square border-r border-b border-white flex flex-col group overflow-hidden bg-[#050505] hover:bg-[#0a0a0a] transition-colors cursor-pointer"
+      className="relative aspect-square border border-white/20 flex flex-col group overflow-hidden bg-[#050505] hover:bg-[#0a0a0a] transition-all cursor-pointer hover:scale-105 duration-700"
     >
       {/* Image fills top portion, no padding */}
       <div className="relative flex-1 w-full overflow-hidden border-b border-white">
@@ -149,7 +149,7 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full border-t border-l border-white bg-[#050505] shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-4 bg-[#050505] shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
         >
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} onClick={() => { setSelectedProject(project); setCurrentImageIndex(0); }} />
