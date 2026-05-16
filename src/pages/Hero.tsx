@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa';
-import NavBar from './NavBar';
 
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
@@ -16,7 +15,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-hidden relative font-sans selection:bg-emerald-500/30">
+    <div id="home" className="min-h-screen bg-[#050505] text-white overflow-hidden relative font-sans selection:bg-emerald-500/30">
       
       {/* Background Waves */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-40">
@@ -47,9 +46,6 @@ export default function Hero() {
            </svg>
          </motion.div>
       </div>
-
-      {/* Navbar */}
-      <NavBar />
 
       {/* Center Content */}
       <div className="flex flex-col items-center justify-center min-h-screen relative z-10 pointer-events-none">

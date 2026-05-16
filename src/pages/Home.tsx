@@ -32,7 +32,7 @@ export default function Home() {
   const yTransform = useTransform(scrollYProgress, [0, 1], [80, -80]);
 
   return (
-    <section ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-32 px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-32 px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
       
       {/* Background Subtle Glow */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-900/10 rounded-full blur-[150px] pointer-events-none z-0"></div>

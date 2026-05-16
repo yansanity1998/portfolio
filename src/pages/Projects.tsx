@@ -83,7 +83,7 @@ export default function Projects() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   return (
-    <section className="min-h-screen bg-[#050505] py-32 px-6 md:px-16 relative overflow-hidden flex items-center">
+    <section id="projects" className="min-h-screen bg-[#050505] py-32 px-6 md:px-16 relative overflow-hidden flex items-center">
       
       {/* Background Subtle Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-900/5 rounded-full blur-[150px] pointer-events-none z-0"></div>

@@ -41,7 +41,7 @@ export default function Experience() {
     });
 
     return (
-        <section className="min-h-screen bg-[#050505] text-white py-32 px-6 md:px-16 relative overflow-hidden">
+        <section id="experience" className="min-h-screen bg-[#050505] text-white py-32 px-6 md:px-16 relative overflow-hidden">
 
             <div className="max-w-7xl mx-auto flex flex-col items-center">
 
