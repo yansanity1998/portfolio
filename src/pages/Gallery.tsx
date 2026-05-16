@@ -104,7 +104,8 @@ export default function Gallery() {
                                                     <img
                                                         src={src}
                                                         alt={`Gallery ${index}`}
-                                                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                                                        className="w-full h-full object-cover opacity-100 group-hover:scale-105 transition-all duration-500 contrast-[1.1] saturate-[1.1] brightness-[1.05]"
+                                                        style={{ imageRendering: '-webkit-optimize-contrast' as any }}
                                                     />
                                                 </div>
                                             </div>
