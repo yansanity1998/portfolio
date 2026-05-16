@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import SplashScreen from './components/SplashScreen'
 import Hero from './pages/Hero'
 import Home from './pages/Home'
@@ -26,21 +26,26 @@ function App() {
 
   return (
     <ThemeProvider>
-      <AnimatePresence>
-        {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <AnimatePresence mode="wait">
+        {showSplash ? (
+          <SplashScreen key="splash" onComplete={handleSplashComplete} />
+        ) : (
+          <motion.div key="main-app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+            <ScrollAnimation>
+              <CustomCursor />
+              <NavBar />
+              <Hero />
+              <Home />
+              <Skills />
+              <Experience />
+              <Projects />
+              <Gallery />
+              <Contact />
+              <Footer />
+            </ScrollAnimation>
+          </motion.div>
+        )}
       </AnimatePresence>
-      <ScrollAnimation>
-      <CustomCursor />
-      <NavBar />
-      <Hero />
-      <Home />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Gallery />
-      <Contact />
-      <Footer />
-      </ScrollAnimation>
     </ThemeProvider>
   )
 }
