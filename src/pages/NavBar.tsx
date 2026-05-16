@@ -16,7 +16,7 @@ export default function NavBar() {
   }, []);
 
   useEffect(() => {
-    const sections = ['home', 'about', 'skills', 'experience', 'projects', 'gallery'];
+    const sections = ['home', 'about', 'skills', 'experience', 'projects', 'gallery', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
         // We find the entry that is currently intersecting
@@ -44,6 +44,7 @@ export default function NavBar() {
     { name: 'Experience', href: '#experience', id: 'experience' },
     { name: 'Projects', href: '#projects', id: 'projects' },
     { name: 'Gallery', href: '#gallery', id: 'gallery' },
+    { name: 'Contact', href: '#contact', id: 'contact' },
   ];
 
   return (

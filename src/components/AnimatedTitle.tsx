@@ -23,7 +23,7 @@ export default function AnimatedTitle({ text, className = "", delay = 0 }: Anima
                 transition={{ 
                   duration: 0.1, 
                   ease: "linear", 
-                  delay: delay + absoluteIndex * 0.2 
+                  delay: delay + absoluteIndex * 0.04 
                 }}
                 viewport={{ once: false, margin: "-50px" }}
                 className="inline-block"
