@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
+  const [isDesktop, setIsDesktop] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  
+
   // Motion values for instant updates (Inner Dot)
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -14,12 +15,19 @@ export default function CustomCursor() {
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       
       const target = e.target as HTMLElement;
-      // Check if we are hovering over something clickable
       if (
         window.getComputedStyle(target).cursor === 'pointer' || 
         target.closest('a, button, [role="button"]')
@@ -35,6 +43,8 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', moveCursor);
     };
   }, [cursorX, cursorY]);
+
+  if (!isDesktop) return null;
 
   return (
     <>
