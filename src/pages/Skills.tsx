@@ -7,35 +7,32 @@ import {
 import { useTheme } from '../context/ThemeContext';
 import AnimatedTitle from '../components/AnimatedTitle';
 
-const row1 = [SiReact, SiTypescript, SiJavascript, SiTailwindcss, SiLaravel, SiMysql, SiPhp, SiHtml5];
-const row2 = [SiNodedotjs, SiExpress, SiCss, SiVite, SiGit, SiGithub, SiFigma, SiFramer, SiThreedotjs];
+const row1 = [
+  { Icon: SiReact, name: "SiReact", brand: "#61DAFB" },
+  { Icon: SiTypescript, name: "SiTypescript", brand: "#3178C6" },
+  { Icon: SiJavascript, name: "SiJavascript", brand: "#F7DF1E" },
+  { Icon: SiTailwindcss, name: "SiTailwindcss", brand: "#06B6D4" },
+  { Icon: SiLaravel, name: "SiLaravel", brand: "#FF2D20" },
+  { Icon: SiMysql, name: "SiMysql", brand: "#4479A1" },
+  { Icon: SiPhp, name: "SiPhp", brand: "#777BB4" },
+  { Icon: SiHtml5, name: "SiHtml5", brand: "#E34F26" }
+];
 
-const brandColors: Record<string, string> = {
-  SiReact: "#61DAFB",
-  SiTypescript: "#3178C6",
-  SiJavascript: "#F7DF1E",
-  SiTailwindcss: "#06B6D4",
-  SiLaravel: "#FF2D20",
-  SiMysql: "#4479A1",
-  SiPhp: "#777BB4",
-  SiHtml5: "#E34F26",
-  SiNodedotjs: "#339933",
-  SiExpress: "#000000",
-  SiCss: "#1572B6",
-  SiVite: "#646CFF",
-  SiGit: "#F05032",
-  SiGithub: "#181717",
-  SiFigma: "#F24E1E",
-  SiFramer: "#0055FF",
-  SiThreedotjs: "#000000",
-};
-
-const row1WithColors = row1.map(Icon => ({ Icon, brand: brandColors[Icon.name] }));
-const row2WithColors = row2.map(Icon => ({ Icon, brand: brandColors[Icon.name] }));
+const row2 = [
+  { Icon: SiNodedotjs, name: "SiNodedotjs", brand: "#339933" },
+  { Icon: SiExpress, name: "SiExpress", brand: "#000000" },
+  { Icon: SiCss, name: "SiCss", brand: "#1572B6" },
+  { Icon: SiVite, name: "SiVite", brand: "#646CFF" },
+  { Icon: SiGit, name: "SiGit", brand: "#F05032" },
+  { Icon: SiGithub, name: "SiGithub", brand: "#181717" },
+  { Icon: SiFigma, name: "SiFigma", brand: "#F24E1E" },
+  { Icon: SiFramer, name: "SiFramer", brand: "#0055FF" },
+  { Icon: SiThreedotjs, name: "SiThreedotjs", brand: "#000000" }
+];
 
 // Multiply arrays to ensure seamless infinite scrolling loop
-const duplicatedRow1 = [...row1WithColors, ...row1WithColors, ...row1WithColors, ...row1WithColors];
-const duplicatedRow2 = [...row2WithColors, ...row2WithColors, ...row2WithColors, ...row2WithColors];
+const duplicatedRow1 = [...row1, ...row1, ...row1, ...row1];
+const duplicatedRow2 = [...row2, ...row2, ...row2, ...row2];
 
 export default function Skills() {
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
@@ -66,12 +63,12 @@ export default function Skills() {
             animate={{ x: ["0%", "-50%"] }}
             transition={{ ease: "linear", duration: 40, repeat: Infinity }}
           >
-            {duplicatedRow1.map(({ Icon, brand }, index) => (
+            {duplicatedRow1.map(({ Icon, name, brand }, index) => (
               <div key={index} className="flex items-center gap-8 md:gap-16">
                 <Icon 
                   className={`text-5xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 === 0 ? (theme === 'light' ? 'text-slate-900' : 'text-white') : (theme === 'light' ? 'text-slate-900/20' : 'text-white/20')}`}
-                  style={hoveredIcon === Icon.name ? { color: brand } : {}}
-                  onMouseEnter={() => setHoveredIcon(Icon.name)}
+                  style={hoveredIcon === name ? { color: brand } : {}}
+                  onMouseEnter={() => setHoveredIcon(name)}
                   onMouseLeave={() => setHoveredIcon(null)}
                 />
               </div>
@@ -86,12 +83,12 @@ export default function Skills() {
             animate={{ x: ["-50%", "0%"] }}
             transition={{ ease: "linear", duration: 45, repeat: Infinity }}
           >
-            {duplicatedRow2.map(({ Icon, brand }, index) => (
+            {duplicatedRow2.map(({ Icon, name, brand }, index) => (
               <div key={index} className="flex items-center gap-8 md:gap-16">
                 <Icon 
                   className={`text-5xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 !== 0 ? (theme === 'light' ? 'text-slate-900' : 'text-white') : (theme === 'light' ? 'text-slate-900/20' : 'text-white/20')}`}
-                  style={hoveredIcon === Icon.name ? { color: brand } : {}}
-                  onMouseEnter={() => setHoveredIcon(Icon.name)}
+                  style={hoveredIcon === name ? { color: brand } : {}}
+                  onMouseEnter={() => setHoveredIcon(name)}
                   onMouseLeave={() => setHoveredIcon(null)}
                 />
               </div>
