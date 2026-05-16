@@ -11,6 +11,7 @@ import cebu2 from '../assets/cebu-top/cebu2.png';
 import capstone1 from '../assets/capstone/capstone1.png';
 import capstone2 from '../assets/capstone/capstone2.png';
 import spcRfid from '../assets/spc-rfid/spc-rfid.png';
+import pixzelDigital from '../assets/pixzeldigital/pixzeldigital.png';
 
 interface Project {
   title: string;
@@ -71,6 +72,16 @@ const projects: Project[] = [
     images: [spcRfid],
     layout: "type2",
     description: "St. Peter's College's comprehensive workforce management solution featuring contactless RFID attendance, automated payroll processing with penalty calculations, and real-time schedule monitoring for Faculty, Staff, and Student Assistants.\n\nThe system handles complex academic scheduling with built-in features such as dual session tracking (Morning & Afternoon), 15-minute grace periods for penalty-free buffer times, and automated penalty generation (₱1/min Late, ₱240 Absent). It provides intuitive interfaces for tapping RFID cards and seamlessly managing class attendance.",
+    github: "https://github.com/yansanity1998",
+    demo: "#"
+  },
+  {
+    title: "Pixzel Digital Attendance System",
+    role: "Full Stack Developer",
+    techStack: ["NextJS", "TSX", "Supabase"],
+    images: [pixzelDigital],
+    layout: "type3",
+    description: "A comprehensive attendance management system tailored specifically for Pixzel Digital's employees. It streamlines the tracking of daily check-ins and check-outs, ensuring accurate time logs.\n\nDeveloped with NextJS and Supabase, the platform provides real-time attendance monitoring, secure employee authentication, and robust administrative tools to seamlessly manage workforce schedules and reporting.",
     github: "https://github.com/yansanity1998",
     demo: "#"
   }
