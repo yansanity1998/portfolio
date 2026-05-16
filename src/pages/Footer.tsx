@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
         
         <div className="flex flex-col items-center md:items-start">
-          <span className="text-xl font-bold text-white tracking-tight mb-2">Jesper Ian V. Barila</span>
+          <span className="text-xl tracking-wide mb-2" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}>Ian</span>
           <p className="text-sm text-gray-500">Building digital experiences.</p>
         </div>
 
@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="text-sm text-gray-500 flex flex-col items-center md:items-end">
           <p>&copy; {currentYear} All rights reserved.</p>
           <p className="mt-1 flex items-center gap-1">
-            Designed & Built by <span className="text-emerald-400 font-medium">Jesper Ian</span>
+            Designed & Built by <span className="text-emerald-400" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}>Ian</span>
           </p>
         </div>
 

@@ -56,10 +56,11 @@ export default function NavBar() {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-white font-bold text-3xl tracking-tighter cursor-pointer"
+        className="text-white text-4xl tracking-wide cursor-pointer"
+        style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
-        Jesper
+        Ian
       </motion.div>
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
