@@ -59,7 +59,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center pointer-events-auto overflow-hidden"
     >
       {/* Background Binary / Tech details */}
-      <div className="absolute inset-0 opacity-[0.15] text-[10px] sm:text-xs text-emerald-500 font-mono select-none break-all leading-none p-4 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.15] text-[10px] sm:text-xs text-emerald-500 font-mono select-none break-all leading-none overflow-hidden pointer-events-none">
         {bgText}
       </div>
 
