@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import AnimatedTitle from '../components/AnimatedTitle';
+import TypewriterText from '../components/TypewriterText';
 import pixzelLogo from '../assets/logos/pixzel.jpg';
 import spcLogo from '../assets/logos/spc.png';
 
@@ -120,7 +121,7 @@ export default function Experience() {
                                             </>
                                         ) : (
                                             <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-sm mt-1 text-justify">
-                                                {exp.description}
+                                                <TypewriterText text={exp.description} />
                                             </p>
                                         )}
                                     </div>
@@ -146,7 +147,7 @@ export default function Experience() {
                                             </>
                                         ) : (
                                             <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-sm mt-1 text-justify">
-                                                {exp.description}
+                                                <TypewriterText text={exp.description} />
                                             </p>
                                         )}
                                     </div>
