@@ -23,7 +23,7 @@ const experiences = [
         year: "2022",
         title: "Hello World!",
         company: "The Beginning",
-        description: "Took my first steps into programming by learning the fundamentals of Python, HTML, CSS, and JavaScript. Built simple console apps and static websites that sparked a lasting passion for software development.",
+        description: "Took my first steps into programming by learning the fundamentals of Java, HTML, CSS, and JavaScript. Built simple console apps and static websites that sparked a lasting passion for software development.",
         logo: spcLogo,
     }
 ];
