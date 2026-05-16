@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import ianImg from '../assets/ian.jpg';
 import { useTheme } from '../context/ThemeContext';
+import AnimatedTitle from '../components/AnimatedTitle';
 
 const devSkills = ["React", "TypeScript", "Tailwind", "JavaScript", "HTML", "CSS", "PHP", "Laravel", "Firebase", "Supabase", "Vercel", "Netlify", "MySQL"];
 const createSkills = ["Figma", "Canva", "Capcut", "Adobe Premiere Pro", "Adobe Illustrator"];
@@ -93,15 +94,11 @@ export default function Home() {
           style={{ y: yTransform }}
           className="flex flex-col items-center lg:items-end justify-start w-full -mt-8"
         >
-          <motion.h2 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-[6rem] font-bold mb-12 tracking-tighter text-right leading-none text-white -translate-x-8"
-          >
-            What I do
-          </motion.h2>
+          <AnimatedTitle 
+            text="What I do"
+            delay={0.1}
+            className="text-5xl md:text-7xl lg:text-[6rem] font-bold mb-12 tracking-tighter text-right justify-end leading-none text-white -translate-x-8"
+          />
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.85, rotate: -3 }}

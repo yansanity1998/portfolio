@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
+import ScrambleText from '../components/ScrambleText';
 
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
@@ -18,50 +19,50 @@ export default function Hero() {
 
   return (
     <div id="home" className="min-h-screen bg-[#050505] text-white overflow-hidden relative font-sans selection:bg-emerald-500/30">
-      
+
       {/* Background Waves */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-40">
-         <motion.div 
-           initial={{ opacity: 0 }} 
-           animate={{ opacity: 1 }} 
-           transition={{ duration: 2 }}
-           className="w-full h-full relative flex items-center justify-center"
-         >
-           <svg className="absolute w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-             {Array.from({ length: 60 }).map((_, i) => (
-               <motion.path
-                 key={i}
-                  d={`M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`}
-                  fill="none"
-                  stroke={theme === 'light' ? `rgba(15,23,42,${0.02 + i * 0.005})` : `rgba(255,255,255,${0.02 + i * 0.005})`}
-                  strokeWidth={1}
-                  animate={{
-                    d: [
-                      `M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`,
-                      `M0,500 C300,${950 - i * 20} 700,${50 + i * 20} 1000,500`,
-                      `M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`
-                    ]
-                 }}
-                 transition={{ duration: 10 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
-               />
-             ))}
-           </svg>
-         </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+          className="w-full h-full relative flex items-center justify-center"
+        >
+          <svg className="absolute w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            {Array.from({ length: 60 }).map((_, i) => (
+              <motion.path
+                key={i}
+                d={`M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`}
+                fill="none"
+                stroke={theme === 'light' ? `rgba(15,23,42,${0.02 + i * 0.005})` : `rgba(255,255,255,${0.02 + i * 0.005})`}
+                strokeWidth={1}
+                animate={{
+                  d: [
+                    `M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`,
+                    `M0,500 C300,${950 - i * 20} 700,${50 + i * 20} 1000,500`,
+                    `M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`
+                  ]
+                }}
+                transition={{ duration: 10 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            ))}
+          </svg>
+        </motion.div>
       </div>
 
       {/* Center Content */}
       <div className="flex flex-col items-center justify-center min-h-screen relative z-10 pointer-events-none">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className={`text-[4rem] sm:text-6xl md:text-8xl lg:text-[8rem] font-bold tracking-tight mb-4 text-center pointer-events-auto bg-clip-text text-transparent bg-[length:200%_100%] bg-gradient-to-r ${theme === 'light' ? 'from-slate-900/40 via-slate-900 to-slate-900/40' : 'from-white/20 via-white to-white/20'} animate-shimmer`}
           style={{ textShadow: theme === 'light' ? "0 10px 40px rgba(15,23,42,0.15)" : "0 10px 40px rgba(255,255,255,0.15)" }}
         >
-          Jesper Ian V. Barila
+          <ScrambleText text="Jesper Ian V. Barila" />
         </motion.h1>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -74,7 +75,7 @@ export default function Hero() {
                 <span className={`transition-all duration-700 z-10 ${isActive ? 'text-white' : 'text-gray-500 blur-[1px] opacity-50'}`}>
                   {word}
                 </span>
-                
+
                 {/* Targeting Box */}
                 <AnimatePresence>
                   {isActive && (
@@ -91,9 +92,9 @@ export default function Hero() {
                       <span className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
                       <span className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
                       <span className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
-                      
+
                       {/* Scanning line animation */}
-                      <motion.div 
+                      <motion.div
                         className="absolute left-0 right-0 h-[1px] bg-emerald-400/50 shadow-[0_0_8px_rgba(52,211,153,0.8)]"
                         initial={{ top: 0, opacity: 0 }}
                         animate={{ top: "100%", opacity: [0, 1, 1, 0] }}
@@ -109,7 +110,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom Left Badge */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}
@@ -118,7 +119,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Bottom Right Socials */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}

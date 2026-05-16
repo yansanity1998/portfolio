@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import AnimatedTitle from '../components/AnimatedTitle';
 
 import img1 from '../assets/gallery/gallery1.jpg';
 import img2 from '../assets/gallery/gallery2.jpg';
@@ -42,15 +43,10 @@ export default function Gallery() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-900/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
 
             <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
-                <motion.h2
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-16 md:mb-24 text-center"
-                >
-                    Gallery
-                </motion.h2>
+                <AnimatedTitle 
+                    text="Gallery"
+                    className="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-16 md:mb-24 justify-center"
+                />
 
                 {/* 3D Circle Carousel Container */}
                 <div

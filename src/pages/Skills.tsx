@@ -5,6 +5,7 @@ import {
   SiNodedotjs, SiExpress, SiCss, SiVite, SiGit, SiGithub, SiFigma, SiFramer, SiThreedotjs
 } from 'react-icons/si';
 import { useTheme } from '../context/ThemeContext';
+import AnimatedTitle from '../components/AnimatedTitle';
 
 const row1 = [SiReact, SiTypescript, SiJavascript, SiTailwindcss, SiLaravel, SiMysql, SiPhp, SiHtml5];
 const row2 = [SiNodedotjs, SiExpress, SiCss, SiVite, SiGit, SiGithub, SiFigma, SiFramer, SiThreedotjs];
@@ -48,7 +49,10 @@ export default function Skills() {
 
       {/* Header */}
       <div className="mb-16 md:mb-24 px-8 md:px-16 max-w-7xl mx-auto relative z-10">
-         <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">Tech Stack</h2>
+         <AnimatedTitle 
+           text="Tech Stack"
+           className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4"
+         />
          <p className="text-gray-400 tracking-widest uppercase text-xs md:text-sm">Languages & Tools</p>
       </div>
 

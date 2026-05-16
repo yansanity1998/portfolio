@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AnimatedTitle from '../components/AnimatedTitle';
 
 import jobmarket1 from '../assets/jobmarket/jobmarket1.png';
 import jobmarket2 from '../assets/jobmarket/jobmarket2.png';
@@ -97,9 +98,10 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center md:text-left"
         >
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-4">
-            Selected Works
-          </h2>
+          <AnimatedTitle 
+            text="Selected Works"
+            className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-4 justify-center md:justify-start"
+          />
           <p className="text-gray-400 max-w-xl">
             A collection of digital experiences combining robust backends with immersive frontends.
           </p>

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import AnimatedTitle from '../components/AnimatedTitle';
 import pixzelLogo from '../assets/logos/pixzel.jpg';
 import spcLogo from '../assets/logos/spc.png';
 
@@ -45,15 +46,10 @@ export default function Experience() {
 
             <div className="max-w-7xl mx-auto flex flex-col items-center">
 
-                <motion.h2
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-5xl md:text-6xl font-bold mb-24 tracking-tight text-center"
-                >
-                    My Experience
-                </motion.h2>
+                <AnimatedTitle 
+                  text="My Experience"
+                  className="text-5xl md:text-6xl font-bold mb-24 tracking-tight justify-center"
+                />
 
                 {/* Timeline Container */}
                 <div ref={containerRef} className="relative w-full max-w-4xl mx-auto">
