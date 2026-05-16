@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedTitle from '../components/AnimatedTitle';
+import MatrixRain from '../components/MatrixRain';
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -23,6 +25,9 @@ export default function Contact() {
 
   return (
     <section id="contact" className="min-h-screen bg-[#050505] relative flex flex-col items-center justify-center overflow-hidden py-32">
+      
+      {/* Matrix Code Rain Background */}
+      <MatrixRain />
       
       {/* Background Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-900/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
