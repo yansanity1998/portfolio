@@ -28,6 +28,7 @@ const textArray = rawText.split(" ").map(word => {
 
 export default function Gallery() {
     const [brokenWords, setBrokenWords] = useState<number[]>([]);
+    const [activeCarousel, setActiveCarousel] = useState(1);
     const { theme } = useTheme();
 
     const handleWordHover = (index: number) => {
@@ -48,43 +49,59 @@ export default function Gallery() {
                     className="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-16 md:mb-24 justify-center"
                 />
 
-                {/* 3D Circle Carousel Container */}
-                <div
-                    className="relative w-full h-[350px] md:h-[450px] flex items-center justify-center"
-                    style={{ perspective: '1000px' }}
-                >
-                    <motion.div
-                        className="relative w-[220px] h-[300px] md:w-[260px] md:h-[360px]"
-                        style={{ transformStyle: 'preserve-3d' }}
-                        animate={{ rotateY: [0, -360] }}
-                        transition={{
-                            repeat: Infinity,
-                            duration: 12,
-                            ease: "linear"
-                        }}
-                    >
-                        {images.map((src, index) => {
-                            const angle = index * 72;
-                            return (
-                                <div
-                                    key={index}
-                                    className="absolute inset-0"
-                                    style={{
-                                        transform: `rotateY(${angle}deg) translateZ(200px)`,
-                                        transformStyle: 'preserve-3d'
+                {/* 3D Circle Carousels Container */}
+                <div className="relative w-full flex items-center justify-center gap-16 md:gap-40 h-[350px] md:h-[450px] overflow-hidden">
+                    {[0, 1, 2].map((carouselIndex) => {
+                        const isActive = activeCarousel === carouselIndex;
+                        return (
+                            <motion.div
+                                key={carouselIndex}
+                                className="relative flex items-center justify-center cursor-pointer"
+                                style={{ perspective: '1000px' }}
+                                animate={{
+                                    scale: isActive ? 1 : 0.45,
+                                    opacity: isActive ? 1 : 0.4,
+                                    zIndex: isActive ? 10 : 1,
+                                    x: isActive ? 0 : (carouselIndex < activeCarousel ? -60 : 60)
+                                }}
+                                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                                onClick={() => setActiveCarousel(carouselIndex)}
+                            >
+                                <motion.div
+                                    className="relative w-[140px] h-[200px] md:w-[220px] md:h-[300px]"
+                                    style={{ transformStyle: 'preserve-3d' }}
+                                    animate={{ rotateY: [0, carouselIndex % 2 === 0 ? -360 : 360] }}
+                                    transition={{
+                                        repeat: Infinity,
+                                        duration: 15 + carouselIndex * 2,
+                                        ease: "linear"
                                     }}
                                 >
-                                    <div className="w-full h-full rounded-lg overflow-hidden border-2 border-white/80 shadow-[0_0_30px_rgba(255,255,255,0.15)] relative bg-black group">
-                                        <img
-                                            src={src}
-                                            alt={`Gallery ${index}`}
-                                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                                        />
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </motion.div>
+                                    {images.map((src, index) => {
+                                        const angle = index * 72;
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="absolute inset-0"
+                                                style={{
+                                                    transform: `rotateY(${angle}deg) translateZ(clamp(120px, 15vw, 200px))`,
+                                                    transformStyle: 'preserve-3d'
+                                                }}
+                                            >
+                                                <div className="w-full h-full rounded-lg overflow-hidden border-2 border-white/80 shadow-[0_0_30px_rgba(255,255,255,0.15)] relative bg-black group pointer-events-none">
+                                                    <img
+                                                        src={src}
+                                                        alt={`Gallery ${index}`}
+                                                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </motion.div>
+                            </motion.div>
+                        );
+                    })}
                 </div>
 
                 <motion.div
