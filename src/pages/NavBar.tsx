@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import LightDarkMode from '../components/LightDarkMode';
+import { scrollToSection } from '../components/ScrollAnimation';
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,6 +70,10 @@ export default function NavBar() {
           <a
             key={link.id}
             href={link.href}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection(link.id);
+            }}
             className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-full ${
               activeSection === link.id
                 ? 'bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]'

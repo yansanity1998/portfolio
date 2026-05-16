@@ -6,11 +6,13 @@ import Gallery from './pages/Gallery'
 import Skills from './pages/Skills'
 import CustomCursor from './components/CustomCursor'
 import NavBar from './pages/NavBar'
+import ScrollAnimation from './components/ScrollAnimation'
 import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   return (
     <ThemeProvider>
+      <ScrollAnimation>
       <CustomCursor />
       <NavBar />
       <Hero />
@@ -19,6 +21,7 @@ function App() {
       <Experience />
       <Projects />
       <Gallery />
+      </ScrollAnimation>
     </ThemeProvider>
   )
 }
