@@ -145,7 +145,7 @@ export default function Projects() {
                   <motion.img 
                     key={`bg-${currentImageIndex}`}
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.2 }}
+                    animate={{ opacity: 0.06 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
                     src={selectedProject.images[currentImageIndex]} 
