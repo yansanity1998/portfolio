@@ -61,7 +61,7 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
+                className="bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
                 placeholder="Your Full Name"
               />
             </div>
@@ -75,7 +75,7 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
+                className="bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
                 placeholder="test@gmail.com"
               />
             </div>
@@ -90,7 +90,7 @@ export default function Contact() {
               value={formData.subject}
               onChange={handleChange}
               required
-              className="bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
+              className="bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors"
               placeholder="Project Inquiry"
             />
           </div>
@@ -104,7 +104,7 @@ export default function Contact() {
               onChange={handleChange}
               required
               rows={6}
-              className="bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors resize-none"
+              className="bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-colors resize-none"
               placeholder="Your message here..."
             />
           </div>
