@@ -63,7 +63,7 @@ export default function Hero() {
           className="flex gap-8 items-center"
         >
           <a href="#" className="px-6 py-2.5 bg-white text-black rounded-full font-semibold text-sm hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.3)]">Home</a>
-          <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">Awards</a>
+          <a href="#gallery" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">Gallery</a>
           <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-medium">Contact</a>
         </motion.div>
       </nav>
