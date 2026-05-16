@@ -49,8 +49,8 @@ export default function NavBar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-[100] transition-all duration-300 ${
-        isScrolled ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-4 shadow-lg' : 'bg-transparent'
+      className={`fixed top-0 left-0 w-full px-8 md:px-16 py-4 flex justify-between items-center z-[100] transition-all duration-300 ${
+        isScrolled ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-2 shadow-lg' : 'bg-transparent'
       }`}
     >
       <motion.div 

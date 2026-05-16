@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import ianImg from '../assets/ian.jpg';
+import jesperImg from '../assets/jesper.jpg';
 import { useTheme } from '../context/ThemeContext';
 import AnimatedTitle from '../components/AnimatedTitle';
 
@@ -110,7 +111,7 @@ export default function Home() {
             {/* Image Container */}
             <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
               <img 
-                src={ianImg} 
+                src={theme === 'light' ? jesperImg : ianImg} 
                 alt="Jesper Ian" 
                 className="w-full h-full object-cover filter grayscale-[40%] brightness-90 group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100" 
               />
