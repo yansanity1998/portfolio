@@ -141,7 +141,7 @@ export default function Hero() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}
-        className="absolute bottom-10 right-10 z-50 flex flex-col gap-6"
+        className="fixed bottom-10 right-10 z-50 flex flex-col gap-6"
       >
         <a href="https://github.com/yansanity1998" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
           <FaGithub size={24} />
