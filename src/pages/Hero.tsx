@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaFacebook, FaFileDownload } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import ScrambleText from '../components/ScrambleText';
 
@@ -131,8 +131,11 @@ export default function Hero() {
         <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
           <FaLinkedin size={24} />
         </a>
-        <a href="https://www.facebook.com/jesper.ian.villacorte.barila" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+        <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
           <FaFacebook size={24} />
+        </a>
+        <a href="/resume.pdf" download="Jesper_Ian_Barila_Resume.pdf" title="Download Resume" className="text-gray-500 hover:text-emerald-400 transition-colors hover:-translate-y-1 transform duration-200">
+          <FaFileDownload size={24} />
         </a>
       </motion.div>
 

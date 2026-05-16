@@ -8,7 +8,8 @@ import linamon1 from '../assets/linamon/linamon1.png';
 import linamon2 from '../assets/linamon/linamon2.png';
 import cebu1 from '../assets/cebu-top/cebu1.png';
 import cebu2 from '../assets/cebu-top/cebu2.png';
-
+import capstone1 from '../assets/capstone/capstone1.png';
+import capstone2 from '../assets/capstone/capstone2.png';
 interface Project {
   title: string;
   role: string;
@@ -48,6 +49,16 @@ const projects: Project[] = [
     images: [cebu2, cebu1],
     layout: "type3",
     description: "A high-end cinematic aviation platform where users can explore and seamlessly inquire about different premium services including air taxi, air charter, air ambulance, and air cargo.\n\nThe website was designed with a focus on immersive brand storytelling, utilizing large-scale imagery and smooth animations to convey a sense of luxury and professionalism. It features a robust inquiry management system built in Laravel, allowing the sales team to quickly respond to high-ticket flight requests, while the frontend is meticulously crafted to ensure flawless performance across all devices.",
+    github: "https://github.com/yansanity1998",
+    demo: "#"
+  },
+  {
+    title: "Anxiety Management System",
+    role: "Full Stack Developer",
+    techStack: ["TSX", "NodeJS", "Supabase"],
+    images: [capstone1, capstone2],
+    layout: "type1",
+    description: "This is my capstone project focused entirely on anxiety management. For students, it provides a personalized dashboard featuring a pet streak, daily mood tracking, breathing exercises, games, and other interactive tools designed to help conquer anxiety.\n\nOn the administrative side, the guidance dashboard is built for counselors to monitor student progress, manage scheduling, and print detailed reports for effective support and intervention.",
     github: "https://github.com/yansanity1998",
     demo: "#"
   }
