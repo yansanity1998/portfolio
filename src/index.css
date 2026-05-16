@@ -14,3 +14,136 @@
 @utility animate-shimmer {
   animation: shimmer 4s ease-in-out infinite;
 }
+
+html.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --card-bg: #ffffff;
+}
+
+html.light body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+html.light .bg-\[\#050505\] {
+  background-color: var(--bg-primary) !important;
+}
+
+html.light .bg-\[\#0a0a0a\] {
+  background-color: var(--bg-secondary) !important;
+}
+
+html.light .text-white {
+  color: var(--text-primary) !important;
+}
+
+html.light .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+html.light .text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+html.light .text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+html.light .border-gray-800 {
+  border-color: var(--border) !important;
+}
+
+html.light .border-gray-700 {
+  border-color: var(--border) !important;
+}
+
+html.light .border-gray-900\/50 {
+  border-color: var(--border) !important;
+}
+
+html.light .border-white {
+  border-color: var(--border) !important;
+}
+
+html.light .border-white\/80 {
+  border-color: var(--border) !important;
+}
+
+html.light .border-white\/30 {
+  border-color: var(--border) !important;
+}
+
+html.light .border-white\/20 {
+  border-color: var(--border) !important;
+}
+
+html.light .bg-gray-900\/30 {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-gray-800 {
+  background-color: var(--border) !important;
+}
+
+html.light .from-gray-700 {
+  --tw-gradient-from: var(--border) !important;
+}
+
+html.light .bg-black\/80 {
+  background-color: rgba(255,255,255,0.8) !important;
+}
+
+html.light .bg-black\/60 {
+  background-color: rgba(255,255,255,0.6) !important;
+}
+
+html.light .shadow-\[0_30px_60px_rgba\(0\,0\,0\,0\.8\)\] {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+}
+
+html.light .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.8\)\] {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+}
+
+html.light .shadow-\[0_15px_40px_rgba\(0\,0\,0\,0\.8\)\] {
+  box-shadow: 0 5px 20px rgba(0,0,0,0.06) !important;
+}
+
+html.light button,
+html.light a,
+html.light [role="button"] {
+  color: var(--text-primary);
+}
+
+html.light .bg-white\/10 {
+  background-color: rgba(0,0,0,0.05) !important;
+}
+
+html.light .text-gray-600 {
+  color: var(--text-muted) !important;
+}
+
+html.light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+html.light .border-emerald-400\/20 {
+  border-color: rgba(5,150,105,0.2) !important;
+}
+
+html.light .border-emerald-900\/50 {
+  border-color: rgba(5,150,105,0.3) !important;
+}
+
+html.light .bg-emerald-900\/10 {
+  background-color: rgba(5,150,105,0.08) !important;
+}
+
+html.light .bg-white\/5 {
+  background-color: rgba(0,0,0,0.03) !important;
+}

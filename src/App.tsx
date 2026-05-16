@@ -5,21 +5,22 @@ import Projects from './pages/Projects'
 import Gallery from './pages/Gallery'
 import Skills from './pages/Skills'
 import CustomCursor from './components/CustomCursor'
+import LightDarkMode from './components/LightDarkMode'
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <CustomCursor />
+      <LightDarkMode />
       <Hero />
       <Home />
       <Skills />
       <Experience />
       <Projects />
       <Gallery />
-    </>
+    </ThemeProvider>
   )
 }
 
 export default App
-
-
