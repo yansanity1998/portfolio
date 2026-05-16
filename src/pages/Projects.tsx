@@ -10,6 +10,8 @@ import cebu1 from '../assets/cebu-top/cebu1.png';
 import cebu2 from '../assets/cebu-top/cebu2.png';
 import capstone1 from '../assets/capstone/capstone1.png';
 import capstone2 from '../assets/capstone/capstone2.png';
+import spcRfid from '../assets/spc-rfid/spc-rfid.png';
+
 interface Project {
   title: string;
   role: string;
@@ -61,6 +63,16 @@ const projects: Project[] = [
     description: "This is my capstone project focused entirely on anxiety management. For students, it provides a personalized dashboard featuring a pet streak, daily mood tracking, breathing exercises, games, and other interactive tools designed to help conquer anxiety.\n\nOn the administrative side, the guidance dashboard is built for counselors to monitor student progress, manage scheduling, and print detailed reports for effective support and intervention.",
     github: "https://github.com/yansanity1998",
     demo: "#"
+  },
+  {
+    title: "SPC RFID Attendance & Payroll Management",
+    role: "Full Stack Developer",
+    techStack: ["TSX", "NodeJS", "Supabase"],
+    images: [spcRfid],
+    layout: "type2",
+    description: "St. Peter's College's comprehensive workforce management solution featuring contactless RFID attendance, automated payroll processing with penalty calculations, and real-time schedule monitoring for Faculty, Staff, and Student Assistants.\n\nThe system handles complex academic scheduling with built-in features such as dual session tracking (Morning & Afternoon), 15-minute grace periods for penalty-free buffer times, and automated penalty generation (₱1/min Late, ₱240 Absent). It provides intuitive interfaces for tapping RFID cards and seamlessly managing class attendance.",
+    github: "https://github.com/yansanity1998",
+    demo: "#"
   }
 ];
 
@@ -72,13 +84,15 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
     >
       {/* Image fills top portion, no padding */}
       <div className="relative flex-1 w-full overflow-hidden border-b border-white">
-        <img src={project.images[0]} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top group-hover:opacity-0 transition-opacity duration-500" />
-        <img src={project.images[1]} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <img src={project.images[0]} alt={project.title} className={`absolute inset-0 w-full h-full object-cover object-top ${project.images.length > 1 ? 'group-hover:opacity-0 transition-opacity duration-500' : ''}`} />
+        {project.images.length > 1 && (
+          <img src={project.images[1]} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        )}
       </div>
 
       {/* Text below the image, with padding */}
-      <div className="w-full z-10 p-6 md:p-8">
-        <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">{project.title}</h3>
+      <div className="w-full z-10 p-6 md:p-8 flex-none h-[180px] flex flex-col">
+        <h3 className={`font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors ${project.title.length > 25 ? 'text-lg leading-tight line-clamp-2' : 'text-xl truncate'}`}>{project.title}</h3>
         <p className="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">{project.role}</p>
         <div className="flex gap-2 flex-wrap">
           {project.techStack.map(tech => (
@@ -182,25 +196,29 @@ export default function Projects() {
                 </AnimatePresence>
                 
                 {/* Navigation Controls */}
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === 0 ? selectedProject.images.length - 1 : prev - 1) }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 hover:bg-emerald-500 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === selectedProject.images.length - 1 ? 0 : prev + 1) }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 hover:bg-emerald-500 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                </button>
+                {selectedProject.images.length > 1 && (
+                  <>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === 0 ? selectedProject.images.length - 1 : prev - 1) }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 hover:bg-emerald-500 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === selectedProject.images.length - 1 ? 0 : prev + 1) }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 hover:bg-emerald-500 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                    </button>
 
-                {/* Pagination Dots */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                  {selectedProject.images.map((_, idx) => (
-                    <div key={idx} className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-emerald-400' : 'bg-gray-600'}`} />
-                  ))}
-                </div>
+                    {/* Pagination Dots */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                      {selectedProject.images.map((_, idx) => (
+                        <div key={idx} className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-emerald-400' : 'bg-gray-600'}`} />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Modal Content Details */}
