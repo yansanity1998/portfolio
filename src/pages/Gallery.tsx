@@ -8,8 +8,20 @@ import img2 from '../assets/gallery/gallery2.jpg';
 import img3 from '../assets/gallery/gallery3.jpg';
 import img4 from '../assets/gallery/gallery4.jpg';
 import img5 from '../assets/gallery/gallery5.jpg';
+import img6 from '../assets/gallery/gallery6.jpg';
+import img7 from '../assets/gallery/gallery7.jpg';
+import img8 from '../assets/gallery/gallery8.jpg';
+import img9 from '../assets/gallery/gallery9.jpg';
+import img10 from '../assets/gallery/gallery10.jpg';
+import img11 from '../assets/gallery/gallery11.jpg';
+import img12 from '../assets/gallery/gallery12.jpg';
+import img13 from '../assets/gallery/gallery13.jpg';
+import img14 from '../assets/gallery/gallery14.jpg';
+import img15 from '../assets/gallery/gallery15.jpg';
 
-const images = [img1, img2, img3, img4, img5];
+const leftImages = [img11, img12, img13, img14, img15];
+const centerImages = [img1, img2, img3, img4, img5];
+const rightImages = [img6, img7, img8, img9, img10];
 
 const rawText = "A collection of moments from my journey as a developer and creator — building projects, exploring new technologies, and constantly pushing creative boundaries. Here are some snapshots along the way:";
 const highlightWords = ["moments", "building", "exploring", "boundaries", "snapshots"];
@@ -77,7 +89,7 @@ export default function Gallery() {
                                         ease: "linear"
                                     }}
                                 >
-                                    {images.map((src, index) => {
+                                    {(carouselIndex === 0 ? leftImages : carouselIndex === 1 ? centerImages : rightImages).map((src, index) => {
                                         const angle = index * 72;
                                         return (
                                             <div

@@ -28,7 +28,7 @@ const projects: Project[] = [
   {
     title: "Jobmarket Iligan",
     role: "Full Stack Developer",
-    techStack: ["JSX", "Laravel", "MySQL"],
+    techStack: ["React", "JSX", "Laravel", "MySQL"],
     images: [jobmarket2, jobmarket1],
     layout: "type1",
     description: "A comprehensive digital platform where users can easily apply for jobs and seamlessly modify their profiles with relevant information. The system utilizes advanced matching algorithms to align candidates with opportunities perfectly suited to their roles and expertise.\n\nDeveloped to streamline the recruitment process, it features a highly interactive user dashboard, real-time job tracking, and an extensive administration panel. The backend is powered by Laravel, ensuring robust security and fast database queries, while the frontend leverages modern JSX for a smooth, app-like experience.",
@@ -38,7 +38,7 @@ const projects: Project[] = [
   {
     title: "MDRRMO Linamon",
     role: "Web Developer",
-    techStack: ["TSX", "Laravel", "MySQL"],
+    techStack: ["React", "TSX", "Laravel", "MySQL"],
     images: [linamon1, linamon2],
     layout: "type2",
     description: "A centralized CMS website built specifically for disaster risk reduction and management in the municipality of Linamon. Citizens can directly request training aids and dispatch ambulances through the platform during emergencies, drastically improving response times.\n\nThe system includes role-based access control, allowing administrators to manage incoming emergency requests, track resources, and publish critical news updates directly to the public portal. Built with a scalable Laravel backend and a responsive TSX frontend, it ensures critical services remain online when they are needed most.",
@@ -48,7 +48,7 @@ const projects: Project[] = [
   {
     title: "CebuTop Aviation",
     role: "Full Stack Developer",
-    techStack: ["TSX", "Laravel", "MySQL"],
+    techStack: ["React", "TSX", "Laravel", "MySQL"],
     images: [cebu2, cebu1],
     layout: "type3",
     description: "A high-end cinematic aviation platform where users can explore and seamlessly inquire about different premium services including air taxi, air charter, air ambulance, and air cargo.\n\nThe website was designed with a focus on immersive brand storytelling, utilizing large-scale imagery and smooth animations to convey a sense of luxury and professionalism. It features a robust inquiry management system built in Laravel, allowing the sales team to quickly respond to high-ticket flight requests, while the frontend is meticulously crafted to ensure flawless performance across all devices.",
@@ -58,7 +58,7 @@ const projects: Project[] = [
   {
     title: "Anxiety Management System",
     role: "Full Stack Developer",
-    techStack: ["TSX", "NodeJS", "Supabase"],
+    techStack: ["React", "TSX", "NodeJS", "Supabase"],
     images: [capstone1, capstone2],
     layout: "type1",
     description: "This is my capstone project focused entirely on anxiety management. For students, it provides a personalized dashboard featuring a pet streak, daily mood tracking, breathing exercises, games, and other interactive tools designed to help conquer anxiety.\n\nOn the administrative side, the guidance dashboard is built for counselors to monitor student progress, manage scheduling, and print detailed reports for effective support and intervention.",
@@ -68,7 +68,7 @@ const projects: Project[] = [
   {
     title: "SPC RFID Attendance & Payroll Management",
     role: "Full Stack Developer",
-    techStack: ["TSX", "NodeJS", "Supabase"],
+    techStack: ["React", "TSX", "NodeJS", "Supabase"],
     images: [spcRfid],
     layout: "type2",
     description: "St. Peter's College's comprehensive workforce management solution featuring contactless RFID attendance, automated payroll processing with penalty calculations, and real-time schedule monitoring for Faculty, Staff, and Student Assistants.\n\nThe system handles complex academic scheduling with built-in features such as dual session tracking (Morning & Afternoon), 15-minute grace periods for penalty-free buffer times, and automated penalty generation (₱1/min Late, ₱240 Absent). It provides intuitive interfaces for tapping RFID cards and seamlessly managing class attendance.",
@@ -78,7 +78,7 @@ const projects: Project[] = [
   {
     title: "Pixzel Digital Attendance System",
     role: "Full Stack Developer",
-    techStack: ["NextJS", "TSX", "Supabase"],
+    techStack: ["React", "NextJS", "TSX", "Supabase"],
     images: [pixzelDigital],
     layout: "type3",
     description: "A comprehensive attendance management system tailored specifically for Pixzel Digital's employees. It streamlines the tracking of daily check-ins and check-outs, ensuring accurate time logs.\n\nDeveloped with NextJS and Supabase, the platform provides real-time attendance monitoring, secure employee authentication, and robust administrative tools to seamlessly manage workforce schedules and reporting.",
@@ -94,7 +94,7 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
       className="relative aspect-square border border-white/20 flex flex-col group overflow-hidden bg-[#050505] hover:bg-[#0a0a0a] transition-all cursor-pointer hover:scale-105 duration-700"
     >
       {/* Image fills top portion, no padding */}
-      <div className="relative flex-1 w-full overflow-hidden border-b border-white">
+      <div className="relative flex-1 w-full overflow-hidden border-b border-white/20">
         <img src={project.images[0]} alt={project.title} className={`absolute inset-0 w-full h-full object-cover object-top ${project.images.length > 1 ? 'group-hover:opacity-0 transition-opacity duration-500' : ''}`} />
         {project.images.length > 1 && (
           <img src={project.images[1]} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -103,9 +103,11 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
 
       {/* Text below the image, with padding */}
       <div className="w-full z-10 p-6 md:p-8 flex-none h-[180px] flex flex-col">
-        <h3 className={`font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors ${project.title.length > 25 ? 'text-lg leading-tight line-clamp-2' : 'text-xl truncate'}`}>{project.title}</h3>
-        <p className="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">{project.role}</p>
-        <div className="flex gap-2 flex-wrap">
+        <div>
+          <h3 className={`font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors ${project.title.length > 25 ? 'text-lg leading-tight line-clamp-2' : 'text-xl truncate'}`}>{project.title}</h3>
+          <p className="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">{project.role}</p>
+        </div>
+        <div className="flex gap-2 flex-wrap mt-auto">
           {project.techStack.map(tech => (
              <span key={tech} className="text-[10px] px-3 py-1 border border-emerald-900/50 rounded-full text-emerald-400 font-bold bg-emerald-900/10 uppercase tracking-wider">{tech}</span>
           ))}
