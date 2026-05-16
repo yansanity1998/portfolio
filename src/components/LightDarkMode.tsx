@@ -6,7 +6,7 @@ export default function LightDarkMode() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-24 right-10 z-[9999] w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 cursor-pointer"
+      className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 cursor-pointer"
       aria-label="Toggle theme"
     >
       {theme === 'dark' ? (
