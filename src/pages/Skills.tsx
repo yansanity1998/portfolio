@@ -36,7 +36,7 @@ const duplicatedRow1 = [...row1WithColors, ...row1WithColors, ...row1WithColors,
 const duplicatedRow2 = [...row2WithColors, ...row2WithColors, ...row2WithColors, ...row2WithColors];
 
 export default function Skills() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
 
   return (
     <section id="skills" className="bg-[#050505] py-24 overflow-hidden relative border-t border-b border-gray-900/50">
@@ -64,9 +64,9 @@ export default function Skills() {
               <div key={index} className="flex items-center gap-8 md:gap-16">
                 <Icon 
                   className={`text-5xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 === 0 ? 'text-white' : 'text-white/20'}`}
-                  style={hoveredIndex === index ? { color: brand } : {}}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
+                  style={hoveredIcon === Icon.name ? { color: brand } : {}}
+                  onMouseEnter={() => setHoveredIcon(Icon.name)}
+                  onMouseLeave={() => setHoveredIcon(null)}
                 />
               </div>
             ))}
@@ -84,9 +84,9 @@ export default function Skills() {
               <div key={index} className="flex items-center gap-8 md:gap-16">
                 <Icon 
                   className={`text-5xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 !== 0 ? 'text-white' : 'text-white/20'}`}
-                  style={hoveredIndex === index ? { color: brand } : {}}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
+                  style={hoveredIcon === Icon.name ? { color: brand } : {}}
+                  onMouseEnter={() => setHoveredIcon(Icon.name)}
+                  onMouseLeave={() => setHoveredIcon(null)}
                 />
               </div>
             ))}
