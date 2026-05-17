@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useInView } from 'framer-motion';
 
 interface ScrambleTextProps {
@@ -8,44 +8,39 @@ interface ScrambleTextProps {
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
 export default function ScrambleText({ text }: ScrambleTextProps) {
-  const [displayText, setDisplayText] = useState('');
-  const ref = useRef(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref);
 
   useEffect(() => {
-    // Only run the animation when the element is in view
-    if (!isInView) {
-      // Optional: Reset to full text or keep it as is when out of view. 
-      // Keeping it as is avoids flicker before the animation restarts.
-      return;
-    }
+    if (!isInView) return;
 
-    let iteration = -10; 
-    const maxIterations = text.length;
-    
-    const interval = setInterval(() => {
-      setDisplayText(
-        text
-          .split('')
-          .map((letter, index) => {
-            if (index < iteration) {
-              return letter;
-            }
-            if (letter === ' ') return ' ';
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          })
-          .join('')
-      );
+    let iteration = -10;
+    let frameId: number;
 
-      if (iteration >= maxIterations) {
-        clearInterval(interval);
-      }
+    const animate = () => {
+      if (!ref.current) return;
 
-      iteration += 1 / 2; 
-    }, 30); 
+      const displayText = text
+        .split('')
+        .map((letter, index) => {
+          if (index < iteration) return letter;
+          if (letter === ' ') return ' ';
+          return CHARS[Math.floor(Math.random() * CHARS.length)];
+        })
+        .join('');
 
-    return () => clearInterval(interval);
+      ref.current.textContent = displayText;
+
+      if (iteration >= text.length) return;
+
+      iteration += 1 / 2;
+      frameId = requestAnimationFrame(animate);
+    };
+
+    frameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(frameId);
   }, [text, isInView]);
 
-  return <span ref={ref}>{displayText}</span>;
+  return <span ref={ref} />;
 }
