@@ -123,11 +123,11 @@ export default function Home() {
             className="relative w-full max-w-[420px] aspect-[4/5] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] group"
           >
             {/* Image Container */}
-            <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
+            <div className="relative w-full h-full rounded-xl overflow-hidden bg-black scale-100 group-hover:scale-110 transition-all duration-[800ms] ease-in-out">
               <img 
                 src={theme === 'light' ? jesperImg : ianImg} 
                 alt="Jesper Ian" 
-                className="w-full h-full object-cover filter grayscale-[100%] brightness-90 group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100" 
+                className="w-full h-full object-cover brightness-100" 
               />
               {/* Subtle Scanning Tech Line Effect on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${
