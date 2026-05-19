@@ -18,7 +18,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <div id="home" className="min-h-screen bg-[#050505] text-white overflow-hidden relative font-sans selection:bg-emerald-500/30">
+    <div id="home" className={`min-h-screen bg-[#050505] text-white overflow-hidden relative font-sans ${
+      theme === 'light' ? 'selection:bg-black/10' : 'selection:bg-white/20'
+    }`}>
 
       {/* Background Waves */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-40">
@@ -72,7 +74,7 @@ export default function Hero() {
             const isActive = idx === activeIndex;
             return (
               <div key={word} className="relative px-4 py-2 flex items-center justify-center">
-                <span className={`transition-all duration-700 z-10 ${isActive ? 'text-white' : 'text-gray-500 blur-[1px] opacity-50'}`}>
+                <span className={`transition-all duration-700 z-10 ${isActive ? (theme === 'light' ? 'text-black font-semibold' : 'text-white') : 'text-gray-500 blur-[1px] opacity-50'}`}>
                   {word}
                 </span>
 
@@ -81,21 +83,25 @@ export default function Hero() {
                   {isActive && (
                     <motion.div
                       layoutId="targetBox"
-                      className="absolute inset-0 border border-emerald-400/20 z-0"
+                      className={`absolute inset-0 border z-0 ${theme === 'light' ? 'border-black/20' : 'border-white/20'}`}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 200, damping: 20 }}
                     >
                       {/* Corners */}
-                      <span className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
-                      <span className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
-                      <span className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
-                      <span className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
+                      <span className={`absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
 
                       {/* Scanning line animation */}
                       <motion.div
-                        className="absolute left-0 right-0 h-[1px] bg-emerald-400/50 shadow-[0_0_8px_rgba(52,211,153,0.8)]"
+                        className={`absolute left-0 right-0 h-[1px] ${
+                          theme === 'light' 
+                            ? 'bg-black/50 shadow-[0_0_8px_rgba(0,0,0,0.3)]' 
+                            : 'bg-white/50 shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+                        }`}
                         initial={{ top: 0, opacity: 0 }}
                         animate={{ top: "100%", opacity: [0, 1, 1, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
@@ -125,16 +131,16 @@ export default function Hero() {
         transition={{ delay: 0.6 }}
         className="fixed bottom-10 right-10 z-50 flex flex-col gap-6"
       >
-        <a href="https://github.com/yansanity1998" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+        <a href="https://github.com/yansanity1998" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
           <FaGithub size={24} />
         </a>
-        <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+        <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
           <FaLinkedin size={24} />
         </a>
-        <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-colors hover:-translate-y-1 transform duration-200">
+        <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
           <FaFacebook size={24} />
         </a>
-        <a href="/resume.pdf" download="Jesper_Ian_Barila_Resume.pdf" title="Download Resume" className="text-gray-500 hover:text-emerald-400 transition-colors hover:-translate-y-1 transform duration-200">
+        <a href="/resume.pdf" download="Jesper_Ian_Barila_Resume.pdf" title="Download Resume" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
           <FaFileDownload size={24} />
         </a>
       </motion.div>

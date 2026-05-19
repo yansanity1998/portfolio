@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CustomCursor() {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   // Motion values for instant updates (Inner Dot)
   const cursorX = useMotionValue(-100);
@@ -66,17 +69,27 @@ export default function CustomCursor() {
         }}
       >
         <motion.div
-          className="w-full h-full rounded-full border border-emerald-400/50 shadow-[0_0_15px_rgba(52,211,153,0.3)] flex items-center justify-center relative"
+          className={`w-full h-full rounded-full border flex items-center justify-center relative transition-shadow duration-300 ${
+            isLight 
+              ? "border-black/30 shadow-[0_0_12px_rgba(0,0,0,0.08)]" 
+              : "border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.15)]"
+          }`}
           animate={{
             scale: isHovering ? 1.6 : 1,
-            backgroundColor: isHovering ? "rgba(52, 211, 153, 0.15)" : "rgba(52, 211, 153, 0)",
-            borderColor: isHovering ? "rgba(52, 211, 153, 0.8)" : "rgba(52, 211, 153, 0.5)",
+            backgroundColor: isHovering 
+              ? (isLight ? "rgba(0, 0, 0, 0.06)" : "rgba(255, 255, 255, 0.12)") 
+              : "rgba(0, 0, 0, 0)",
+            borderColor: isHovering 
+              ? (isLight ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.7)") 
+              : (isLight ? "rgba(0, 0, 0, 0.3)" : "rgba(255, 255, 255, 0.4)"),
           }}
           transition={{ duration: 0.2, ease: "easeOut" }}
         >
            {/* Tech rotating dashed element inside the ring */}
            <motion.div 
-             className="absolute w-[130%] h-[130%] rounded-full border border-dashed border-emerald-400/40"
+             className={`absolute w-[130%] h-[130%] rounded-full border border-dashed transition-colors duration-300 ${
+               isLight ? "border-black/20" : "border-white/20"
+             }`}
              animate={{ rotate: 360 }}
              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
            />
@@ -85,7 +98,11 @@ export default function CustomCursor() {
 
       {/* Instant Following Inner Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 pointer-events-none z-[10000] bg-emerald-400 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.9)]"
+        className={`fixed top-0 left-0 w-2 h-2 pointer-events-none z-[10000] rounded-full transition-all duration-300 ${
+          isLight 
+            ? "bg-black shadow-[0_0_8px_rgba(0,0,0,0.3)]" 
+            : "bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+        }`}
         style={{
           x: cursorX,
           y: cursorY,

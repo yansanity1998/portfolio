@@ -53,7 +53,9 @@ export default function Gallery() {
         <section id="gallery" className="min-h-screen bg-[#050505] relative flex flex-col items-center justify-center overflow-hidden py-32">
 
             {/* Background Ambient Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-900/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none z-0 transition-colors duration-300 ${
+                theme === 'light' ? 'bg-slate-200/30' : 'bg-white/5'
+            }`}></div>
 
             <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
                 <AnimatedTitle 
@@ -139,8 +141,8 @@ export default function Gallery() {
                                             rotate: isWordBroken ? item.rotate : 0,
                                             scale: isWordBroken ? (item.isHighlight ? 1.1 : 0.9) : 1,
                                             color: isWordBroken
-                                                ? (item.isHighlight ? '#34d399' : (theme === 'light' ? '#0f172a' : '#ffffff'))
-                                                : (item.isHighlight ? '#6ee7b7' : (theme === 'light' ? '#64748b' : '#9ca3af'))
+                                                ? (item.isHighlight ? (theme === 'light' ? '#000000' : '#ffffff') : (theme === 'light' ? '#475569' : '#d1d5db'))
+                                                : (item.isHighlight ? (theme === 'light' ? '#0f172a' : '#ffffff') : (theme === 'light' ? '#64748b' : '#9ca3af'))
                                         }}
                                         transition={{ type: "spring", stiffness: 120, damping: 12, mass: 0.8 }}
                                         className="inline-block whitespace-pre select-none cursor-crosshair"

@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import LightDarkMode from '../components/LightDarkMode';
 import { scrollToSection } from '../components/ScrollAnimation';
+import { useTheme } from '../context/ThemeContext';
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,8 +87,10 @@ export default function NavBar() {
             }}
             className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-full ${
               activeSection === link.id
-                ? 'bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]'
-                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                ? (theme === 'light'
+                    ? 'bg-black/10 text-black shadow-[0_0_12px_rgba(0,0,0,0.06)] font-semibold'
+                    : 'bg-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.15)]')
+                : (theme === 'light' ? 'text-gray-500 hover:text-black hover:bg-black/5' : 'text-gray-400 hover:text-white hover:bg-white/5')
             }`}
           >
             {link.name}
@@ -135,8 +139,10 @@ export default function NavBar() {
                 }}
                 className={`text-lg font-medium transition-all duration-300 px-6 py-3 rounded-full w-[80%] text-center ${
                   activeSection === link.id
-                    ? 'bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                    ? (theme === 'light'
+                        ? 'bg-black/10 text-black shadow-[0_0_12px_rgba(0,0,0,0.06)] font-semibold'
+                        : 'bg-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.15)]')
+                    : (theme === 'light' ? 'text-gray-500 hover:text-black hover:bg-black/5' : 'text-gray-400 hover:text-white hover:bg-white/5')
                 }`}
               >
                 {link.name}

@@ -59,7 +59,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center pointer-events-auto overflow-hidden"
     >
       {/* Background Binary / Tech details */}
-      <div className="absolute inset-0 opacity-[0.15] text-[10px] sm:text-xs text-emerald-500 font-mono select-none break-all leading-none overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 opacity-[0.08] text-[10px] sm:text-xs text-white font-mono select-none break-all leading-none overflow-hidden pointer-events-none">
         {bgText}
       </div>
 
@@ -73,25 +73,25 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           className="relative w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center p-1"
         >
           {/* Target Box Corners */}
-          <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)] z-20"></span>
-          <span className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)] z-20"></span>
-          <span className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)] z-20"></span>
-          <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)] z-20"></span>
+          <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-white shadow-[0_0_10px_rgba(255,255,255,0.4)] z-20"></span>
+          <span className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-white shadow-[0_0_10px_rgba(255,255,255,0.4)] z-20"></span>
+          <span className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-white shadow-[0_0_10px_rgba(255,255,255,0.4)] z-20"></span>
+          <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-white shadow-[0_0_10px_rgba(255,255,255,0.4)] z-20"></span>
 
-          <div className="relative w-full h-full overflow-hidden border border-emerald-500/20 bg-[#0a0a0a]">
+          <div className="relative w-full h-full overflow-hidden border border-white/20 bg-[#0a0a0a]">
             {/* The Image */}
             <motion.img 
               src={ianImg}
               alt="Jesper Ian"
               className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-luminosity"
               initial={{ filter: "blur(10px) grayscale(100%) brightness(0.3)" }}
-              animate={{ filter: "blur(0px) grayscale(20%) brightness(1.2)" }}
+              animate={{ filter: "blur(0px) grayscale(100%) brightness(1.2)" }}
               transition={{ duration: 2, ease: "easeOut" }}
             />
 
             {/* Scan Highlight Gradient */}
             <motion.div
-              className="absolute left-0 right-0 h-[40%] bg-gradient-to-b from-transparent via-emerald-400/20 to-emerald-400/5 z-10"
+              className="absolute left-0 right-0 h-[40%] bg-gradient-to-b from-transparent via-white/20 to-white/5 z-10"
               initial={{ top: "-40%" }}
               animate={{ top: "100%" }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -99,20 +99,20 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             
             {/* Solid Scanning Line */}
             <motion.div
-              className="absolute left-0 right-0 h-[2px] bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,1)] z-10"
+              className="absolute left-0 right-0 h-[2px] bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)] z-10"
               initial={{ top: "0%" }}
               animate={{ top: "140%" }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             />
             
             {/* Matrix overlay over image */}
-            <div className="absolute inset-0 bg-emerald-500/10 mix-blend-overlay z-10 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-white/5 mix-blend-overlay z-10 pointer-events-none"></div>
           </div>
         </motion.div>
 
         {/* Loading Text */}
         <motion.div 
-          className="mt-12 text-emerald-400/80 tracking-[0.3em] text-xs sm:text-sm uppercase font-mono flex items-center gap-2"
+          className="mt-12 text-white/80 tracking-[0.3em] text-xs sm:text-sm uppercase font-mono flex items-center gap-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5 }}
@@ -134,7 +134,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           transition={{ delay: 1.0, duration: 0.5 }}
         >
           <motion.div
-            className="absolute top-0 left-0 bottom-0 bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"
+            className="absolute top-0 left-0 bottom-0 bg-white shadow-[0_0_10px_rgba(255,255,255,0.6)]"
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{ duration: 2.0, delay: 1.0, ease: "easeInOut" }}
@@ -152,8 +152,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
       </div>
       
       {/* Decorative center lines */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[1px] bg-emerald-500/5 blur-[1px] -rotate-45 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[1px] bg-emerald-500/5 blur-[1px] rotate-45 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[1px] bg-white/5 blur-[1px] -rotate-45 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[1px] bg-white/5 blur-[1px] rotate-45 pointer-events-none" />
     </motion.div>
   );
 }

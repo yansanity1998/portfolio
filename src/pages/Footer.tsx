@@ -1,7 +1,9 @@
 import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { theme } = useTheme();
 
   return (
     <footer className="bg-[#0a0a0a] border-t border-white/10 py-12 relative z-10">
@@ -13,13 +15,13 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-6">
-          <a href="https://github.com/yansanity1998" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-emerald-400 transition-colors">
+          <a href="https://github.com/yansanity1998" target="_blank" rel="noopener noreferrer" className={`text-gray-500 transition-colors ${theme === 'light' ? 'hover:text-black' : 'hover:text-white'}`}>
             <FaGithub size={20} />
           </a>
-          <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-emerald-400 transition-colors">
+          <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" target="_blank" rel="noopener noreferrer" className={`text-gray-500 transition-colors ${theme === 'light' ? 'hover:text-black' : 'hover:text-white'}`}>
             <FaLinkedin size={20} />
           </a>
-          <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-emerald-400 transition-colors">
+          <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`text-gray-500 transition-colors ${theme === 'light' ? 'hover:text-black' : 'hover:text-white'}`}>
             <FaFacebook size={20} />
           </a>
         </div>
@@ -27,7 +29,7 @@ export default function Footer() {
         <div className="text-sm text-gray-500 flex flex-col items-center md:items-end">
           <p>&copy; {currentYear} All rights reserved.</p>
           <p className="mt-1 flex items-center gap-1">
-            Designed & Built by <span className="text-emerald-400" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}>Ian</span>
+            Designed & Built by <span className={theme === 'light' ? 'text-black font-semibold' : 'text-white'} style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}>Ian</span>
           </p>
         </div>
 

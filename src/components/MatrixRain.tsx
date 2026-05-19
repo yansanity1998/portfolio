@@ -65,13 +65,13 @@ export default function MatrixRain() {
           if (j === 0) {
             // Head character is extra bright/solid
             ctx.fillStyle = theme === 'dark' 
-              ? 'rgba(167, 243, 208, 0.95)' 
+              ? 'rgba(255, 255, 255, 0.95)' 
               : 'rgba(15, 23, 42, 0.85)';
           } else {
             // Trail characters
             ctx.fillStyle = theme === 'dark' 
-              ? `rgba(16, 185, 129, ${opacity})` 
-              : `rgba(15, 23, 42, ${opacity * 0.7})`; // Dark slate in light mode
+              ? `rgba(255, 255, 255, ${opacity * 0.45})` 
+              : `rgba(15, 23, 42, ${opacity * 0.45})`; // Dark slate in light mode
           }
 
           ctx.fillText(char, x, y);

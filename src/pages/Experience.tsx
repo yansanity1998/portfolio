@@ -4,6 +4,7 @@ import AnimatedTitle from '../components/AnimatedTitle';
 import TypewriterText from '../components/TypewriterText';
 import pixzelLogo from '../assets/logos/pixzel.jpg';
 import spcLogo from '../assets/logos/spc.png';
+import { useTheme } from '../context/ThemeContext';
 
 const experiences = [
     {
@@ -31,6 +32,7 @@ const experiences = [
 
 export default function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const { theme } = useTheme();
 
     // Track scroll progress within the container for the animated line
     const { scrollYProgress } = useScroll({
@@ -63,7 +65,11 @@ export default function Experience() {
 
                     {/* Animated Glowing Fill Line */}
                     <motion.div
-                        className="absolute left-1/2 top-0 bottom-0 w-[4px] bg-gradient-to-b from-emerald-400 via-emerald-500 to-transparent -translate-x-1/2 origin-top shadow-[0_0_15px_rgba(52,211,153,0.5)]"
+                        className={`absolute left-1/2 top-0 bottom-0 w-[4px] bg-gradient-to-b -translate-x-1/2 origin-top ${
+                            theme === 'light' 
+                                ? 'from-black via-gray-400 to-transparent shadow-[0_0_15px_rgba(0,0,0,0.15)]' 
+                                : 'from-white via-gray-600 to-transparent shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                        }`}
                         style={{ scaleY: smoothProgress }}
                     ></motion.div>
 
@@ -84,7 +90,10 @@ export default function Experience() {
                                     {/* Node Dot - Lights up exactly when line hits it */}
                                     <motion.div
                                         initial={{ borderColor: "#1f2937", boxShadow: "0 0 0px rgba(0,0,0,0)" }}
-                                        whileInView={{ borderColor: "#34d399", boxShadow: "0 0 20px rgba(52,211,153,1)" }}
+                                        whileInView={{ 
+                                            borderColor: theme === 'light' ? "#0f172a" : "#ffffff", 
+                                            boxShadow: theme === 'light' ? "0 0 20px rgba(0,0,0,0.2)" : "0 0 20px rgba(255,255,255,0.8)" 
+                                        }}
                                         viewport={{ margin: "0px 0px -50% 0px" }}
                                         transition={{ duration: 0.3 }}
                                         className="absolute left-1/2 top-0 -translate-x-1/2 -mt-2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border-2 z-20 flex items-center justify-center overflow-hidden"
@@ -105,13 +114,16 @@ export default function Experience() {
                                         {isLeft ? (
                                             <>
                                                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">{exp.title}</h3>
-                                                <h4 className="text-emerald-400 text-sm md:text-base font-semibold mb-2">{exp.company}</h4>
+                                                <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-white'} text-sm md:text-base font-semibold mb-2`}>{exp.company}</h4>
                                                 <p className="text-gray-500 text-sm tracking-widest font-mono mb-6">{exp.year}</p>
 
                                                 {/* Decorative Icon Circle */}
                                                 <motion.div
                                                     initial={{ borderColor: "#374151", boxShadow: "0 0 15px rgba(0,0,0,0.5)" }}
-                                                    whileInView={{ borderColor: "#34d399", boxShadow: "0 0 25px rgba(52,211,153,0.6)" }}
+                                                    whileInView={{ 
+                                                        borderColor: theme === 'light' ? "#0f172a" : "#ffffff", 
+                                                        boxShadow: theme === 'light' ? "0 0 25px rgba(0,0,0,0.15)" : "0 0 25px rgba(255,255,255,0.5)" 
+                                                    }}
                                                     viewport={{ margin: "0px 0px -50% 0px" }}
                                                     transition={{ duration: 0.4 }}
                                                     className="w-20 h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
@@ -131,13 +143,16 @@ export default function Experience() {
                                         {!isLeft ? (
                                             <>
                                                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">{exp.title}</h3>
-                                                <h4 className="text-emerald-400 text-sm md:text-base font-semibold mb-2">{exp.company}</h4>
+                                                <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-white'} text-sm md:text-base font-semibold mb-2`}>{exp.company}</h4>
                                                 <p className="text-gray-500 text-sm tracking-widest font-mono mb-6">{exp.year}</p>
 
                                                 {/* Decorative Icon Circle */}
                                                 <motion.div
                                                     initial={{ borderColor: "#374151", boxShadow: "0 0 15px rgba(0,0,0,0.5)" }}
-                                                    whileInView={{ borderColor: "#34d399", boxShadow: "0 0 25px rgba(52,211,153,0.6)" }}
+                                                    whileInView={{ 
+                                                        borderColor: theme === 'light' ? "#0f172a" : "#ffffff", 
+                                                        boxShadow: theme === 'light' ? "0 0 25px rgba(0,0,0,0.15)" : "0 0 25px rgba(255,255,255,0.5)" 
+                                                    }}
                                                     viewport={{ margin: "0px 0px -50% 0px" }}
                                                     transition={{ duration: 0.4 }}
                                                     className="w-20 h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"

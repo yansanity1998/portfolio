@@ -39,7 +39,9 @@ export default function Home() {
     <section id="about" ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-32 px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
       
       {/* Background Subtle Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-900/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+      <div className={`absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none z-0 transition-colors duration-300 ${
+        theme === 'light' ? 'bg-slate-200/30' : 'bg-white/5'
+      }`}></div>
 
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
         
@@ -60,10 +62,16 @@ export default function Home() {
             <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
               Building modern web applications with React, TypeScript, and Tailwind, backed by PHP and Laravel for robust server-side solutions.
             </p>
-            <h4 className="text-emerald-400 text-sm font-bold mb-4 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">Skillset & tools</h4>
+            <h4 className={`text-sm font-bold mb-4 uppercase tracking-widest transition-all duration-300 ${
+              theme === 'light' ? 'text-black drop-shadow-[0_0_8px_rgba(0,0,0,0.08)]' : 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]'
+            }`}>Skillset & tools</h4>
             <div className="flex flex-wrap gap-3">
               {devSkills.map(skill => (
-                <span key={skill} className="px-4 py-2 border border-gray-800 bg-gray-900/30 rounded-xl text-xs font-medium text-gray-300 hover:bg-emerald-400/10 hover:border-emerald-400/50 hover:text-emerald-300 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-[0_0_15px_rgba(52,211,153,0.2)] hover:-translate-y-0.5">
+                <span key={skill} className={`px-4 py-2 border border-gray-800 bg-gray-900/30 rounded-xl text-xs font-medium text-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:-translate-y-0.5 ${
+                  theme === 'light' 
+                    ? 'hover:bg-black/10 hover:border-black/40 hover:text-black hover:shadow-[0_0_15px_rgba(0,0,0,0.08)]' 
+                    : 'hover:bg-white/10 hover:border-white/45 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]'
+                }`}>
                   {skill}
                 </span>
               ))}
@@ -79,10 +87,16 @@ export default function Home() {
             <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
               Creating content across various platforms, helping bring ideas to life through visual storytelling and engaging media.
             </p>
-            <h4 className="text-emerald-400 text-sm font-bold mb-4 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]">Skillset & tools</h4>
+            <h4 className={`text-sm font-bold mb-4 uppercase tracking-widest transition-all duration-300 ${
+              theme === 'light' ? 'text-black drop-shadow-[0_0_8px_rgba(0,0,0,0.08)]' : 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]'
+            }`}>Skillset & tools</h4>
             <div className="flex flex-wrap gap-3">
               {createSkills.map(skill => (
-                <span key={skill} className="px-4 py-2 border border-gray-800 bg-gray-900/30 rounded-xl text-xs font-medium text-gray-300 hover:bg-emerald-400/10 hover:border-emerald-400/50 hover:text-emerald-300 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-[0_0_15px_rgba(52,211,153,0.2)] hover:-translate-y-0.5">
+                <span key={skill} className={`px-4 py-2 border border-gray-800 bg-gray-900/30 rounded-xl text-xs font-medium text-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:-translate-y-0.5 ${
+                  theme === 'light' 
+                    ? 'hover:bg-black/10 hover:border-black/40 hover:text-black hover:shadow-[0_0_15px_rgba(0,0,0,0.08)]' 
+                    : 'hover:bg-white/10 hover:border-white/45 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]'
+                }`}>
                   {skill}
                 </span>
               ))}
@@ -113,10 +127,12 @@ export default function Home() {
               <img 
                 src={theme === 'light' ? jesperImg : ianImg} 
                 alt="Jesper Ian" 
-                className="w-full h-full object-cover filter grayscale-[40%] brightness-90 group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100" 
+                className="w-full h-full object-cover filter grayscale-[100%] brightness-90 group-hover:grayscale-0 group-hover:brightness-105 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100" 
               />
               {/* Subtle Scanning Tech Line Effect on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-[100%] group-hover:animate-[scan_2.5s_ease-in-out_infinite]"></div>
+              <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${
+                theme === 'light' ? 'via-black/10' : 'via-white/10'
+              } to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-[100%] group-hover:animate-[scan_2.5s_ease-in-out_infinite]`}></div>
             </div>
             
             {/* Floating Stamp UI */}

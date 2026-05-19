@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedTitle from '../components/AnimatedTitle';
+import { useTheme } from '../context/ThemeContext';
 
 import jobmarket1 from '../assets/jobmarket/jobmarket1.png';
 import jobmarket2 from '../assets/jobmarket/jobmarket2.png';
@@ -88,6 +89,7 @@ const projects: Project[] = [
 ];
 
 const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => void }) => {
+  const { theme } = useTheme();
   return (
     <div 
       onClick={onClick}
@@ -104,12 +106,16 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
       {/* Text below the image, with padding */}
       <div className="w-full z-10 p-6 md:p-8 flex-none h-[180px] flex flex-col">
         <div>
-          <h3 className={`font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors ${project.title.length > 25 ? 'text-lg leading-tight line-clamp-2' : 'text-xl truncate'}`}>{project.title}</h3>
+          <h3 className={`font-bold text-white mb-1 transition-colors ${theme === 'light' ? 'group-hover:text-black' : 'group-hover:text-white'} ${project.title.length > 25 ? 'text-lg leading-tight line-clamp-2' : 'text-xl truncate'}`}>{project.title}</h3>
           <p className="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">{project.role}</p>
         </div>
         <div className="flex gap-2 flex-wrap mt-auto">
           {project.techStack.map(tech => (
-             <span key={tech} className="text-[10px] px-3 py-1 border border-emerald-900/50 rounded-full text-emerald-400 font-bold bg-emerald-900/10 uppercase tracking-wider">{tech}</span>
+             <span key={tech} className={`text-[10px] px-3 py-1 border rounded-full font-bold uppercase tracking-wider ${
+               theme === 'light' 
+                 ? 'border-black/15 text-black bg-black/5' 
+                 : 'border-white/20 text-white bg-white/10'
+             }`}>{tech}</span>
           ))}
         </div>
       </div>
@@ -120,12 +126,15 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { theme } = useTheme();
 
   return (
     <section id="projects" className="min-h-screen bg-[#050505] py-32 px-6 md:px-16 relative overflow-hidden flex items-center">
       
       {/* Background Subtle Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-900/5 rounded-full blur-[150px] pointer-events-none z-0"></div>
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none z-0 transition-colors duration-300 ${
+        theme === 'light' ? 'bg-slate-200/20' : 'bg-white/5'
+      }`}></div>
 
       <div className="max-w-6xl w-full mx-auto flex flex-col relative z-10">
         
@@ -213,21 +222,25 @@ export default function Projects() {
                   <>
                     <button 
                       onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === 0 ? selectedProject.images.length - 1 : prev - 1) }}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 hover:bg-emerald-500 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100"
+                      className={`absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100 ${
+                        theme === 'light' ? 'hover:bg-black hover:text-white' : 'hover:bg-white hover:text-black'
+                      }`}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                     </button>
                     <button 
                       onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === selectedProject.images.length - 1 ? 0 : prev + 1) }}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 hover:bg-emerald-500 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100"
+                      className={`absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/80 rounded-full flex items-center justify-center text-white transition-colors border border-gray-700 z-10 md:opacity-0 md:group-hover:opacity-100 ${
+                        theme === 'light' ? 'hover:bg-black hover:text-white' : 'hover:bg-white hover:text-black'
+                      }`}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                     </button>
-
+ 
                     {/* Pagination Dots */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
                       {selectedProject.images.map((_, idx) => (
-                        <div key={idx} className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-emerald-400' : 'bg-gray-600'}`} />
+                        <div key={idx} className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? (theme === 'light' ? 'bg-black' : 'bg-white') : 'bg-gray-600'}`} />
                       ))}
                     </div>
                   </>
@@ -246,7 +259,9 @@ export default function Projects() {
                 </button>
 
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight pr-12">{selectedProject.title}</h2>
-                <h3 className="text-emerald-400 font-semibold tracking-widest uppercase mb-8 text-xs md:text-sm">{selectedProject.role}</h3>
+                <h3 className={`font-semibold tracking-widest uppercase mb-8 text-xs md:text-sm ${
+                  theme === 'light' ? 'text-black' : 'text-white'
+                }`}>{selectedProject.role}</h3>
                 
                 {/* Scrollable Description */}
                 <div className="text-gray-300 text-sm md:text-base leading-relaxed mb-10 space-y-4">
@@ -256,7 +271,11 @@ export default function Projects() {
                 <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-4">Technologies Used</h4>
                 <div className="flex flex-wrap gap-2 mb-12">
                   {selectedProject.techStack.map(tech => (
-                    <span key={tech} className="px-3 py-1.5 border border-gray-700 rounded-full text-emerald-300 font-bold bg-[#0a0a0a] uppercase tracking-wider text-[10px] shadow-md">
+                    <span key={tech} className={`px-3 py-1.5 border rounded-full font-bold uppercase tracking-wider text-[10px] shadow-md ${
+                      theme === 'light' 
+                        ? 'border-black/15 text-black bg-[#fafafa]' 
+                        : 'border-white/10 text-white bg-[#0a0a0a]'
+                    }`}>
                       {tech}
                     </span>
                   ))}
@@ -268,7 +287,11 @@ export default function Projects() {
                     href={selectedProject.demo} 
                     target="_blank" 
                     rel="noreferrer" 
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-white text-black font-bold uppercase tracking-widest hover:bg-emerald-400 transition-colors shadow-lg text-sm"
+                    className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold uppercase tracking-widest transition-colors shadow-lg text-sm ${
+                      theme === 'light' 
+                        ? 'bg-black text-white hover:bg-gray-800' 
+                        : 'bg-white text-black hover:bg-gray-200'
+                    }`}
                   >
                     Live Demo
                   </a>
@@ -276,7 +299,11 @@ export default function Projects() {
                     href={selectedProject.github} 
                     target="_blank" 
                     rel="noreferrer" 
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-transparent border-2 border-gray-700 text-white font-bold uppercase tracking-widest hover:border-emerald-400 hover:text-emerald-400 transition-colors text-sm"
+                    className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-transparent border-2 font-bold uppercase tracking-widest transition-colors text-sm ${
+                      theme === 'light' 
+                        ? 'border-black text-black hover:bg-black/5' 
+                        : 'border-white/20 text-white hover:border-white hover:bg-white/5'
+                    }`}
                   >
                     GitHub Repo
                   </a>

@@ -19,7 +19,7 @@ const row1 = [
 ];
 
 const row2 = [
-  { Icon: SiNodedotjs, name: "SiNodedotjs", brand: "#339933" },
+  { Icon: SiNodedotjs, name: "SiNodedotjs", brand: "#888888" },
   { Icon: SiExpress, name: "SiExpress", brand: "#000000" },
   { Icon: SiCss, name: "SiCss", brand: "#1572B6" },
   { Icon: SiVite, name: "SiVite", brand: "#646CFF" },
@@ -42,7 +42,9 @@ export default function Skills() {
     <section id="skills" className="bg-[#050505] py-24 overflow-hidden relative border-t border-b border-gray-900/50">
       
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-900/10 blur-[150px] pointer-events-none rounded-full"></div>
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] blur-[150px] pointer-events-none rounded-full transition-colors duration-300 ${
+        theme === 'light' ? 'bg-slate-200/40' : 'bg-white/5'
+      }`}></div>
 
       {/* Header */}
       <div className="mb-16 md:mb-24 px-8 md:px-16 max-w-7xl mx-auto relative z-10">
