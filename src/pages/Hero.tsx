@@ -8,6 +8,7 @@ const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showSocials, setShowSocials] = useState(false);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -129,21 +130,37 @@ export default function Hero() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}
-        className="fixed bottom-10 right-10 z-50 flex flex-col gap-6"
+        className="fixed right-6 md:right-10 z-50 flex flex-col items-end gap-3"
+        style={{ bottom: 'max(80px, 10vh)' }}
       >
-        <a href="https://github.com/yansanity1998" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-          <FaGithub size={24} />
-        </a>
-        <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-          <FaLinkedin size={24} />
-        </a>
-        <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-          <FaFacebook size={24} />
-        </a>
-        <a href="/resume.pdf" download="Jesper_Ian_Barila_Resume.pdf" title="Download Resume" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-          <FaFileDownload size={24} />
-        </a>
+        {/* Links - always visible on desktop, collapsible on mobile */}
+        <div className={`flex flex-col gap-5 md:gap-6 transition-all duration-300 ${showSocials ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none md:opacity-100 md:scale-100 md:pointer-events-auto'}`}>
+          <a href="https://github.com/yansanity1998" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
+            <FaGithub size={24} />
+          </a>
+          <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
+            <FaLinkedin size={24} />
+          </a>
+          <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
+            <FaFacebook size={24} />
+          </a>
+          <a href="/resume.pdf" download="Jesper_Ian_Barila_Resume.pdf" title="Download Resume" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
+            <FaFileDownload size={24} />
+          </a>
+        </div>
       </motion.div>
+
+      {/* Toggle button - fixed at very bottom right on mobile only */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        onClick={() => setShowSocials(!showSocials)}
+        className="md:hidden fixed bottom-6 right-6 z-[60] w-6 h-6 flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white/60 backdrop-blur-md text-[10px] leading-none"
+        aria-label={showSocials ? 'Hide socials' : 'Show socials'}
+      >
+        ...
+      </motion.button>
 
     </div>
   );
