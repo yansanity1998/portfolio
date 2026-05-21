@@ -14,6 +14,26 @@ import capstone2 from '../assets/capstone/capstone2.png';
 import spcRfid from '../assets/spc-rfid/spc-rfid.png';
 import pixzelDigital from '../assets/pixzeldigital/pixzeldigital.png';
 
+import osas1 from '../assets/osas/OSAS.png';
+import osas2 from '../assets/osas/Screenshot 2026-01-25 085313.png';
+import osas3 from '../assets/osas/Screenshot 2026-01-25 085324.png';
+import osas4 from '../assets/osas/Screenshot 2026-01-25 085341.png';
+import osas5 from '../assets/osas/Screenshot 2026-01-25 085350.png';
+import osas6 from '../assets/osas/Screenshot 2026-01-25 085412.png';
+import osas7 from '../assets/osas/Screenshot 2026-01-25 085423.png';
+import osas8 from '../assets/osas/Screenshot 2026-01-25 085435.png';
+import osas9 from '../assets/osas/Screenshot 2026-01-25 085442.png';
+import osas10 from '../assets/osas/Screenshot 2026-01-25 085450.png';
+import osas11 from '../assets/osas/Screenshot 2026-01-25 085459.png';
+import osas12 from '../assets/osas/Screenshot 2026-01-25 085505.png';
+import osas13 from '../assets/osas/Screenshot 2026-01-25 085515.png';
+import osas14 from '../assets/osas/Screenshot 2026-01-25 085522.png';
+import osas15 from '../assets/osas/Screenshot 2026-01-25 085529.png';
+import osas16 from '../assets/osas/Screenshot 2026-01-25 085550.png';
+import osas17 from '../assets/osas/Screenshot 2026-01-25 085557.png';
+import osas18 from '../assets/osas/Screenshot 2026-01-25 085605.png';
+import osas19 from '../assets/osas/Screenshot 2026-01-25 085616.png';
+
 interface Project {
   title: string;
   role: string;
@@ -83,6 +103,16 @@ const projects: Project[] = [
     images: [pixzelDigital],
     layout: "type3",
     description: "A comprehensive attendance management system tailored specifically for Pixzel Digital's employees. It streamlines the tracking of daily check-ins and check-outs, ensuring accurate time logs.\n\nDeveloped with NextJS and Supabase, the platform provides real-time attendance monitoring, secure employee authentication, and robust administrative tools to seamlessly manage workforce schedules and reporting.",
+    github: "https://github.com/yansanity1998",
+    demo: "#"
+  },
+  {
+    title: "OSAS Integrated Inventory System",
+    role: "Full Stack Developer",
+    techStack: ["PHP", "JavaScript", "MySQL", "Tailwind"],
+    images: [osas1, osas2, osas3, osas4, osas5, osas6, osas7, osas8, osas9, osas10, osas11, osas12, osas13, osas14, osas15, osas16, osas17, osas18, osas19],
+    layout: "type1",
+    description: "A comprehensive dual-inventory management system built exclusively for the Office of Student Affairs and Services (OSAS) at St. Peter's College. This platform seamlessly integrates two distinct inventory subsystems into one unified dashboard — one tailored for sports equipment and the other for document or cabinet assets — allowing administrators to manage, track, and audit all institutional resources from a single point of control.\n\nThe Sports Inventory subsystem is purpose-built to handle the unique demands of athletic asset management. It tracks equipment across multiple sports categories including basketball, volleyball, badminton, table tennis, chess, and various athletic gear. Each item entry captures critical details such as item name, brand, quantity, condition status (e.g., good, damaged, under repair, condemned), and storage location within the OSAS sports facility. The system supports check-in and check-out workflows, allowing students and staff to borrow equipment with proper documentation and automated return tracking. Overdue items are flagged in real time, and a built-in history log monitors every transaction for complete auditability. Depreciation alerts notify administrators when equipment has been in service beyond its expected lifespan, prompting timely replacement requests to prevent shortages during tournaments and training sessions.\n\nThe Document/Cabinet Inventory subsystem manages the office\'s administrative assets — filing cabinets, document boxes, office supplies, archival folders, and confidential records stored within the OSAS premises. Each cabinet or document entry is catalogued with metadata including cabinet ID, floor location, room number, document classification (e.g., student records, administrative forms, financial documents, incident reports), retention period, and access level. Barcode integration enables quick scanning for check-in, check-out, and inventory audits. The system enforces retention policies by automatically flagging documents eligible for disposal or archival transfer, ensuring compliance with institutional data governance standards. A hierarchical folder structure mirrors the physical layout of cabinets, shelves, and drawers, making physical-to-digital cross-referencing effortless during regulatory inspections or internal audits.\n\nBoth subsystems feed into a centralized OSAS Dashboard that provides a holistic view of all institutional inventory. Key features include a real-time status overview displaying the total number of items, currently borrowed assets, pending returns, flagged items needing maintenance, and recently added entries — all rendered with dynamic charts and summary cards. The dashboard also features a powerful unified search bar that can query across both subsystems simultaneously, filtering by category, location, status, or custom tags. Role-based access control differentiates between OSAS staff, student assistants, and system administrators, each with tailored permissions for viewing, editing, approving, or deleting inventory records.\n\nAdditional capabilities include automated report generation in PDF and Excel formats for end-of-month reconciliations, customized notification alerts for low stock items or approaching retention deadlines, and a complete activity audit trail that logs every user action from item creation to disposal. The system was architected using PHP for server-side logic with XAMPP providing the local development and deployment environment, MySQL for relational database management ensuring data integrity across complex join operations between the two inventory subsystems, and vanilla JavaScript with HTML/CSS delivering a responsive and intuitive frontend interface accessible from any device within the campus network.\n\nBuilt from the ground up based on the actual workflow requirements gathered through direct consultation with OSAS personnel, this system eliminated the previous manual ledger-based tracking that was prone to errors, misplacements, and time-consuming physical audits. It has significantly reduced inventory processing time by approximately 60%, improved asset accountability, and provided St. Peter's College OSAS with a modern, scalable foundation for managing both their athletic and administrative resources well into the future.",
     github: "https://github.com/yansanity1998",
     demo: "#"
   }
