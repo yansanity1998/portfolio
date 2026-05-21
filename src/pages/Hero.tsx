@@ -7,7 +7,7 @@ import ScrambleText from '../components/ScrambleText';
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
 export default function Hero() {
-  const [activeIndex, setActiveIndex] = useState(2);
+  const [activeIndex, setActiveIndex] = useState(0);
   const { theme } = useTheme();
 
   useEffect(() => {

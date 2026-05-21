@@ -147,7 +147,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.5 }}
         >
-          <ScrambleText text="BIOMETRICS_VERIFIED: 0x8F2A" />
+          <ScrambleText text="BIOMETRICS_VERIFIED: Jesper Ian" />
         </motion.div>
       </div>
       
