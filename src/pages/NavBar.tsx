@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LightDarkMode from '../components/LightDarkMode';
-import { scrollToSection } from '../components/ScrollAnimation';
 import { useTheme } from '../context/ThemeContext';
 
 export default function NavBar() {
@@ -10,6 +10,8 @@ export default function NavBar() {
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,32 +25,40 @@ export default function NavBar() {
     const sections = ['home', 'about', 'skills', 'experience', 'projects', 'gallery', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
-        // We find the entry that is currently intersecting
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
+            const path = entry.target.id === 'home' ? '/' : `/${entry.target.id}`;
+            if (location.pathname !== path) {
+              navigate(path, { replace: true });
+            }
           }
         });
       },
       { threshold: 0.3 }
     );
 
-    sections.forEach((section) => {
-      const element = document.getElementById(section);
-      if (element) observer.observe(element);
-    });
+    const timeout = setTimeout(() => {
+      sections.forEach((section) => {
+        const element = document.getElementById(section);
+        if (element) observer.observe(element);
+      });
+    }, 100);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
+  }, [navigate, location.pathname]);
 
   const navLinks = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'About', href: '#about', id: 'about' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Experience', href: '#experience', id: 'experience' },
-    { name: 'Projects', href: '#projects', id: 'projects' },
-    { name: 'Gallery', href: '#gallery', id: 'gallery' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
+    { name: 'Home', href: '/', id: 'home' },
+    { name: 'About', href: '/about', id: 'about' },
+    { name: 'Skills', href: '/skills', id: 'skills' },
+    { name: 'Experience', href: '/experience', id: 'experience' },
+    { name: 'Projects', href: '/projects', id: 'projects' },
+    { name: 'Gallery', href: '/gallery', id: 'gallery' },
+    { name: 'Contact', href: '/contact', id: 'contact' },
   ];
 
   return (
@@ -63,7 +73,7 @@ export default function NavBar() {
         className="text-white text-3xl md:text-4xl tracking-wide cursor-pointer z-50 relative"
         style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}
         onClick={() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          navigate('/');
           setIsMobileMenuOpen(false);
         }}
       >
@@ -83,7 +93,7 @@ export default function NavBar() {
             href={link.href}
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection(link.id);
+              navigate(link.href);
             }}
             className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-full ${
               activeSection === link.id
@@ -134,7 +144,7 @@ export default function NavBar() {
                 href={link.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToSection(link.id);
+                  navigate(link.href);
                   setIsMobileMenuOpen(false);
                 }}
                 className={`text-lg font-medium transition-all duration-300 px-6 py-3 rounded-full w-[80%] text-center ${

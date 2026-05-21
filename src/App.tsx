@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import SplashScreen from './components/SplashScreen'
 import Hero from './pages/Hero'
@@ -15,39 +16,82 @@ import NavBar from './pages/NavBar'
 import ScrollAnimation from './components/ScrollAnimation'
 import { ThemeProvider } from './context/ThemeContext'
 
-function App() {
+function MainLayout() {
+  return (
+    <ScrollAnimation>
+      <CustomCursor />
+      <NavBar />
+      <Hero />
+      <Home />
+      <Skills />
+      <Experience />
+      <Projects />
+      <Gallery />
+      <Contact />
+      <Footer />
+    </ScrollAnimation>
+  )
+}
+
+function AppContent() {
   const [showSplash, setShowSplash] = useState(() => {
     return !sessionStorage.getItem('hasShownSplash');
   });
+  const location = useLocation();
 
   const handleSplashComplete = () => {
     setShowSplash(false);
     sessionStorage.setItem('hasShownSplash', 'true');
   };
 
+  const pathToSection: Record<string, string> = {
+    '/': 'home',
+    '/about': 'about',
+    '/skills': 'skills',
+    '/experience': 'experience',
+    '/projects': 'projects',
+    '/gallery': 'gallery',
+    '/contact': 'contact',
+  };
+
+  useEffect(() => {
+    if (showSplash) return;
+    const sectionId = pathToSection[location.pathname];
+    if (sectionId) {
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }, 50);
+    }
+  }, [location.pathname, showSplash]);
+
+  return (
+    <AnimatePresence mode="wait">
+      {showSplash ? (
+        <SplashScreen key="splash" onComplete={handleSplashComplete} />
+      ) : (
+        <motion.div key="main-app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+          <MainLayout />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function App() {
   return (
     <ThemeProvider>
-      <AnimatePresence mode="wait">
-        {showSplash ? (
-          <SplashScreen key="splash" onComplete={handleSplashComplete} />
-        ) : (
-          <motion.div key="main-app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <ScrollAnimation>
-              <CustomCursor />
-              <NavBar />
-              <Hero />
-              <Home />
-              <Skills />
-              <Experience />
-              <Projects />
-              <Gallery />
-              <Contact />
-              <Footer />
-            </ScrollAnimation>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <Analytics />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AppContent />} />
+          <Route path="/about" element={<AppContent />} />
+          <Route path="/skills" element={<AppContent />} />
+          <Route path="/experience" element={<AppContent />} />
+          <Route path="/projects" element={<AppContent />} />
+          <Route path="/gallery" element={<AppContent />} />
+          <Route path="/contact" element={<AppContent />} />
+        </Routes>
+        <Analytics />
+      </BrowserRouter>
     </ThemeProvider>
   )
 }
