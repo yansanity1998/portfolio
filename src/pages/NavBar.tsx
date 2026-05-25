@@ -74,6 +74,7 @@ export default function NavBar() {
         className="text-white text-3xl md:text-4xl tracking-wide cursor-pointer z-50 relative"
         style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}
         onClick={() => {
+          scrollToSection('home');
           navigate('/');
           setIsMobileMenuOpen(false);
         }}

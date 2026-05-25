@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, useNavigationType } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import SplashScreen from './components/SplashScreen'
 import Hero from './pages/Hero'
@@ -54,15 +54,18 @@ function AppContent() {
     '/contact': 'contact',
   };
 
+  const navigationType = useNavigationType();
+
   useEffect(() => {
     if (showSplash) return;
+    if (navigationType !== 'POP') return;
     const sectionId = pathToSection[location.pathname];
     if (sectionId) {
       setTimeout(() => {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
     }
-  }, [location.pathname, showSplash]);
+  }, [location.pathname, showSplash, navigationType]);
 
   return (
     <AnimatePresence mode="wait">
