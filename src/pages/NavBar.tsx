@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LightDarkMode from '../components/LightDarkMode';
 import { useTheme } from '../context/ThemeContext';
+import { scrollToSection } from '../components/ScrollAnimation';
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -93,6 +94,7 @@ export default function NavBar() {
             href={link.href}
             onClick={(e) => {
               e.preventDefault();
+              scrollToSection(link.id);
               navigate(link.href);
             }}
             className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-full ${
@@ -144,6 +146,7 @@ export default function NavBar() {
                 href={link.href}
                 onClick={(e) => {
                   e.preventDefault();
+                  scrollToSection(link.id);
                   navigate(link.href);
                   setIsMobileMenuOpen(false);
                 }}
