@@ -10,7 +10,12 @@ export default function AnimatedTitle({ text, className = "", delay = 0 }: Anima
   const words = text.split(" ");
   
   return (
-    <h2 className={`${className} flex flex-wrap`}>
+    <motion.h2
+      className={`${className} flex flex-wrap`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}
+    >
       {words.map((word, wordIndex) => (
         <span key={wordIndex} className="inline-flex whitespace-nowrap mr-[0.25em]">
           {word.split('').map((char, charIndex) => {
@@ -18,14 +23,10 @@ export default function AnimatedTitle({ text, className = "", delay = 0 }: Anima
             return (
               <motion.span
                 key={charIndex}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ 
-                  duration: 0.1, 
-                  ease: "linear", 
-                  delay: delay + absoluteIndex * 0.04 
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1, transition: { duration: 0.1, ease: "linear", delay: delay + absoluteIndex * 0.04 } }
                 }}
-                viewport={{ once: false, margin: "-50px" }}
                 className="inline-block"
               >
                 {char}
@@ -34,6 +35,6 @@ export default function AnimatedTitle({ text, className = "", delay = 0 }: Anima
           })}
         </span>
       ))}
-    </h2>
+    </motion.h2>
   );
 }

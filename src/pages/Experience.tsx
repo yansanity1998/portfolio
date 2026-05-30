@@ -8,7 +8,14 @@ import { useTheme } from '../context/ThemeContext';
 
 const experiences = [
     {
-        year: "2026",
+        year: "May 18, 2026",
+        title: "Part-Time Developer",
+        company: "Pixzel Digital Service",
+        description: "Continuing as a part-time developer at Pixzel Digital Service after completing OJT, taking on more client projects and maintenance work while balancing academic responsibilities.",
+        logo: pixzelLogo,
+    },
+    {
+        year: " January 29, 2026",
         title: "OJT",
         company: "Pixzel Digital Service",
         description: "Working hands-on with real-world clients at Pixzel Digital Service, building and maintaining websites while learning industry workflows, team collaboration, and modern development practices under professional mentorship.",

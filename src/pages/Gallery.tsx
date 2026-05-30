@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import AnimatedTitle from '../components/AnimatedTitle';
@@ -41,7 +41,39 @@ const textArray = rawText.split(" ").map(word => {
 export default function Gallery() {
     const [brokenWords, setBrokenWords] = useState<number[]>([]);
     const [activeCarousel, setActiveCarousel] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
     const { theme } = useTheme();
+
+    const touchStartX = useRef(0);
+    const isSwipingRef = useRef(false);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+        isSwipingRef.current = false;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (Math.abs(e.touches[0].clientX - touchStartX.current) > 20) {
+            isSwipingRef.current = true;
+        }
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        const diff = e.changedTouches[0].clientX - touchStartX.current;
+        if (Math.abs(diff) > 50) {
+            setActiveCarousel(prev => {
+                if (diff > 0) return prev > 0 ? prev - 1 : 2;
+                return prev < 2 ? prev + 1 : 0;
+            });
+        }
+    };
 
     const handleWordHover = (index: number) => {
         if (!brokenWords.includes(index)) {
@@ -64,7 +96,13 @@ export default function Gallery() {
                 />
 
                 {/* 3D Circle Carousels Container */}
-                <div className="relative w-full flex items-center justify-center gap-16 md:gap-40 h-[350px] md:h-[450px] overflow-hidden">
+                <div
+                    className="relative w-full flex items-center justify-center gap-0 md:gap-40 h-[350px] md:h-[450px] overflow-hidden"
+                    style={{ touchAction: 'pan-y' }}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                >
                     {[0, 1, 2].map((carouselIndex) => {
                         const isActive = activeCarousel === carouselIndex;
                         return (
@@ -73,13 +111,19 @@ export default function Gallery() {
                                 className="relative flex items-center justify-center cursor-pointer"
                                 style={{ perspective: '1000px' }}
                                 animate={{
-                                    scale: isActive ? 1 : 0.45,
-                                    opacity: isActive ? 1 : 0.4,
+                                    scale: isActive ? 1 : (isMobile ? 0.6 : 0.45),
+                                    opacity: isActive ? 1 : (isMobile ? 0.7 : 0.4),
                                     zIndex: isActive ? 10 : 1,
-                                    x: isActive ? 0 : (carouselIndex < activeCarousel ? -60 : 60)
+                                    x: isActive ? 0 : (
+                                        isMobile
+                                            ? (carouselIndex < activeCarousel ? 60 : -60)
+                                            : (carouselIndex < activeCarousel ? -60 : 60)
+                                    )
                                 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                                onClick={() => setActiveCarousel(carouselIndex)}
+                                onClick={() => {
+                                    if (!isSwipingRef.current) setActiveCarousel(carouselIndex);
+                                }}
                             >
                                 <motion.div
                                     className="relative w-[140px] h-[200px] md:w-[220px] md:h-[300px]"

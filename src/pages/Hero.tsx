@@ -69,12 +69,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex items-center gap-4 sm:gap-6 md:gap-10 text-lg sm:text-xl md:text-3xl font-medium mt-4 pointer-events-auto"
+          className="flex items-center gap-1 sm:gap-6 md:gap-10 text-xs sm:text-xl md:text-3xl font-medium mt-4 pointer-events-auto"
         >
           {words.map((word, idx) => {
             const isActive = idx === activeIndex;
             return (
-              <div key={word} className="relative px-4 py-2 flex items-center justify-center">
+              <div key={word} className="relative px-1 sm:px-4 py-1 sm:py-2 flex items-center justify-center">
                 <span className={`transition-all duration-700 z-10 ${isActive ? (theme === 'light' ? 'text-black font-semibold' : 'text-white') : 'text-gray-500 blur-[1px] opacity-50'}`}>
                   {word}
                 </span>
