@@ -12,7 +12,7 @@ import img6 from '../assets/gallery/gallery6.jpg';
 import img7 from '../assets/gallery/gallery7.jpg';
 import img8 from '../assets/gallery/gallery8.jpg';
 import img9 from '../assets/gallery/gallery9.jpg';
-import img10 from '../assets/gallery/gallery10.jpg';
+import img10 from '../assets/gallery/gallery10.png';
 import img11 from '../assets/gallery/gallery11.jpg';
 import img12 from '../assets/gallery/gallery12.jpg';
 import img13 from '../assets/gallery/gallery13.jpg';
