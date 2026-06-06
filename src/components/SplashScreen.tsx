@@ -83,9 +83,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             <motion.img 
               src={ianImg}
               alt="Jesper Ian"
-              className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-luminosity"
-              initial={{ filter: "blur(10px) grayscale(100%) brightness(0.3)" }}
-              animate={{ filter: "blur(0px) grayscale(100%) brightness(1.2)" }}
+              className="absolute inset-0 w-full h-full object-cover opacity-80"
+              initial={{ filter: "blur(10px) brightness(0.3)" }}
+              animate={{ filter: "blur(0px) brightness(1.2)" }}
               transition={{ duration: 2, ease: "easeOut" }}
             />
 

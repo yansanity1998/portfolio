@@ -110,9 +110,9 @@ export default function Home() {
           className="flex flex-col items-center lg:items-end justify-start w-full -mt-8"
         >
           <AnimatedTitle 
-            text="What I do"
+            text="Working On"
             delay={0.1}
-            className="text-5xl md:text-7xl lg:text-[6rem] font-bold mb-12 tracking-tighter text-right justify-end leading-none text-white -translate-x-8"
+            className="text-4xl md:text-6xl lg:text-[5rem] font-bold mb-12 tracking-tighter text-right justify-end leading-none text-white -translate-x-8"
           />
           
           <motion.div 
