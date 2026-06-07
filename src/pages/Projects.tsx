@@ -7,6 +7,8 @@ import jobmarket1 from '../assets/jobmarket/jobmarket1.png';
 import jobmarket2 from '../assets/jobmarket/jobmarket2.png';
 import linamon1 from '../assets/linamon/linamon1.png';
 import linamon2 from '../assets/linamon/linamon2.png';
+import linamon3 from '../assets/linamon/linamon3.png';
+
 import cebu1 from '../assets/cebu-top/cebu1.png';
 import cebu2 from '../assets/cebu-top/cebu2.png';
 import capstone1 from '../assets/capstone/capstone1.png';
@@ -62,7 +64,7 @@ const projects: Project[] = [
     title: "MDRRMO Linamon",
     role: "Web Developer",
     techStack: ["React", "TSX", "Laravel", "MySQL"],
-    images: [linamon1, linamon2],
+    images: [linamon1, linamon2, linamon3],
     layout: "type2",
     description: "A centralized CMS website built specifically for disaster risk reduction and management in the municipality of Linamon. Citizens can directly request training aids and dispatch ambulances through the platform during emergencies, drastically improving response times.\n\nThe system includes role-based access control, allowing administrators to manage incoming emergency requests, track resources, and publish critical news updates directly to the public portal. Built with a scalable Laravel backend and a responsive TSX frontend, it ensures critical services remain online when they are needed most.",
     github: "https://github.com/yansanity1998",
