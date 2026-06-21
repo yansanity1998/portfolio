@@ -118,28 +118,25 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.85, rotate: -3 }}
             whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            whileHover={{ scale: 1.05, transition: { duration: 0.8, ease: "easeOut", delay: 0 } }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.3 }}
-            className="relative w-full max-w-[420px] aspect-[4/5] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] group"
+            className="relative w-full max-w-[420px] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] cursor-pointer"
           >
             {/* Image Container */}
-            <div className="relative w-full h-full rounded-xl overflow-hidden bg-black scale-100 group-hover:scale-110 transition-all duration-[800ms] ease-in-out">
+            <div className="relative w-full rounded-xl overflow-hidden">
               <img 
                 src={theme === 'light' ? jesperImg : ianImg} 
                 alt="Jesper Ian" 
-                className="w-full h-full object-cover brightness-100" 
+                className="w-full h-auto" 
               />
-              {/* Subtle Scanning Tech Line Effect on Hover */}
-              <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${
-                theme === 'light' ? 'via-black/10' : 'via-white/10'
-              } to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -translate-y-[100%] group-hover:animate-[scan_2.5s_ease-in-out_infinite]`}></div>
             </div>
             
             {/* Floating Stamp UI */}
             <div className={`absolute -bottom-4 -left-6 px-8 py-3.5 rounded-lg font-bold text-[15px] tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed uppercase backdrop-blur-[4px]
               ${theme === 'light' 
-                ? 'text-slate-800 border-slate-400 bg-white/60 group-hover:text-black group-hover:border-slate-800 group-hover:bg-white/90 shadow-md' 
-                : 'text-white/80 border-white/30 bg-white/5 group-hover:text-white group-hover:border-white/80 group-hover:bg-white/20'}`}
+                ? 'text-slate-800 border-slate-400 bg-white/60 hover:text-black hover:border-slate-800 hover:bg-white/90 shadow-md' 
+                : 'text-white/80 border-white/30 bg-white/5 hover:text-white hover:border-white/80 hover:bg-white/20'}`}
             >
               Passionate Builder
             </div>
@@ -147,14 +144,6 @@ export default function Home() {
         </motion.div>
 
       </div>
-      
-      {/* Keyframes for scanning line */}
-      <style>{`
-        @keyframes scan {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100%); }
-        }
-      `}</style>
     </section>
   );
 }

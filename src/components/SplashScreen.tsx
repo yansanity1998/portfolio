@@ -83,30 +83,11 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             <motion.img 
               src={ianImg}
               alt="Jesper Ian"
-              className="absolute inset-0 w-full h-full object-cover opacity-80"
-              initial={{ filter: "blur(10px) brightness(0.3)" }}
-              animate={{ filter: "blur(0px) brightness(1.2)" }}
-              transition={{ duration: 2, ease: "easeOut" }}
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
             />
-
-            {/* Scan Highlight Gradient */}
-            <motion.div
-              className="absolute left-0 right-0 h-[40%] bg-gradient-to-b from-transparent via-white/20 to-white/5 z-10"
-              initial={{ top: "-40%" }}
-              animate={{ top: "100%" }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            />
-            
-            {/* Solid Scanning Line */}
-            <motion.div
-              className="absolute left-0 right-0 h-[2px] bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)] z-10"
-              initial={{ top: "0%" }}
-              animate={{ top: "140%" }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            />
-            
-            {/* Matrix overlay over image */}
-            <div className="absolute inset-0 bg-white/5 mix-blend-overlay z-10 pointer-events-none"></div>
           </div>
         </motion.div>
 
