@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaFacebook, FaFileDownload } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import ScrambleText from '../components/ScrambleText';
+import cvPdf from '../assets/CV-ian.pdf';
 
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
 
@@ -144,7 +145,7 @@ export default function Hero() {
           <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
             <FaFacebook size={24} />
           </a>
-          <a href="/resume.pdf" download="Jesper_Ian_Barila_Resume.pdf" title="Download Resume" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
+          <a href={cvPdf} target="_blank" rel="noopener noreferrer" title="View CV" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
             <FaFileDownload size={24} />
           </a>
         </div>

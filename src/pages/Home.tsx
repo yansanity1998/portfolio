@@ -106,7 +106,7 @@ export default function Home() {
 
         {/* Right Side: Title and Image */}
         <motion.div 
-          style={{ y: yTransform }}
+          style={{ y: yTransform, willChange: "transform" }}
           className="flex flex-col items-center lg:items-end justify-start w-full -mt-8"
         >
           <AnimatedTitle 
@@ -121,6 +121,7 @@ export default function Home() {
             whileHover={{ scale: 1.05, transition: { duration: 0.8, ease: "easeOut", delay: 0 } }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.3 }}
+            style={{ willChange: "transform" }}
             className="relative w-full max-w-[420px] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] cursor-pointer"
           >
             {/* Image Container */}
@@ -133,7 +134,7 @@ export default function Home() {
             </div>
             
             {/* Floating Stamp UI */}
-            <div className={`absolute -bottom-4 -left-6 px-8 py-3.5 rounded-lg font-bold text-[15px] tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed uppercase backdrop-blur-[4px]
+            <div className={`absolute -bottom-4 -left-6 px-8 py-3.5 rounded-lg font-bold text-[15px] tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed uppercase backdrop-blur-[4px] will-change-transform
               ${theme === 'light' 
                 ? 'text-slate-800 border-slate-400 bg-white/60 hover:text-black hover:border-slate-800 hover:bg-white/90 shadow-md' 
                 : 'text-white/80 border-white/30 bg-white/5 hover:text-white hover:border-white/80 hover:bg-white/20'}`}

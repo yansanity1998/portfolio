@@ -14,26 +14,19 @@ export default function AnimatedTitle({ text, className = "", delay = 0 }: Anima
       className={`${className} flex flex-wrap`}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false }}
+      viewport={{ once: true, margin: "-50px" }}
     >
       {words.map((word, wordIndex) => (
-        <span key={wordIndex} className="inline-flex whitespace-nowrap mr-[0.25em]">
-          {word.split('').map((char, charIndex) => {
-            const absoluteIndex = words.slice(0, wordIndex).join("").length + charIndex;
-            return (
-              <motion.span
-                key={charIndex}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1, transition: { duration: 0.1, ease: "linear", delay: delay + absoluteIndex * 0.04 } }
-                }}
-                className="inline-block"
-              >
-                {char}
-              </motion.span>
-            );
-          })}
-        </span>
+        <motion.span
+          key={wordIndex}
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: "easeOut", delay: delay + wordIndex * 0.1 } }
+          }}
+          className="inline-flex whitespace-nowrap mr-[0.25em] will-change-transform"
+        >
+          {word}
+        </motion.span>
       ))}
     </motion.h2>
   );

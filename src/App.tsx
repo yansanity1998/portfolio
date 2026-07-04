@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { BrowserRouter, Routes, Route, useLocation, useNavigationType } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
-import SplashScreen from './components/SplashScreen'
 import Hero from './pages/Hero'
 import Home from './pages/Home'
 import Experience from './pages/Experience'
@@ -34,15 +33,7 @@ function MainLayout() {
 }
 
 function AppContent() {
-  const [showSplash, setShowSplash] = useState(() => {
-    return !sessionStorage.getItem('hasShownSplash');
-  });
   const location = useLocation();
-
-  const handleSplashComplete = () => {
-    setShowSplash(false);
-    sessionStorage.setItem('hasShownSplash', 'true');
-  };
 
   const pathToSection: Record<string, string> = {
     '/': 'home',
@@ -57,7 +48,7 @@ function AppContent() {
   const navigationType = useNavigationType();
 
   useEffect(() => {
-    if (showSplash) return;
+
     if (navigationType !== 'POP') return;
     const sectionId = pathToSection[location.pathname];
     if (sectionId) {
@@ -65,17 +56,13 @@ function AppContent() {
         document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
     }
-  }, [location.pathname, showSplash, navigationType]);
+  }, [location.pathname, navigationType]);
 
   return (
     <AnimatePresence mode="wait">
-      {showSplash ? (
-        <SplashScreen key="splash" onComplete={handleSplashComplete} />
-      ) : (
         <motion.div key="main-app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
           <MainLayout />
         </motion.div>
-      )}
     </AnimatePresence>
   )
 }
