@@ -22,48 +22,39 @@ export default function ScrambleText({ text }: ScrambleTextProps) {
     }
 
     const chars = text.split('');
-    const randomIdx = new Uint8Array(chars.length);
-    const updateRandom = () => {
-      for (let i = 0; i < chars.length; i++) {
-        randomIdx[i] = (Math.random() * CHARS_LENGTH) | 0;
-      }
-    };
-    updateRandom();
-
-    let iteration = -10;
-    let frameCount = 0;
+    const len = chars.length;
     let frameId: number;
+    const startTime = performance.now();
+    const duration = 750; // fast 750ms resolve time
 
-    const animate = () => {
+    const animate = (now: number) => {
       if (!ref.current) return;
-      frameCount++;
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Calculate how many characters are resolved based on progress (with smooth easing)
+      // Reveal characters progressively across the duration
+      const resolvedCount = Math.floor(progress * (len + 4));
 
-      if ((frameCount & 1) === 0) {
-        frameId = requestAnimationFrame(animate);
-        return;
-      }
-
-      updateRandom();
-
-      const out = [];
-      for (let i = 0; i < chars.length; i++) {
-        if (i < iteration) {
-          out.push(chars[i]);
-        } else if (chars[i] === ' ') {
-          out.push(' ');
+      let result = '';
+      for (let i = 0; i < len; i++) {
+        if (chars[i] === ' ') {
+          result += ' ';
+        } else if (i < resolvedCount) {
+          result += chars[i];
         } else {
-          out.push(CHARS[randomIdx[i]]);
+          result += CHARS[(Math.random() * CHARS_LENGTH) | 0];
         }
       }
-      ref.current.textContent = out.join('');
 
-      if (iteration >= chars.length) {
+      ref.current.textContent = result;
+
+      if (progress < 1 || resolvedCount < len) {
+        frameId = requestAnimationFrame(animate);
+      } else {
+        ref.current.textContent = text;
         hasAnimated.current = true;
-        return;
       }
-
-      iteration += 1;
-      frameId = requestAnimationFrame(animate);
     };
 
     frameId = requestAnimationFrame(animate);

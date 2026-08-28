@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaFacebook, FaFileDownload } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 import ScrambleText from '../components/ScrambleText';
+import HeroWaves from '../components/HeroWaves';
 import cvPdf from '../assets/CV-ian.pdf';
 
 const words = ["Full Stack Developer", "UI/UX Designer", "Web Developer"];
@@ -24,35 +25,9 @@ export default function Hero() {
       theme === 'light' ? 'selection:bg-black/10' : 'selection:bg-white/20'
     }`}>
 
-      {/* Background Waves */}
-      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-40">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-          className="w-full h-full relative flex items-center justify-center"
-        >
-          <svg className="absolute w-full h-full" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-            {Array.from({ length: 60 }).map((_, i) => (
-              <motion.path
-                key={i}
-                d={`M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`}
-                fill="none"
-                stroke={theme === 'light' ? `rgba(15,23,42,${0.02 + i * 0.005})` : `rgba(255,255,255,${0.02 + i * 0.005})`}
-                strokeWidth={1}
-                animate={{
-                  d: [
-                    `M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`,
-                    `M0,500 C300,${950 - i * 20} 700,${50 + i * 20} 1000,500`,
-                    `M0,500 C300,${50 + i * 20} 700,${950 - i * 20} 1000,500`
-                  ]
-                }}
-                transition={{ duration: 10 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
-              />
-            ))}
-          </svg>
-        </motion.div>
-      </div>
+      {/* Background Waves - Rendered on 60fps Canvas instead of 60 animated SVG DOM nodes */}
+      <HeroWaves theme={theme} />
+
 
       {/* Center Content */}
       <div className="flex flex-col items-center justify-center min-h-screen relative z-10 pointer-events-none">

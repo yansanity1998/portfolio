@@ -15,81 +15,111 @@ export default function MatrixRain() {
     let animationFrameId: number;
 
     const resizeCanvas = () => {
-      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
     };
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Matrix characters (Alphanumeric + Katakana)
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
-    const charArray = chars.split('');
+    // Matrix characters
+    const chars = '0123456789ABCDEFｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾔﾕﾗﾘﾜ';
+    const charLen = chars.length;
+    const fontSize = 16;
+    const spacing = 36; // Wide spacing for a clean, minimal aesthetic (fewer columns)
 
-    const fontSize = 14;
-    let columns = Math.floor(canvas.width / fontSize);
+    let columns = Math.floor((canvas.width || window.innerWidth) / spacing);
+    
+    // Structure each rain drop column
+    interface Drop {
+      x: number;
+      y: number;
+      speed: number;
+      chars: string[];
+      length: number;
+    }
 
-    // Drops coordinates
-    let drops: number[] = [];
+    let drops: Drop[] = [];
+
     const initDrops = () => {
-      columns = Math.floor(canvas.width / fontSize);
+      columns = Math.floor(canvas.width / spacing);
       drops = [];
       for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -100; // start drops at random negative positions
+        // Only activate ~40% of columns for a minimal, non-crowded look
+        if (Math.random() > 0.45) continue;
+
+        const length = 6 + ((Math.random() * 8) | 0);
+        const columnChars: string[] = [];
+        for (let k = 0; k < length; k++) {
+          columnChars.push(chars[(Math.random() * charLen) | 0]);
+        }
+
+        drops.push({
+          x: i * spacing + 10,
+          y: Math.random() * -canvas.height,
+          speed: 1.2 + Math.random() * 1.5,
+          chars: columnChars,
+          length
+        });
       }
     };
+
     initDrops();
 
-    const draw = () => {
-      // Clear canvas completely to keep it 100% transparent and prevent layering issues
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const isLight = theme === 'light';
+    let lastTime = performance.now();
 
+    const draw = (now: number) => {
+      const delta = Math.min((now - lastTime) / 16.66, 2); // Frame-rate independent
+      lastTime = now;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${fontSize}px monospace`;
 
-      const trailLength = 15;
-
       for (let i = 0; i < drops.length; i++) {
-        // Draw the trail of characters above drops[i]
-        for (let j = 0; j < trailLength; j++) {
-          const y = (drops[i] - j) * fontSize;
+        const drop = drops[i];
+        drop.y += drop.speed * delta;
 
-          // Skip if character is above the top of the canvas
-          if (y < 0) continue;
+        // Draw each character in this drop trail
+        for (let j = 0; j < drop.length; j++) {
+          const charY = drop.y - j * fontSize;
 
-          // Calculate opacity: head (j = 0) is brightest, tail is dimmest
-          const opacity = (1 - j / trailLength) * 0.45;
+          if (charY < 0 || charY > canvas.height + fontSize) continue;
 
-          const char = charArray[Math.floor(Math.random() * charArray.length)];
-          const x = i * fontSize;
-
+          // Head character is slightly brighter; tail fades out
           if (j === 0) {
-            // Head character is extra bright/solid
-            ctx.fillStyle = theme === 'dark' 
-              ? 'rgba(255, 255, 255, 0.95)' 
-              : 'rgba(15, 23, 42, 0.85)';
+            ctx.fillStyle = isLight 
+              ? 'rgba(15, 23, 42, 0.45)' 
+              : 'rgba(255, 255, 255, 0.7)';
           } else {
-            // Trail characters
-            ctx.fillStyle = theme === 'dark' 
-              ? `rgba(255, 255, 255, ${opacity * 0.45})` 
-              : `rgba(15, 23, 42, ${opacity * 0.45})`; // Dark slate in light mode
+            const alpha = (1 - j / drop.length) * (isLight ? 0.15 : 0.22);
+            ctx.fillStyle = isLight
+              ? `rgba(15, 23, 42, ${alpha})`
+              : `rgba(255, 255, 255, ${alpha})`;
           }
 
-          ctx.fillText(char, x, y);
+          ctx.fillText(drop.chars[j], drop.x, charY);
         }
 
-        // Reset drop when it goes off screen with a slight random chance
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
+        // Randomly mutate 1 character occasionally for digital flicker without heavy per-frame random calls
+        if (Math.random() < 0.05) {
+          const mutateIdx = (Math.random() * drop.length) | 0;
+          drop.chars[mutateIdx] = chars[(Math.random() * charLen) | 0];
         }
 
-        // Increment drop position
-        drops[i] += 0.5; // Slightly slower speed (0.5 instead of 1) for a smoother look
+        // Reset drop to top when it falls below screen
+        if (drop.y - drop.length * fontSize > canvas.height) {
+          drop.y = Math.random() * -120;
+          drop.speed = 1.2 + Math.random() * 1.5;
+        }
       }
 
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    draw();
+    animationFrameId = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);

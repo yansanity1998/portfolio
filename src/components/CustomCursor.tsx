@@ -26,22 +26,29 @@ export default function CustomCursor() {
   }, []);
 
   useEffect(() => {
+    let hovering = false;
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       
-      const target = e.target as HTMLElement;
-      if (
-        window.getComputedStyle(target).cursor === 'pointer' || 
-        target.closest('a, button, [role="button"]')
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
+      const target = e.target as HTMLElement | null;
+      const isInteractive = Boolean(
+        target && (
+          target.tagName === 'A' ||
+          target.tagName === 'BUTTON' ||
+          target.getAttribute('role') === 'button' ||
+          target.closest('a, button, [role="button"], .cursor-pointer')
+        )
+      );
+
+      if (isInteractive !== hovering) {
+        hovering = isInteractive;
+        setIsHovering(isInteractive);
       }
     };
 
-    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mousemove', moveCursor, { passive: true });
     return () => {
       window.removeEventListener('mousemove', moveCursor);
     };

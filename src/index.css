@@ -24,6 +24,27 @@
   animation: shimmer 4s ease-in-out infinite;
 }
 
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+.hide-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 html, body {
   background-color: #050505;
   color: #ffffff;
@@ -126,12 +147,6 @@ html.light .shadow-\[0_20px_50px_rgba\(0\,0\,0\,0\.8\)\] {
 
 html.light .shadow-\[0_15px_40px_rgba\(0\,0\,0\,0\.8\)\] {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06) !important;
-}
-
-html.light button,
-html.light a,
-html.light [role="button"] {
-  color: var(--text-primary);
 }
 
 html.light .bg-white\/10 {

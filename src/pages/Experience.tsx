@@ -8,6 +8,13 @@ import { useTheme } from '../context/ThemeContext';
 
 const experiences = [
     {
+        year: "August 10, 2026 - Present",
+        title: "Junior Developer",
+        company: "Pixzel Digital Service",
+        description: "Promoted to Junior Developer after successfully completing OJT and part-time tenure at Pixzel Digital Service. Taking full ownership of client projects, developing core features, and building scalable web applications with modern tech stacks.",
+        logo: pixzelLogo,
+    },
+    {
         year: "May 18, 2026",
         title: "Part-Time Developer",
         company: "Pixzel Digital Service",
@@ -94,35 +101,89 @@ export default function Experience() {
                                     key={index}
                                     className="relative flex items-start justify-center w-full mb-32 last:mb-0"
                                 >
-                                    {/* Node Dot - Lights up exactly when line hits it */}
-                                    <motion.div
-                                        initial={{ borderColor: "#1f2937", boxShadow: "0 0 0px rgba(0,0,0,0)" }}
-                                        whileInView={{ 
-                                            borderColor: theme === 'light' ? "#0f172a" : "#ffffff", 
-                                            boxShadow: theme === 'light' ? "0 0 20px rgba(0,0,0,0.2)" : "0 0 20px rgba(255,255,255,0.8)" 
-                                        }}
-                                        viewport={{ margin: "0px 0px -50% 0px" }}
-                                        transition={{ duration: 0.3 }}
-                                        className="absolute left-1/2 top-0 -translate-x-1/2 -mt-2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border-2 z-20 flex items-center justify-center overflow-hidden"
-                                    >
-                                        <motion.img
-                                            src={exp.logo}
-                                            alt={`${exp.company} logo`}
-                                            initial={{ scale: 0, opacity: 0 }}
-                                            whileInView={{ scale: 1, opacity: 1 }}
+                                    {/* Central Node & Branch to Date */}
+                                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -mt-2 z-20 flex items-center justify-center pointer-events-none">
+                                        {/* Node Logo Container */}
+                                        <motion.div
+                                            initial={{ borderColor: "#1f2937", boxShadow: "0 0 0px rgba(0,0,0,0)", scale: 0.8 }}
+                                            whileInView={{ 
+                                                borderColor: theme === 'light' ? "#0f172a" : "#ffffff", 
+                                                boxShadow: theme === 'light' ? "0 0 20px rgba(0,0,0,0.15)" : "0 0 20px rgba(255,255,255,0.7)",
+                                                scale: 1
+                                            }}
                                             viewport={{ margin: "0px 0px -50% 0px" }}
-                                            transition={{ duration: 0.4, delay: 0.1 }}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </motion.div>
+                                            transition={{ duration: 0.3 }}
+                                            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border-2 flex items-center justify-center overflow-hidden relative z-20 pointer-events-auto"
+                                        >
+                                            <motion.img
+                                                src={exp.logo}
+                                                alt={`${exp.company} logo`}
+                                                initial={{ scale: 0, opacity: 0 }}
+                                                whileInView={{ scale: 1, opacity: 1 }}
+                                                viewport={{ margin: "0px 0px -50% 0px" }}
+                                                transition={{ duration: 0.4, delay: 0.1 }}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </motion.div>
+
+                                        {/* 45-degree Angled Branch / Arm pointing upward-outward away from the title */}
+                                        <motion.div
+                                            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                            viewport={{ margin: "0px 0px -40% 0px" }}
+                                            transition={{ duration: 0.5, delay: 0.2 }}
+                                            className={`hidden md:flex items-center absolute pointer-events-auto z-10 ${
+                                                isLeft 
+                                                    ? 'right-[calc(50%+16px)] -top-12 flex-row-reverse' 
+                                                    : 'left-[calc(50%+16px)] -top-12 flex-row'
+                                            }`}
+                                        >
+                                            {/* 45-degree Circuit/Branch SVG Connector */}
+                                            <svg
+                                                width="40"
+                                                height="36"
+                                                viewBox="0 0 40 36"
+                                                fill="none"
+                                                className={`flex-shrink-0 ${isLeft ? '-scale-x-100' : ''}`}
+                                            >
+                                                {/* 45-degree angled path: from bottom-left (center node) up diagonally */}
+                                                <path
+                                                    d="M 2 34 L 20 16 L 38 16"
+                                                    stroke={theme === 'light' ? 'rgba(15,23,42,0.4)' : 'rgba(255,255,255,0.4)'}
+                                                    strokeWidth="1.5"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                                {/* Arrowhead pointing along the horizontal tip */}
+                                                <path
+                                                    d="M 34 12 L 38 16 L 34 20"
+                                                    stroke={theme === 'light' ? '#0f172a' : '#ffffff'}
+                                                    strokeWidth="1.5"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg>
+
+                                            {/* Floating Futuristic Date Badge */}
+                                            <div className={`px-3 py-1 rounded-full text-[11px] font-mono tracking-wider whitespace-nowrap border backdrop-blur-md shadow-sm transition-all duration-300 ${
+                                                theme === 'light'
+                                                    ? 'bg-white/90 border-slate-300 text-slate-800 shadow-[0_4px_12px_rgba(0,0,0,0.06)]'
+                                                    : 'bg-[#0f0f11]/90 border-white/20 text-gray-200 shadow-[0_0_15px_rgba(255,255,255,0.12)]'
+                                            } ${isLeft ? 'mr-1.5' : 'ml-1.5'}`}>
+                                                {exp.year}
+                                            </div>
+                                        </motion.div>
+                                    </div>
 
                                     {/* Left Side Panel */}
-                                    <div className={`w-1/2 pr-10 md:pr-16 flex flex-col ${isLeft ? 'items-end text-right' : 'items-end text-right'}`}>
+                                    <div className="w-1/2 pr-10 md:pr-16 flex flex-col items-end text-right">
                                         {isLeft ? (
                                             <>
                                                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">{exp.title}</h3>
                                                 <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-white'} text-sm md:text-base font-semibold mb-2`}>{exp.company}</h4>
-                                                <p className="text-gray-500 text-sm tracking-widest font-mono mb-6">{exp.year}</p>
+                                                
+                                                {/* Mobile-only date fallback */}
+                                                <p className="md:hidden text-gray-500 text-xs tracking-widest font-mono mb-4">{exp.year}</p>
 
                                                 {/* Decorative Icon Circle */}
                                                 <motion.div
@@ -133,7 +194,7 @@ export default function Experience() {
                                                     }}
                                                     viewport={{ margin: "0px 0px -50% 0px" }}
                                                     transition={{ duration: 0.4 }}
-                                                    className="w-20 h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
+                                                    className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden mt-3"
                                                 >
                                                     <img src={exp.logo} alt={exp.company} className="w-full h-full object-cover" />
                                                 </motion.div>
@@ -146,12 +207,14 @@ export default function Experience() {
                                     </div>
 
                                     {/* Right Side Panel */}
-                                    <div className={`w-1/2 pl-10 md:pl-16 flex flex-col ${!isLeft ? 'items-start text-left' : 'items-start text-left'}`}>
+                                    <div className="w-1/2 pl-10 md:pl-16 flex flex-col items-start text-left">
                                         {!isLeft ? (
                                             <>
                                                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">{exp.title}</h3>
                                                 <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-white'} text-sm md:text-base font-semibold mb-2`}>{exp.company}</h4>
-                                                <p className="text-gray-500 text-sm tracking-widest font-mono mb-6">{exp.year}</p>
+                                                
+                                                {/* Mobile-only date fallback */}
+                                                <p className="md:hidden text-gray-500 text-xs tracking-widest font-mono mb-4">{exp.year}</p>
 
                                                 {/* Decorative Icon Circle */}
                                                 <motion.div
@@ -162,7 +225,7 @@ export default function Experience() {
                                                     }}
                                                     viewport={{ margin: "0px 0px -50% 0px" }}
                                                     transition={{ duration: 0.4 }}
-                                                    className="w-20 h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden"
+                                                    className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center overflow-hidden mt-3"
                                                 >
                                                     <img src={exp.logo} alt={exp.company} className="w-full h-full object-cover" />
                                                 </motion.div>

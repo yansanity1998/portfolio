@@ -5,7 +5,7 @@ import jesperImg from '../assets/jesper.jpg';
 import { useTheme } from '../context/ThemeContext';
 import AnimatedTitle from '../components/AnimatedTitle';
 
-const devSkills = ["React", "TypeScript", "Tailwind", "JavaScript", "HTML", "CSS", "PHP", "Laravel", "Firebase", "Supabase", "Vercel", "Netlify", "MySQL"];
+const devSkills = ["React", "TypeScript", "Tailwind", "JavaScript", "HTML", "CSS", "PHP", "Laravel", "React Native","Expo Go", "Firebase", "Supabase", "Vercel", "Netlify", "MySQL"];
 const createSkills = ["Figma", "Canva", "Capcut", "Adobe Premiere Pro", "Adobe Illustrator"];
 
 const containerVariants: Variants = {
