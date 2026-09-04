@@ -62,24 +62,24 @@ export default function Experience() {
     });
 
     return (
-        <section id="experience" className="min-h-screen bg-[#050505] text-white py-32 px-6 md:px-16 relative overflow-hidden">
+        <section id="experience" className="min-h-screen bg-[#050505] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-16 relative overflow-hidden">
 
             <div className="max-w-7xl mx-auto flex flex-col items-center">
 
                 <AnimatedTitle 
                   text="My Experience"
-                  className="text-5xl md:text-6xl font-bold mb-24 tracking-tight justify-center"
+                  className="text-3xl sm:text-4xl md:text-6xl font-bold mb-12 sm:mb-16 md:mb-24 tracking-tight justify-center"
                 />
 
                 {/* Timeline Container */}
                 <div ref={containerRef} className="relative w-full max-w-4xl mx-auto">
 
                     {/* Static Background Line */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-gray-800 -translate-x-1/2"></div>
+                    <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gray-800 -translate-x-1/2"></div>
 
                     {/* Animated Glowing Fill Line */}
                     <motion.div
-                        className={`absolute left-1/2 top-0 bottom-0 w-[4px] bg-gradient-to-b -translate-x-1/2 origin-top ${
+                        className={`absolute left-6 md:left-1/2 top-0 bottom-0 w-[3px] md:w-[4px] bg-gradient-to-b -translate-x-1/2 origin-top ${
                             theme === 'light' 
                                 ? 'from-black via-gray-400 to-transparent shadow-[0_0_15px_rgba(0,0,0,0.15)]' 
                                 : 'from-white via-gray-600 to-transparent shadow-[0_0_15px_rgba(255,255,255,0.4)]'
@@ -88,7 +88,7 @@ export default function Experience() {
                     ></motion.div>
 
                     {/* Timeline Items */}
-                    <div className="relative z-10 py-10">
+                    <div className="relative z-10 py-6 md:py-10">
                         {experiences.map((exp, index) => {
                             const isLeft = index % 2 === 0;
 
@@ -96,13 +96,13 @@ export default function Experience() {
                                 <motion.div
                                     initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-100px" }}
+                                    viewport={{ once: true, margin: "-80px" }}
                                     transition={{ duration: 0.7, delay: 0.1 }}
                                     key={index}
-                                    className="relative flex items-start justify-center w-full mb-32 last:mb-0"
+                                    className="relative flex flex-col md:flex-row items-start md:justify-center w-full mb-14 sm:mb-20 md:mb-32 last:mb-0"
                                 >
-                                    {/* Central Node & Branch to Date */}
-                                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -mt-2 z-20 flex items-center justify-center pointer-events-none">
+                                    {/* Central / Left Node */}
+                                    <div className="absolute left-6 md:left-1/2 top-0 -translate-x-1/2 -mt-1 md:-mt-2 z-20 flex items-center justify-center pointer-events-none">
                                         {/* Node Logo Container */}
                                         <motion.div
                                             initial={{ borderColor: "#1f2937", boxShadow: "0 0 0px rgba(0,0,0,0)", scale: 0.8 }}
@@ -113,7 +113,7 @@ export default function Experience() {
                                             }}
                                             viewport={{ margin: "0px 0px -50% 0px" }}
                                             transition={{ duration: 0.3 }}
-                                            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border-2 flex items-center justify-center overflow-hidden relative z-20 pointer-events-auto"
+                                            className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-[#050505] border-2 flex items-center justify-center overflow-hidden relative z-20 pointer-events-auto shadow-md"
                                         >
                                             <motion.img
                                                 src={exp.logo}
@@ -126,7 +126,7 @@ export default function Experience() {
                                             />
                                         </motion.div>
 
-                                        {/* 45-degree Angled Branch / Arm pointing upward-outward away from the title */}
+                                        {/* 45-degree Angled Branch / Arm pointing upward-outward away from the title (Desktop only) */}
                                         <motion.div
                                             initial={{ opacity: 0, scale: 0.8, y: 10 }}
                                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -146,7 +146,6 @@ export default function Experience() {
                                                 fill="none"
                                                 className={`flex-shrink-0 ${isLeft ? '-scale-x-100' : ''}`}
                                             >
-                                                {/* 45-degree angled path: from bottom-left (center node) up diagonally */}
                                                 <path
                                                     d="M 2 34 L 20 16 L 38 16"
                                                     stroke={theme === 'light' ? 'rgba(15,23,42,0.4)' : 'rgba(255,255,255,0.4)'}
@@ -154,7 +153,6 @@ export default function Experience() {
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
                                                 />
-                                                {/* Arrowhead pointing along the horizontal tip */}
                                                 <path
                                                     d="M 34 12 L 38 16 L 34 20"
                                                     stroke={theme === 'light' ? '#0f172a' : '#ffffff'}
@@ -175,16 +173,29 @@ export default function Experience() {
                                         </motion.div>
                                     </div>
 
-                                    {/* Left Side Panel */}
-                                    <div className="w-1/2 pr-10 md:pr-16 flex flex-col items-end text-right">
+                                    {/* Mobile Card View (shown only on mobile <md) */}
+                                    <div className="flex md:hidden flex-col w-full pl-14 pr-2 text-left">
+                                        <div className={`inline-flex items-center self-start px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider border backdrop-blur-md mb-2 ${
+                                            theme === 'light'
+                                                ? 'bg-white/90 border-slate-300 text-slate-800 shadow-sm'
+                                                : 'bg-[#0f0f11]/90 border-white/20 text-gray-300 shadow-sm'
+                                        }`}>
+                                            {exp.year}
+                                        </div>
+                                        <h3 className="text-lg font-bold tracking-tight text-white mb-0.5">{exp.title}</h3>
+                                        <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-gray-300'} text-xs font-semibold mb-2`}>{exp.company}</h4>
+                                        <p className="text-gray-400 text-xs leading-relaxed text-justify">
+                                            <TypewriterText text={exp.description} />
+                                        </p>
+                                    </div>
+
+                                    {/* Desktop Left Side Panel */}
+                                    <div className="hidden md:flex w-1/2 pr-10 md:pr-16 flex-col items-end text-right">
                                         {isLeft ? (
                                             <>
                                                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">{exp.title}</h3>
                                                 <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-white'} text-sm md:text-base font-semibold mb-2`}>{exp.company}</h4>
                                                 
-                                                {/* Mobile-only date fallback */}
-                                                <p className="md:hidden text-gray-500 text-xs tracking-widest font-mono mb-4">{exp.year}</p>
-
                                                 {/* Decorative Icon Circle */}
                                                 <motion.div
                                                     initial={{ borderColor: "#374151", boxShadow: "0 0 15px rgba(0,0,0,0.5)" }}
@@ -206,16 +217,13 @@ export default function Experience() {
                                         )}
                                     </div>
 
-                                    {/* Right Side Panel */}
-                                    <div className="w-1/2 pl-10 md:pl-16 flex flex-col items-start text-left">
+                                    {/* Desktop Right Side Panel */}
+                                    <div className="hidden md:flex w-1/2 pl-10 md:pl-16 flex-col items-start text-left">
                                         {!isLeft ? (
                                             <>
                                                 <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-1">{exp.title}</h3>
                                                 <h4 className={`${theme === 'light' ? 'text-black font-semibold' : 'text-white'} text-sm md:text-base font-semibold mb-2`}>{exp.company}</h4>
                                                 
-                                                {/* Mobile-only date fallback */}
-                                                <p className="md:hidden text-gray-500 text-xs tracking-widest font-mono mb-4">{exp.year}</p>
-
                                                 {/* Decorative Icon Circle */}
                                                 <motion.div
                                                     initial={{ borderColor: "#374151", boxShadow: "0 0 15px rgba(0,0,0,0.5)" }}

@@ -36,14 +36,14 @@ export default function Home() {
   const yTransform = useTransform(scrollYProgress, [0, 1], [80, -80]);
 
   return (
-    <section id="about" ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-32 px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="min-h-screen bg-[#050505] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
       
       {/* Background Subtle Glow */}
       <div className={`absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none z-0 transition-colors duration-300 ${
         theme === 'light' ? 'bg-slate-200/30' : 'bg-white/5'
       }`}></div>
 
-      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center relative z-10">
         
         {/* Left Side: Skills */}
         <motion.div 
@@ -51,23 +51,23 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="flex flex-col gap-16"
+          className="flex flex-col gap-8 sm:gap-12 md:gap-16"
         >
           {/* Develop Section */}
-          <motion.div variants={itemVariants} className="relative py-8 group">
-            <h3 className="text-2xl font-bold tracking-tight mb-4 flex items-center gap-4">
+          <motion.div variants={itemVariants} className="relative py-2 sm:py-6 md:py-8 group">
+            <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-2 sm:mb-4 flex items-center gap-4">
               DEVELOP
               <span className="h-[1px] flex-1 bg-gradient-to-r from-gray-700 to-transparent"></span>
             </h3>
-            <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
+            <p className="text-gray-400 text-xs sm:text-sm md:text-base mb-4 sm:mb-6 leading-relaxed">
               Building modern web applications with React, TypeScript, and Tailwind, backed by PHP and Laravel for robust server-side solutions.
             </p>
-            <h4 className={`text-sm font-bold mb-4 uppercase tracking-widest transition-all duration-300 ${
+            <h4 className={`text-xs sm:text-sm font-bold mb-3 sm:mb-4 uppercase tracking-widest transition-all duration-300 ${
               theme === 'light' ? 'text-black drop-shadow-[0_0_8px_rgba(0,0,0,0.08)]' : 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]'
             }`}>Skillset & tools</h4>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {devSkills.map(skill => (
-                <span key={skill} className={`px-4 py-2 border border-gray-800 bg-gray-900/30 rounded-xl text-xs font-medium text-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:-translate-y-0.5 ${
+                <span key={skill} className={`px-3 py-1.5 sm:px-4 sm:py-2 border border-gray-800 bg-gray-900/30 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-medium text-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:-translate-y-0.5 ${
                   theme === 'light' 
                     ? 'hover:bg-black/10 hover:border-black/40 hover:text-black hover:shadow-[0_0_15px_rgba(0,0,0,0.08)]' 
                     : 'hover:bg-white/10 hover:border-white/45 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]'
@@ -79,20 +79,20 @@ export default function Home() {
           </motion.div>
 
           {/* Create Section */}
-          <motion.div variants={itemVariants} className="relative py-8 group">
-            <h3 className="text-2xl font-bold tracking-tight mb-4 flex items-center gap-4">
+          <motion.div variants={itemVariants} className="relative py-2 sm:py-6 md:py-8 group">
+            <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-2 sm:mb-4 flex items-center gap-4">
               CREATE
               <span className="h-[1px] flex-1 bg-gradient-to-r from-gray-700 to-transparent"></span>
             </h3>
-            <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
+            <p className="text-gray-400 text-xs sm:text-sm md:text-base mb-4 sm:mb-6 leading-relaxed">
               Creating content across various platforms, helping bring ideas to life through visual storytelling and engaging media.
             </p>
-            <h4 className={`text-sm font-bold mb-4 uppercase tracking-widest transition-all duration-300 ${
+            <h4 className={`text-xs sm:text-sm font-bold mb-3 sm:mb-4 uppercase tracking-widest transition-all duration-300 ${
               theme === 'light' ? 'text-black drop-shadow-[0_0_8px_rgba(0,0,0,0.08)]' : 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]'
             }`}>Skillset & tools</h4>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {createSkills.map(skill => (
-                <span key={skill} className={`px-4 py-2 border border-gray-800 bg-gray-900/30 rounded-xl text-xs font-medium text-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:-translate-y-0.5 ${
+                <span key={skill} className={`px-3 py-1.5 sm:px-4 sm:py-2 border border-gray-800 bg-gray-900/30 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-medium text-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:-translate-y-0.5 ${
                   theme === 'light' 
                     ? 'hover:bg-black/10 hover:border-black/40 hover:text-black hover:shadow-[0_0_15px_rgba(0,0,0,0.08)]' 
                     : 'hover:bg-white/10 hover:border-white/45 hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]'
@@ -107,12 +107,12 @@ export default function Home() {
         {/* Right Side: Title and Image */}
         <motion.div 
           style={{ y: yTransform, willChange: "transform" }}
-          className="flex flex-col items-center lg:items-end justify-start w-full -mt-8"
+          className="flex flex-col items-center lg:items-end justify-start w-full mt-4 lg:-mt-8"
         >
           <AnimatedTitle 
             text="Working On"
             delay={0.1}
-            className="text-4xl md:text-6xl lg:text-[5rem] font-bold mb-12 tracking-tighter text-right justify-end leading-none text-white -translate-x-8"
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-[5rem] font-bold mb-6 sm:mb-8 md:mb-12 tracking-tighter text-center lg:text-right justify-center lg:justify-end leading-none text-white translate-x-0 lg:-translate-x-8"
           />
           
           <motion.div 
@@ -122,7 +122,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.3 }}
             style={{ willChange: "transform" }}
-            className="relative w-full max-w-[420px] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] cursor-pointer"
+            className="relative w-full max-w-[280px] sm:max-w-[360px] md:max-w-[420px] rounded-xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] cursor-pointer"
           >
             {/* Image Container */}
             <div className="relative w-full rounded-xl overflow-hidden">
@@ -134,7 +134,7 @@ export default function Home() {
             </div>
             
             {/* Floating Stamp UI */}
-            <div className={`absolute -bottom-4 -left-6 px-8 py-3.5 rounded-lg font-bold text-[15px] tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed uppercase backdrop-blur-[4px] will-change-transform
+            <div className={`absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-6 px-4 py-2 sm:px-8 sm:py-3.5 rounded-md sm:rounded-lg font-bold text-xs sm:text-[15px] tracking-[0.1em] sm:tracking-[0.15em] rotate-[-6deg] hover:rotate-[-3deg] hover:scale-105 transition-all duration-300 z-20 border-2 border-dashed uppercase backdrop-blur-[4px] will-change-transform
               ${theme === 'light' 
                 ? 'text-slate-800 border-slate-400 bg-white/60 hover:text-black hover:border-slate-800 hover:bg-white/90 shadow-md' 
                 : 'text-white/80 border-white/30 bg-white/5 hover:text-white hover:border-white/80 hover:bg-white/20'}`}

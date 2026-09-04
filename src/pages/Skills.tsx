@@ -39,7 +39,7 @@ export default function Skills() {
   const { theme } = useTheme();
 
   return (
-    <section id="skills" className="bg-[#050505] py-24 overflow-hidden relative border-t border-b border-gray-900/50">
+    <section id="skills" className="bg-[#050505] py-14 sm:py-20 md:py-24 overflow-hidden relative border-t border-b border-gray-900/50">
       
       {/* Background Ambient Glow */}
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] blur-[150px] pointer-events-none rounded-full transition-colors duration-300 ${
@@ -47,28 +47,28 @@ export default function Skills() {
       }`}></div>
 
       {/* Header */}
-      <div className="mb-16 md:mb-24 px-8 md:px-16 max-w-7xl mx-auto relative z-10">
+      <div className="mb-10 sm:mb-16 md:mb-24 px-4 sm:px-8 md:px-16 max-w-7xl mx-auto relative z-10">
          <AnimatedTitle 
            text="Tech Stack"
-           className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4"
+           className="text-3xl sm:text-4xl md:text-6xl font-bold text-white tracking-tighter mb-2 sm:mb-4"
          />
-         <p className="text-gray-400 tracking-widest uppercase text-xs md:text-sm">Languages & Tools</p>
+         <p className="text-gray-400 tracking-widest uppercase text-[10px] sm:text-xs md:text-sm">Languages & Tools</p>
       </div>
 
       {/* Marquee Containers */}
-      <div className="flex flex-col gap-6 md:gap-10 relative z-10 w-full overflow-hidden">
+      <div className="flex flex-col gap-4 sm:gap-6 md:gap-10 relative z-10 w-full overflow-hidden">
         
         {/* Row 1 - Scrolling Left */}
         <div className="flex w-full overflow-hidden whitespace-nowrap">
           <motion.div 
-            className="flex gap-8 md:gap-16 items-center"
+            className="flex gap-6 sm:gap-10 md:gap-16 items-center"
             animate={{ x: ["0%", "-50%"] }}
             transition={{ ease: "linear", duration: 40, repeat: Infinity }}
           >
             {duplicatedRow1.map(({ Icon, name, brand }, index) => (
-              <div key={index} className="flex items-center gap-8 md:gap-16">
+              <div key={index} className="flex items-center gap-6 sm:gap-10 md:gap-16">
                 <Icon 
-                  className={`text-5xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 === 0 ? (theme === 'light' ? 'text-slate-900' : 'text-white') : (theme === 'light' ? 'text-slate-900/20' : 'text-white/20')}`}
+                  className={`text-4xl sm:text-6xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 === 0 ? (theme === 'light' ? 'text-slate-900' : 'text-white') : (theme === 'light' ? 'text-slate-900/20' : 'text-white/20')}`}
                   style={hoveredIcon === name ? { color: brand } : {}}
                   onMouseEnter={() => setHoveredIcon(name)}
                   onMouseLeave={() => setHoveredIcon(null)}
@@ -81,14 +81,14 @@ export default function Skills() {
         {/* Row 2 - Scrolling Right */}
         <div className="flex w-full overflow-hidden whitespace-nowrap">
           <motion.div 
-            className="flex gap-8 md:gap-16 items-center"
+            className="flex gap-6 sm:gap-10 md:gap-16 items-center"
             animate={{ x: ["-50%", "0%"] }}
             transition={{ ease: "linear", duration: 45, repeat: Infinity }}
           >
             {duplicatedRow2.map(({ Icon, name, brand }, index) => (
-              <div key={index} className="flex items-center gap-8 md:gap-16">
+              <div key={index} className="flex items-center gap-6 sm:gap-10 md:gap-16">
                 <Icon 
-                  className={`text-5xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 !== 0 ? (theme === 'light' ? 'text-slate-900' : 'text-white') : (theme === 'light' ? 'text-slate-900/20' : 'text-white/20')}`}
+                  className={`text-4xl sm:text-6xl md:text-7xl lg:text-[8rem] transition-all duration-300 cursor-default ${index % 2 !== 0 ? (theme === 'light' ? 'text-slate-900' : 'text-white') : (theme === 'light' ? 'text-slate-900/20' : 'text-white/20')}`}
                   style={hoveredIcon === name ? { color: brand } : {}}
                   onMouseEnter={() => setHoveredIcon(name)}
                   onMouseLeave={() => setHoveredIcon(null)}

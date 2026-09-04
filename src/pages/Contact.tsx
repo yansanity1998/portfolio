@@ -29,7 +29,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="min-h-screen bg-[#050505] relative flex flex-col items-center justify-center overflow-hidden py-32">
+    <section id="contact" className="min-h-screen bg-[#050505] relative flex flex-col items-center justify-center overflow-hidden py-16 sm:py-24 md:py-32">
       
       {/* Matrix Code Rain Background */}
       <MatrixRain />
@@ -42,7 +42,7 @@ export default function Contact() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <AnimatedTitle 
           text="Get In Touch"
-          className="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-4 justify-center"
+          className="text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-tighter mb-2 sm:mb-4 justify-center"
         />
         
         <motion.p
@@ -50,12 +50,12 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-gray-400 text-lg md:text-xl text-center max-w-2xl mb-16"
+          className="text-gray-400 text-xs sm:text-base md:text-xl text-center max-w-2xl mb-8 sm:mb-12 md:mb-16"
         >
           Have a project in mind or just want to say hi? Feel free to send me a message and I'll get back to you as soon as possible.
         </motion.p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 w-full mt-4 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 md:gap-12 w-full mt-2 sm:mt-4 items-stretch">
           {/* Left Column: Contact Details */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -64,7 +64,7 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:col-span-5 flex flex-col h-full"
           >
-            <div className={`border rounded-sm p-6 backdrop-blur-sm relative overflow-hidden group h-full flex flex-col justify-between transition-all duration-300 ${
+            <div className={`border rounded-sm p-4 sm:p-6 backdrop-blur-sm relative overflow-hidden group h-full flex flex-col justify-between transition-all duration-300 ${
               isLight 
                 ? 'border-slate-200/80 bg-white/80 shadow-lg shadow-slate-100/50' 
                 : 'border-white/10 bg-[#0a0a0a]/50'
@@ -76,13 +76,13 @@ export default function Contact() {
               <div className={`absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 transition-colors duration-300 ${isLight ? 'border-black' : 'border-white'}`}></div>
               
               <div>
-                <h3 className={`text-sm font-semibold tracking-wider uppercase mb-4 flex items-center gap-2 transition-colors ${
+                <h3 className={`text-xs sm:text-sm font-semibold tracking-wider uppercase mb-2 sm:mb-4 flex items-center gap-2 transition-colors ${
                   isLight ? 'text-slate-900 font-bold' : 'text-white'
                 }`}>
                   System Access Points
                 </h3>
                 
-                <p className={`text-sm mb-6 leading-relaxed transition-colors ${
+                <p className={`text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed transition-colors ${
                   isLight ? 'text-slate-600' : 'text-gray-400'
                 }`}>
                   Connect via direct communication channels or view professional profiles on social networks.
@@ -90,28 +90,28 @@ export default function Contact() {
               </div>
 
               {/* Contact list */}
-              <div className="space-y-4 flex-1 flex flex-col justify-center">
+              <div className="space-y-3 sm:space-y-4 flex-1 flex flex-col justify-center">
                 {/* Phone Card */}
                 <a 
                   href="tel:09918547240"
-                  className={`flex items-center p-4 border rounded-sm transition-all duration-300 group/item ${
+                  className={`flex items-center p-3 sm:p-4 border rounded-sm transition-all duration-300 group/item ${
                     isLight 
                       ? 'bg-slate-50/50 border-slate-100 hover:border-black/35 hover:bg-slate-100/50' 
                       : 'bg-[#050505]/60 border-white/5 hover:border-white/35 hover:bg-white/5'
                   }`}
                 >
-                  <div className={`p-3 rounded-sm transition-all duration-300 mr-4 ${
+                  <div className={`p-2.5 sm:p-3 rounded-sm transition-all duration-300 mr-3 sm:mr-4 ${
                     isLight 
                       ? 'bg-slate-100 text-slate-800 group-hover/item:bg-black group-hover/item:text-white' 
                       : 'bg-white/10 text-white group-hover/item:bg-white group-hover/item:text-[#050505]'
                   }`}>
-                    <FaPhone className="w-5 h-5" />
+                    <FaPhone className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <span className={`block text-[10px] tracking-widest uppercase font-semibold transition-colors ${
+                    <span className={`block text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold transition-colors ${
                       isLight ? 'text-slate-400' : 'text-gray-500'
                     }`}>Contact Number</span>
-                    <span className={`font-mono text-sm tracking-wide transition-colors ${
+                    <span className={`font-mono text-xs sm:text-sm tracking-wide transition-colors ${
                       isLight ? 'text-slate-855 group-hover/item:text-black font-semibold' : 'text-white group-hover/item:text-white'
                     }`}>09918547240</span>
                   </div>
@@ -122,24 +122,24 @@ export default function Contact() {
                   href="https://www.facebook.com/jesper.ian.villacorte.barila" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className={`flex items-center p-4 border rounded-sm transition-all duration-300 group/item ${
+                  className={`flex items-center p-3 sm:p-4 border rounded-sm transition-all duration-300 group/item ${
                     isLight 
                       ? 'bg-slate-50/50 border-slate-100 hover:border-black/35 hover:bg-slate-100/50' 
                       : 'bg-[#050505]/60 border-white/5 hover:border-white/35 hover:bg-white/5'
                   }`}
                 >
-                  <div className={`p-3 rounded-sm transition-all duration-300 mr-4 ${
+                  <div className={`p-2.5 sm:p-3 rounded-sm transition-all duration-300 mr-3 sm:mr-4 ${
                     isLight 
                       ? 'bg-slate-100 text-slate-800 group-hover/item:bg-black group-hover/item:text-white' 
                       : 'bg-white/10 text-white group-hover/item:bg-white group-hover/item:text-[#050505]'
                   }`}>
-                    <FaFacebook className="w-5 h-5" />
+                    <FaFacebook className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div className="overflow-hidden">
-                    <span className={`block text-[10px] tracking-widest uppercase font-semibold transition-colors ${
+                    <span className={`block text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold transition-colors ${
                       isLight ? 'text-slate-400' : 'text-gray-500'
                     }`}>Social Network</span>
-                    <span className={`text-sm truncate block transition-colors ${
+                    <span className={`text-xs sm:text-sm truncate block transition-colors ${
                       isLight ? 'text-slate-855 group-hover/item:text-black font-semibold' : 'text-white group-hover/item:text-white'
                     }`}>jesper.ian.villacorte.barila</span>
                   </div>
@@ -150,24 +150,24 @@ export default function Contact() {
                   href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className={`flex items-center p-4 border rounded-sm transition-all duration-300 group/item ${
+                  className={`flex items-center p-3 sm:p-4 border rounded-sm transition-all duration-300 group/item ${
                     isLight 
                       ? 'bg-slate-50/50 border-slate-100 hover:border-black/35 hover:bg-slate-100/50' 
                       : 'bg-[#050505]/60 border-white/5 hover:border-white/35 hover:bg-white/5'
                   }`}
                 >
-                  <div className={`p-3 rounded-sm transition-all duration-300 mr-4 ${
+                  <div className={`p-2.5 sm:p-3 rounded-sm transition-all duration-300 mr-3 sm:mr-4 ${
                     isLight 
                       ? 'bg-slate-100 text-slate-800 group-hover/item:bg-black group-hover/item:text-white' 
                       : 'bg-white/10 text-white group-hover/item:bg-white group-hover/item:text-[#050505]'
                   }`}>
-                    <FaLinkedin className="w-5 h-5" />
+                    <FaLinkedin className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div className="overflow-hidden">
-                    <span className={`block text-[10px] tracking-widest uppercase font-semibold transition-colors ${
+                    <span className={`block text-[9px] sm:text-[10px] tracking-widest uppercase font-semibold transition-colors ${
                       isLight ? 'text-slate-400' : 'text-gray-500'
                     }`}>Professional Link</span>
-                    <span className={`text-sm truncate block transition-colors ${
+                    <span className={`text-xs sm:text-sm truncate block transition-colors ${
                       isLight ? 'text-slate-855 group-hover/item:text-black font-semibold' : 'text-white group-hover/item:text-white'
                     }`}>Jesper Ian Barila</span>
                   </div>
@@ -183,11 +183,11 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
             onSubmit={handleSubmit}
-            className="lg:col-span-7 w-full space-y-6"
+            className="lg:col-span-7 w-full space-y-4 sm:space-y-6"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-gray-400">Name</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="flex flex-col space-y-1.5 sm:space-y-2">
+                <label htmlFor="name" className="text-xs sm:text-sm font-medium text-gray-400">Name</label>
                 <input
                   type="text"
                   id="name"
@@ -195,7 +195,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors ${
+                  className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors ${
                     isLight 
                       ? 'focus:border-black/50 focus:ring-black/50' 
                       : 'focus:border-white/50 focus:ring-white/50'
@@ -204,8 +204,8 @@ export default function Contact() {
                 />
               </div>
               
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-gray-400">Email</label>
+              <div className="flex flex-col space-y-1.5 sm:space-y-2">
+                <label htmlFor="email" className="text-xs sm:text-sm font-medium text-gray-400">Email</label>
                 <input
                   type="email"
                   id="email"
@@ -213,7 +213,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors ${
+                  className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors ${
                     isLight 
                       ? 'focus:border-black/50 focus:ring-black/50' 
                       : 'focus:border-white/50 focus:ring-white/50'
@@ -223,8 +223,8 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="subject" className="text-sm font-medium text-gray-400">Subject</label>
+            <div className="flex flex-col space-y-1.5 sm:space-y-2">
+              <label htmlFor="subject" className="text-xs sm:text-sm font-medium text-gray-400">Subject</label>
               <input
                 type="text"
                 id="subject"
@@ -232,7 +232,7 @@ export default function Contact() {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors ${
+                className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors ${
                   isLight 
                     ? 'focus:border-black/50 focus:ring-black/50' 
                     : 'focus:border-white/50 focus:ring-white/50'
@@ -241,16 +241,16 @@ export default function Contact() {
               />
             </div>
 
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="message" className="text-sm font-medium text-gray-400">Message</label>
+            <div className="flex flex-col space-y-1.5 sm:space-y-2">
+              <label htmlFor="message" className="text-xs sm:text-sm font-medium text-gray-400">Message</label>
               <textarea
                 id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows={6}
-                className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors resize-none ${
+                rows={5}
+                className={`bg-[#0a0a0a] border border-white/10 rounded-sm px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-colors resize-none ${
                   isLight 
                     ? 'focus:border-black/50 focus:ring-black/50' 
                     : 'focus:border-white/50 focus:ring-white/50'
@@ -263,14 +263,14 @@ export default function Contact() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className={`w-full rounded-sm py-4 font-medium text-lg transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+              className={`w-full rounded-sm py-3 sm:py-4 font-medium text-sm sm:text-lg transition-colors flex items-center justify-center gap-2 cursor-pointer ${
                 isLight 
                   ? 'bg-black/5 hover:bg-black/10 text-black border border-black/25' 
                   : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
               }`}
             >
               Send Message
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </motion.button>

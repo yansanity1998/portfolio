@@ -78,7 +78,7 @@ export default function Gallery() {
     };
 
     return (
-        <section id="gallery" className="min-h-screen bg-[#050505] relative flex flex-col items-center justify-center overflow-hidden py-32">
+        <section id="gallery" className="min-h-screen bg-[#050505] relative flex flex-col items-center justify-center overflow-hidden py-16 sm:py-24 md:py-32 px-4">
 
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none z-0 transition-colors duration-300 ${
                 theme === 'light' ? 'bg-slate-200/30' : 'bg-white/5'
@@ -87,11 +87,11 @@ export default function Gallery() {
             <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
                 <AnimatedTitle 
                     text="Gallery"
-                    className="text-5xl md:text-6xl font-bold text-white tracking-tighter mb-16 md:mb-24 justify-center"
+                    className="text-3xl sm:text-4xl md:text-6xl font-bold text-white tracking-tighter mb-8 sm:mb-16 md:mb-24 justify-center"
                 />
 
                 <div
-                    className="relative w-full flex items-center justify-center gap-0 md:gap-40 h-[350px] md:h-[450px] overflow-hidden"
+                    className="relative w-full flex items-center justify-center gap-0 md:gap-40 h-[270px] sm:h-[350px] md:h-[450px] overflow-hidden"
                     style={{ touchAction: 'pan-y' }}
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
@@ -105,12 +105,12 @@ export default function Gallery() {
                                 className="relative flex items-center justify-center cursor-pointer"
                                 style={{ perspective: '1000px' }}
                                 animate={{
-                                    scale: isActive ? 1 : (window.innerWidth < 768 ? 0.6 : 0.45),
-                                    opacity: isActive ? 1 : (window.innerWidth < 768 ? 0.7 : 0.4),
+                                    scale: isActive ? 1 : (window.innerWidth < 768 ? 0.55 : 0.45),
+                                    opacity: isActive ? 1 : (window.innerWidth < 768 ? 0.6 : 0.4),
                                     zIndex: isActive ? 10 : 1,
                                     x: isActive ? 0 : (
                                         window.innerWidth < 768
-                                            ? (carouselIndex < activeCarousel ? 60 : -60)
+                                            ? (carouselIndex < activeCarousel ? 45 : -45)
                                             : (carouselIndex < activeCarousel ? -60 : 60)
                                     )
                                 }}
@@ -120,7 +120,7 @@ export default function Gallery() {
                                 }}
                             >
                                 <motion.div
-                                    className="relative w-[140px] h-[200px] md:w-[220px] md:h-[300px] will-change-transform"
+                                    className="relative w-[105px] h-[155px] sm:w-[150px] sm:h-[220px] md:w-[220px] md:h-[300px] will-change-transform"
                                     style={{ transformStyle: 'preserve-3d' }}
                                     animate={isActive ? { rotateY: [0, carouselIndex % 2 === 0 ? -360 : 360] } : {}}
                                     transition={isActive ? {
@@ -136,11 +136,11 @@ export default function Gallery() {
                                                 key={index}
                                                 className="absolute inset-0 will-change-transform"
                                                 style={{
-                                                    transform: `rotateY(${angle}deg) translateZ(clamp(120px, 15vw, 200px))`,
+                                                    transform: `rotateY(${angle}deg) translateZ(clamp(85px, 14vw, 200px))`,
                                                     transformStyle: 'preserve-3d'
                                                 }}
                                             >
-                                                <div className="w-full h-full rounded-lg overflow-hidden border-2 border-white/80 shadow-[0_0_30px_rgba(255,255,255,0.15)] relative bg-black group pointer-events-none">
+                                                <div className="w-full h-full rounded-md sm:rounded-lg overflow-hidden border-2 border-white/80 shadow-[0_0_30px_rgba(255,255,255,0.15)] relative bg-black group pointer-events-none">
                                                     <img
                                                         src={src}
                                                         alt={`Gallery ${index}`}
@@ -156,19 +156,37 @@ export default function Gallery() {
                     })}
                 </div>
 
+                {/* Mobile Carousel Switcher Indicators */}
+                <div className="flex md:hidden items-center justify-center gap-2 mt-4 z-20">
+                    {[0, 1, 2].map((idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => setActiveCarousel(idx)}
+                            className={`px-3 py-1 text-xs rounded-full border transition-all ${
+                                activeCarousel === idx 
+                                    ? (theme === 'light' ? 'bg-black text-white border-black font-semibold' : 'bg-white text-black border-white font-semibold')
+                                    : 'border-white/20 text-gray-400 bg-white/5'
+                            }`}
+                        >
+                            Set {idx + 1}
+                        </button>
+                    ))}
+                </div>
+
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mt-16 md:mt-24 w-full"
+                    className="text-center mt-10 sm:mt-16 md:mt-24 w-full"
                 >
-                    <div className="max-w-4xl mx-auto px-4 min-h-[150px] flex items-center justify-center">
-                        <p className="text-lg md:text-2xl text-gray-400 font-medium leading-relaxed flex flex-wrap justify-center gap-x-[0.4rem] gap-y-1 md:gap-x-[0.5rem] md:gap-y-2 relative z-20">
+                    <div className="max-w-4xl mx-auto px-2 sm:px-4 min-h-[100px] sm:min-h-[150px] flex items-center justify-center">
+                        <p className="text-xs sm:text-base md:text-xl lg:text-2xl text-gray-400 font-medium leading-relaxed flex flex-wrap justify-center gap-x-[0.35rem] gap-y-1 md:gap-x-[0.5rem] md:gap-y-2 relative z-20">
                             {textArray.map((item, i) => (
                                 <span
                                     key={i}
                                     onMouseEnter={(e) => handleWordHover(e, i)}
+                                    onTouchStart={(e: any) => handleWordHover(e, i)}
                                     className="inline-block whitespace-pre select-none cursor-crosshair transition-all duration-300 ease-out"
                                     style={{
                                         color: item.isHighlight ? (theme === 'light' ? '#0f172a' : '#ffffff') : (theme === 'light' ? '#64748b' : '#9ca3af'),

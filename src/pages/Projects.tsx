@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedTitle from '../components/AnimatedTitle';
 import { useTheme } from '../context/ThemeContext';
@@ -176,25 +176,25 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
   return (
     <div
       onClick={onClick}
-      className="relative aspect-square border border-white/20 flex flex-col group overflow-hidden bg-[#050505] hover:bg-[#0a0a0a] transition-all cursor-pointer hover:scale-105 duration-700"
+      className="relative aspect-[4/3] sm:aspect-square border border-white/20 flex flex-col group overflow-hidden bg-[#050505] hover:bg-[#0a0a0a] transition-all cursor-pointer hover:scale-[1.02] md:hover:scale-105 duration-500 rounded-sm"
     >
-      {/* Image fills top portion, no padding */}
-      <div className="relative flex-1 w-full overflow-hidden border-b border-white/20">
+      {/* Image fills top portion */}
+      <div className="relative flex-1 w-full overflow-hidden border-b border-white/20 min-h-[140px] sm:min-h-[180px]">
         <img src={project.images[0]} alt={project.title} className={`absolute inset-0 w-full h-full object-cover object-top ${project.images.length > 1 ? 'group-hover:opacity-0 transition-opacity duration-500' : ''}`} />
         {project.images.length > 1 && (
           <img src={project.images[1]} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         )}
       </div>
 
-      {/* Text below the image, with padding */}
-      <div className="w-full z-10 p-6 md:p-8 flex-none h-[180px] flex flex-col">
+      {/* Text below the image */}
+      <div className="w-full z-10 p-3.5 sm:p-6 md:p-8 flex-none h-[130px] sm:h-[150px] md:h-[180px] flex flex-col justify-between">
         <div>
-          <h3 className={`font-bold text-white mb-1 transition-colors ${theme === 'light' ? 'group-hover:text-black' : 'group-hover:text-white'} ${project.title.length > 25 ? 'text-lg leading-tight line-clamp-2' : 'text-xl truncate'}`}>{project.title}</h3>
-          <p className="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">{project.role}</p>
+          <h3 className={`font-bold text-white mb-0.5 sm:mb-1 transition-colors ${theme === 'light' ? 'group-hover:text-black' : 'group-hover:text-white'} text-sm sm:text-lg md:text-xl truncate`}>{project.title}</h3>
+          <p className="text-[9px] sm:text-[10px] text-gray-500 mb-2 sm:mb-4 uppercase tracking-widest">{project.role}</p>
         </div>
-        <div className="flex gap-2 flex-wrap mt-auto">
+        <div className="flex gap-1 sm:gap-2 flex-wrap mt-auto">
           {project.techStack.map(tech => (
-            <span key={tech} className={`text-[10px] px-3 py-1 border rounded-full font-bold uppercase tracking-wider ${theme === 'light'
+            <span key={tech} className={`text-[8px] sm:text-[10px] px-2 py-0.5 sm:px-3 sm:py-1 border rounded-full font-bold uppercase tracking-wider ${theme === 'light'
               ? 'border-black/15 text-black bg-black/5'
               : 'border-white/20 text-white bg-white/10'
               }`}>{tech}</span>
@@ -208,7 +208,54 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
+  const [mobileViewMode, setMobileViewMode] = useState<'swipe' | 'grid'>('swipe');
   const { theme } = useTheme();
+
+  // Mobile card swipe handling
+  const cardTouchStartX = useRef(0);
+  const cardTouchStartY = useRef(0);
+
+  const handleCardTouchStart = (e: React.TouchEvent) => {
+    cardTouchStartX.current = e.touches[0].clientX;
+    cardTouchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleCardTouchEnd = (e: React.TouchEvent) => {
+    const diffX = e.changedTouches[0].clientX - cardTouchStartX.current;
+    const diffY = e.changedTouches[0].clientY - cardTouchStartY.current;
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) {
+        // Next
+        setMobileProjectIndex((prev) => (prev + 1) % projects.length);
+      } else {
+        // Prev
+        setMobileProjectIndex((prev) => (prev - 1 + projects.length) % projects.length);
+      }
+    }
+  };
+
+  // Modal image swipe handling
+  const modalTouchStartX = useRef(0);
+  const modalTouchStartY = useRef(0);
+
+  const handleModalTouchStart = (e: React.TouchEvent) => {
+    modalTouchStartX.current = e.touches[0].clientX;
+    modalTouchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleModalTouchEnd = (e: React.TouchEvent) => {
+    if (!selectedProject || selectedProject.images.length <= 1) return;
+    const diffX = e.changedTouches[0].clientX - modalTouchStartX.current;
+    const diffY = e.changedTouches[0].clientY - modalTouchStartY.current;
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) {
+        setCurrentImageIndex(prev => prev === selectedProject.images.length - 1 ? 0 : prev + 1);
+      } else {
+        setCurrentImageIndex(prev => prev === 0 ? selectedProject.images.length - 1 : prev - 1);
+      }
+    }
+  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -224,8 +271,10 @@ export default function Projects() {
     };
   }, [selectedProject]);
 
+  const activeProject = projects[mobileProjectIndex];
+
   return (
-    <section id="projects" className="min-h-screen bg-[#050505] py-32 px-6 md:px-16 relative overflow-hidden flex items-center">
+    <section id="projects" className="min-h-screen bg-[#050505] py-16 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 relative overflow-hidden flex items-center">
 
       {/* Background Subtle Glow */}
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none z-0 transition-colors duration-300 ${theme === 'light' ? 'bg-slate-200/20' : 'bg-white/5'
@@ -233,29 +282,141 @@ export default function Projects() {
 
       <div className="max-w-6xl w-full mx-auto flex flex-col relative z-10">
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center md:text-left"
-        >
-          <AnimatedTitle
-            text="Selected Works"
-            className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-4 justify-center md:justify-start"
-          />
-          <p className="text-gray-400 max-w-xl">
-            A collection of digital experiences combining robust backends with immersive frontends.
-          </p>
-        </motion.div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 md:mb-16 gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center md:text-left"
+          >
+            <AnimatedTitle
+              text="Selected Works"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-2 sm:mb-4 justify-center md:justify-start"
+            />
+            <p className="text-gray-400 text-xs sm:text-sm md:text-base max-w-xl">
+              A collection of digital experiences combining robust backends with immersive frontends.
+            </p>
+          </motion.div>
 
-        {/* The 3-Column Grid */}
+          {/* Mobile View Switcher (Swipe vs Grid) */}
+          <div className="flex md:hidden items-center justify-center gap-2 bg-[#0a0a0a] p-1 rounded-full border border-white/10 self-center">
+            <button
+              onClick={() => setMobileViewMode('swipe')}
+              className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
+                mobileViewMode === 'swipe'
+                  ? (theme === 'light' ? 'bg-black text-white' : 'bg-white text-black shadow-sm')
+                  : 'text-gray-400'
+              }`}
+            >
+              ↔ Swipe View
+            </button>
+            <button
+              onClick={() => setMobileViewMode('grid')}
+              className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
+                mobileViewMode === 'grid'
+                  ? (theme === 'light' ? 'bg-black text-white' : 'bg-white text-black shadow-sm')
+                  : 'text-gray-400'
+              }`}
+            >
+              ⊞ Grid View
+            </button>
+          </div>
+        </div>
+
+        {/* MOBILE SWIPEABLE CAROUSEL VIEW */}
+        <div className="block md:hidden w-full">
+          {mobileViewMode === 'swipe' ? (
+            <div className="flex flex-col items-center w-full">
+              {/* Project Counter & Swipe Hint */}
+              <div className="w-full flex items-center justify-between text-xs text-gray-400 mb-3 px-2">
+                <span className="font-mono font-semibold tracking-wider">
+                  {String(mobileProjectIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                </span>
+                <span className="text-[11px] text-gray-400 flex items-center gap-1">
+                  Swipe ↔ or use arrows
+                </span>
+              </div>
+
+              {/* Swipeable Card Area */}
+              <div 
+                className="w-full relative touch-pan-y"
+                onTouchStart={handleCardTouchStart}
+                onTouchEnd={handleCardTouchEnd}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeProject.title}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.25 }}
+                    className="w-full"
+                  >
+                    <ProjectCard 
+                      project={activeProject} 
+                      onClick={() => { setSelectedProject(activeProject); setCurrentImageIndex(0); }} 
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Carousel Navigation Bar & Dots */}
+              <div className="flex items-center justify-between w-full mt-4 px-2">
+                <button
+                  onClick={() => setMobileProjectIndex(prev => (prev - 1 + projects.length) % projects.length)}
+                  className="w-9 h-9 rounded-full border border-white/20 bg-black/60 text-white flex items-center justify-center active:scale-95 text-xs shadow-md"
+                  aria-label="Previous project"
+                >
+                  ◀
+                </button>
+
+                {/* Dots indicator */}
+                <div className="flex items-center gap-1.5 overflow-x-auto max-w-[200px] px-2 py-1">
+                  {projects.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setMobileProjectIndex(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        idx === mobileProjectIndex 
+                          ? (theme === 'light' ? 'bg-black w-5' : 'bg-white w-5')
+                          : 'bg-gray-600 w-1.5'
+                      }`}
+                      aria-label={`Go to project ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setMobileProjectIndex(prev => (prev + 1) % projects.length)}
+                  className="w-9 h-9 rounded-full border border-white/20 bg-black/60 text-white flex items-center justify-center active:scale-95 text-xs shadow-md"
+                  aria-label="Next project"
+                >
+                  ▶
+                </button>
+              </div>
+
+              <p className="text-[11px] text-gray-500 mt-2 text-center">
+                Tap card to view full project details & live demo
+              </p>
+            </div>
+          ) : (
+            /* Mobile Grid fallback */
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+              {projects.map((project) => (
+                <ProjectCard key={project.title} project={project} onClick={() => { setSelectedProject(project); setCurrentImageIndex(0); }} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* DESKTOP GRID (Hidden on Mobile) */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-4 bg-[#050505] shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+          className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 bg-[#050505] shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
         >
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} onClick={() => { setSelectedProject(project); setCurrentImageIndex(0); }} />
@@ -272,7 +433,7 @@ export default function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className={`fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 ${
+            className={`fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 md:p-8 ${
               theme === 'light' ? 'bg-black/40 backdrop-blur-md' : 'bg-black/75 backdrop-blur-md'
             }`}
           >
@@ -281,16 +442,20 @@ export default function Projects() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className={`rounded-2xl w-full max-w-6xl max-h-[90vh] h-full md:h-[82vh] flex flex-col md:flex-row relative overflow-hidden transition-all duration-300 ${
+              className={`rounded-xl sm:rounded-2xl w-full max-w-6xl max-h-[92vh] h-full md:h-[82vh] flex flex-col md:flex-row relative overflow-hidden transition-all duration-300 ${
                 theme === 'light'
                   ? 'bg-white border border-slate-200 shadow-[0_25px_60px_rgba(0,0,0,0.18)] text-slate-900'
                   : 'bg-[#080808] border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.9)] text-white'
               }`}
             >
-              {/* Image Carousel Area - Full edge-to-edge preview */}
-              <div className={`relative w-full md:w-[55%] h-72 md:h-full group flex-shrink-0 border-b md:border-b-0 md:border-r overflow-hidden ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-[#09090b] border-white/10'
-              }`}>
+              {/* Image Carousel Area - Full edge-to-edge preview with swipe support */}
+              <div 
+                className={`relative w-full md:w-[55%] h-56 sm:h-72 md:h-full group flex-shrink-0 border-b md:border-b-0 md:border-r overflow-hidden touch-pan-y ${
+                  theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-[#09090b] border-white/10'
+                }`}
+                onTouchStart={handleModalTouchStart}
+                onTouchEnd={handleModalTouchEnd}
+              >
 
                 {/* Main Full Display Image - Completely covers container with 0 gap */}
                 <AnimatePresence mode="wait">
@@ -302,43 +467,52 @@ export default function Projects() {
                     transition={{ duration: 0.3 }}
                     src={selectedProject.images[currentImageIndex]}
                     alt={selectedProject.title}
-                    className="absolute inset-0 w-full h-full object-cover object-top z-10"
+                    className="absolute inset-0 w-full h-full object-cover object-top z-10 select-none"
                   />
                 </AnimatePresence>
+
+                {/* Mobile Swipe Hint Badge */}
+                {selectedProject.images.length > 1 && (
+                  <div className="md:hidden absolute top-3 left-3 z-20 px-2.5 py-1 rounded-full text-[9px] font-semibold bg-black/60 backdrop-blur-md text-white/90 border border-white/15 shadow-sm">
+                    ↔ Swipe image
+                  </div>
+                )}
 
                 {/* Navigation Controls */}
                 {selectedProject.images.length > 1 && (
                   <>
                     <button
                       onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === 0 ? selectedProject.images.length - 1 : prev - 1) }}
-                      className={`absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all border z-20 shadow-md ${
+                      className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all border z-20 shadow-md ${
                         theme === 'light' 
                           ? 'bg-white/90 text-slate-900 border-slate-200 hover:bg-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.08)]' 
                           : 'bg-black/80 text-white border-white/20 hover:bg-white hover:text-black'
                       }`}
+                      aria-label="Previous image"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(prev => prev === selectedProject.images.length - 1 ? 0 : prev + 1) }}
-                      className={`absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all border z-20 shadow-md ${
+                      className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all border z-20 shadow-md ${
                         theme === 'light' 
                           ? 'bg-white/90 text-slate-900 border-slate-200 hover:bg-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.08)]' 
                           : 'bg-black/80 text-white border-white/20 hover:bg-white hover:text-black'
                       }`}
+                      aria-label="Next image"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                     </button>
 
                     {/* Pagination Dots with Glass Backdrop */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-lg">
+                    <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 z-20 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10 shadow-lg">
                       {selectedProject.images.map((_, idx) => (
                         <div 
                           key={idx} 
-                          className={`h-2 rounded-full transition-all duration-300 ${
+                          className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                             idx === currentImageIndex 
-                              ? 'bg-white w-6' 
-                              : 'bg-white/40 w-2'
+                              ? 'bg-white w-4 sm:w-6' 
+                              : 'bg-white/40 w-1.5 sm:w-2'
                           }`} 
                         />
                       ))}
@@ -349,7 +523,7 @@ export default function Projects() {
 
               {/* Modal Content Details */}
               <div 
-                className={`w-full md:w-[45%] p-6 md:p-10 flex flex-col h-full overflow-y-auto relative hide-scrollbar transition-colors ${
+                className={`w-full md:w-[45%] p-4 sm:p-6 md:p-10 flex flex-col h-full overflow-y-auto relative hide-scrollbar transition-colors ${
                   theme === 'light' ? 'bg-white text-slate-900' : 'bg-[#080808] text-white'
                 }`}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -358,38 +532,38 @@ export default function Projects() {
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className={`absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center transition-all border z-20 ${
+                  className={`absolute top-3 right-3 sm:top-5 sm:right-5 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all border z-20 ${
                     theme === 'light'
                       ? 'bg-slate-100 hover:bg-red-500 hover:text-white text-slate-700 border-slate-200'
                       : 'bg-white/10 hover:bg-red-500 hover:text-white text-white border-white/20'
                   }`}
                   aria-label="Close modal"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
 
-                <h2 className={`text-2xl md:text-4xl font-bold mb-2 tracking-tight pr-12 ${
+                <h2 className={`text-xl sm:text-2xl md:text-4xl font-bold mb-1 sm:mb-2 tracking-tight pr-10 md:pr-12 ${
                   theme === 'light' ? 'text-slate-900' : 'text-white'
                 }`}>{selectedProject.title}</h2>
                 
-                <h3 className={`font-semibold tracking-widest uppercase mb-6 text-xs md:text-sm ${
+                <h3 className={`font-semibold tracking-widest uppercase mb-4 sm:mb-6 text-[11px] sm:text-xs md:text-sm ${
                   theme === 'light' ? 'text-slate-600 font-bold' : 'text-gray-400'
                 }`}>{selectedProject.role}</h3>
 
                 {/* Scrollable Description */}
-                <div className={`text-sm md:text-base leading-relaxed mb-8 space-y-4 ${
+                <div className={`text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8 space-y-3 sm:space-y-4 ${
                   theme === 'light' ? 'text-slate-700' : 'text-gray-300'
                 }`}>
                   {selectedProject.description.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
                 </div>
 
-                <h4 className={`text-xs font-bold uppercase tracking-widest mb-3 ${
+                <h4 className={`text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2.5 sm:mb-3 ${
                   theme === 'light' ? 'text-slate-900' : 'text-white'
                 }`}>Technologies Used</h4>
                 
-                <div className="flex flex-wrap gap-2 mb-10">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6 sm:mb-10">
                   {selectedProject.techStack.map(tech => (
-                    <span key={tech} className={`px-3 py-1.5 border rounded-full font-bold uppercase tracking-wider text-[10px] shadow-sm ${
+                    <span key={tech} className={`px-2.5 py-1 sm:px-3 sm:py-1.5 border rounded-full font-bold uppercase tracking-wider text-[9px] sm:text-[10px] shadow-sm ${
                       theme === 'light'
                         ? 'border-slate-300 text-slate-800 bg-slate-100'
                         : 'border-white/15 text-gray-200 bg-white/5'
@@ -400,7 +574,7 @@ export default function Projects() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className={`flex flex-col gap-3 mt-auto pt-6 border-t ${
+                <div className={`flex flex-col gap-2 sm:gap-3 mt-auto pt-4 sm:pt-6 border-t ${
                   theme === 'light' ? 'border-slate-200' : 'border-white/10'
                 }`}>
                   {selectedProject.demo !== "#" && (
@@ -408,7 +582,7 @@ export default function Projects() {
                       href={selectedProject.demo.startsWith('http://') || selectedProject.demo.startsWith('https://') ? selectedProject.demo : `https://${selectedProject.demo}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold uppercase tracking-widest transition-all shadow-md text-sm cursor-pointer ${
+                      className={`w-full flex items-center justify-center gap-2 py-3 sm:py-3.5 rounded-lg sm:rounded-xl font-bold uppercase tracking-widest transition-all shadow-md text-xs sm:text-sm cursor-pointer ${
                         theme === 'light'
                           ? 'bg-slate-900 !text-white hover:bg-slate-800 shadow-[0_4px_14px_rgba(15,23,42,0.2)]'
                           : 'bg-white !text-black hover:bg-gray-200 shadow-[0_4px_14px_rgba(255,255,255,0.15)]'
@@ -423,7 +597,7 @@ export default function Projects() {
                       href={selectedProject.github}
                       target="_blank"
                       rel="noreferrer"
-                      className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border-2 font-bold uppercase tracking-widest transition-all text-sm ${
+                      className={`w-full flex items-center justify-center gap-2 py-3 sm:py-3.5 rounded-lg sm:rounded-xl border-2 font-bold uppercase tracking-widest transition-all text-xs sm:text-sm ${
                         theme === 'light'
                           ? 'border-slate-300 text-slate-800 hover:bg-slate-100 hover:border-slate-400'
                           : 'border-white/20 text-white hover:border-white hover:bg-white/10'

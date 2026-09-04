@@ -64,14 +64,14 @@ export default function NavBar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 w-full px-6 md:px-16 py-4 flex justify-between items-center z-[100] transition-all duration-300 ${
-        isScrolled ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-2 shadow-lg' : 'bg-transparent'
+      className={`fixed top-0 left-0 w-full px-4 sm:px-8 md:px-16 py-3 md:py-4 flex justify-between items-center z-[100] transition-all duration-300 ${
+        isScrolled ? 'bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-2.5 shadow-lg' : 'bg-transparent'
       }`}
     >
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-white text-3xl md:text-4xl tracking-wide cursor-pointer z-50 relative"
+        className="text-white text-2xl sm:text-3xl md:text-4xl tracking-wide cursor-pointer z-50 relative"
         style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}
         onClick={() => {
           scrollToSection('home');

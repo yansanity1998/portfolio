@@ -30,12 +30,12 @@ export default function Hero() {
 
 
       {/* Center Content */}
-      <div className="flex flex-col items-center justify-center min-h-screen relative z-10 pointer-events-none">
+      <div className="flex flex-col items-center justify-center min-h-screen relative z-10 px-4 pointer-events-none">
         <motion.h1
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className={`text-[4rem] sm:text-6xl md:text-8xl lg:text-[8rem] font-bold tracking-tight mb-4 text-center pointer-events-auto bg-clip-text text-transparent bg-[length:200%_100%] bg-gradient-to-r ${theme === 'light' ? 'from-slate-900/40 via-slate-900 to-slate-900/40' : 'from-white/20 via-white to-white/20'} animate-shimmer`}
+          className={`text-3xl sm:text-5xl md:text-7xl lg:text-[8rem] font-bold tracking-tight mb-3 sm:mb-4 text-center pointer-events-auto bg-clip-text text-transparent bg-[length:200%_100%] bg-gradient-to-r leading-tight sm:leading-none ${theme === 'light' ? 'from-slate-900/40 via-slate-900 to-slate-900/40' : 'from-white/20 via-white to-white/20'} animate-shimmer`}
           style={{ textShadow: theme === 'light' ? "0 10px 40px rgba(15,23,42,0.15)" : "0 10px 40px rgba(255,255,255,0.15)" }}
         >
           <ScrambleText text="Jesper Ian V. Barila" />
@@ -45,13 +45,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex items-center gap-1 sm:gap-6 md:gap-10 text-xs sm:text-xl md:text-3xl font-medium mt-4 pointer-events-auto"
+          className="flex items-center justify-center flex-wrap gap-1.5 sm:gap-6 md:gap-10 text-[11px] sm:text-lg md:text-2xl lg:text-3xl font-medium mt-2 sm:mt-4 pointer-events-auto max-w-full"
         >
           {words.map((word, idx) => {
             const isActive = idx === activeIndex;
             return (
-              <div key={word} className="relative px-1 sm:px-4 py-1 sm:py-2 flex items-center justify-center">
-                <span className={`transition-all duration-700 z-10 ${isActive ? (theme === 'light' ? 'text-black font-semibold' : 'text-white') : 'text-gray-500 blur-[1px] opacity-50'}`}>
+              <div key={word} className="relative px-2 sm:px-4 py-1 sm:py-2 flex items-center justify-center">
+                <span className={`transition-all duration-700 z-10 text-center whitespace-nowrap ${isActive ? (theme === 'light' ? 'text-black font-semibold' : 'text-white') : 'text-gray-500 blur-[0.5px] opacity-50'}`}>
                   {word}
                 </span>
 
@@ -67,10 +67,10 @@ export default function Hero() {
                       transition={{ type: "spring", stiffness: 200, damping: 20 }}
                     >
                       {/* Corners */}
-                      <span className={`absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
-                      <span className={`absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
-                      <span className={`absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
-                      <span className={`absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -top-1 -left-1 w-2.5 h-2.5 sm:w-3 sm:h-3 border-t-2 border-l-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 border-t-2 border-r-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -bottom-1 -left-1 w-2.5 h-2.5 sm:w-3 sm:h-3 border-b-2 border-l-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
+                      <span className={`absolute -bottom-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 border-b-2 border-r-2 ${theme === 'light' ? 'border-black shadow-[0_0_10px_rgba(0,0,0,0.15)]' : 'border-white shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}></span>
 
                       {/* Scanning line animation */}
                       <motion.div
@@ -106,22 +106,22 @@ export default function Hero() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}
-        className="fixed right-6 md:right-10 z-50 flex flex-col items-end gap-3"
-        style={{ bottom: 'max(80px, 10vh)' }}
+        className="fixed right-4 md:right-10 z-50 flex flex-col items-end gap-3"
+        style={{ bottom: 'max(70px, 8vh)' }}
       >
         {/* Links - always visible on desktop, collapsible on mobile */}
-        <div className={`flex flex-col gap-5 md:gap-6 transition-all duration-300 ${showSocials ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none md:opacity-100 md:scale-100 md:pointer-events-auto'}`}>
-          <a href="https://github.com/yansanity1998" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-            <FaGithub size={24} />
+        <div className={`flex flex-col gap-4 md:gap-6 p-2 rounded-full backdrop-blur-md md:backdrop-blur-none bg-black/40 md:bg-transparent border border-white/10 md:border-none transition-all duration-300 ${showSocials ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none md:opacity-100 md:scale-100 md:pointer-events-auto'}`}>
+          <a href="https://github.com/yansanity1998" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-700 md:text-slate-500 hover:text-black' : 'text-gray-300 md:text-gray-500 hover:text-white'}`}>
+            <FaGithub size={20} className="sm:w-6 sm:h-6" />
           </a>
-          <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-            <FaLinkedin size={24} />
+          <a href="https://www.linkedin.com/in/jesper-ian-barila-269086334/?locale=en" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-700 md:text-slate-500 hover:text-black' : 'text-gray-300 md:text-gray-500 hover:text-white'}`}>
+            <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
           </a>
-          <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-            <FaFacebook size={24} />
+          <a href="https://www.facebook.com/jesper.ian.villacorte.barila" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-700 md:text-slate-500 hover:text-black' : 'text-gray-300 md:text-gray-500 hover:text-white'}`}>
+            <FaFacebook size={20} className="sm:w-6 sm:h-6" />
           </a>
-          <a href={cvPdf} target="_blank" rel="noopener noreferrer" title="View CV" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-500 hover:text-black' : 'text-gray-500 hover:text-white'}`}>
-            <FaFileDownload size={24} />
+          <a href={cvPdf} target="_blank" rel="noopener noreferrer" title="View CV" className={`transition-colors hover:-translate-y-1 transform duration-200 ${theme === 'light' ? 'text-slate-700 md:text-slate-500 hover:text-black' : 'text-gray-300 md:text-gray-500 hover:text-white'}`}>
+            <FaFileDownload size={20} className="sm:w-6 sm:h-6" />
           </a>
         </div>
       </motion.div>
@@ -132,10 +132,10 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
         onClick={() => setShowSocials(!showSocials)}
-        className="md:hidden fixed bottom-6 right-6 z-[60] w-6 h-6 flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white/60 backdrop-blur-md text-[10px] leading-none"
+        className="md:hidden fixed bottom-5 right-4 z-[60] w-8 h-8 flex items-center justify-center rounded-full bg-black/60 border border-white/20 text-white/80 backdrop-blur-md text-xs leading-none shadow-lg active:scale-95 transition-transform"
         aria-label={showSocials ? 'Hide socials' : 'Show socials'}
       >
-        ...
+        {showSocials ? '✕' : '⋯'}
       </motion.button>
 
     </div>
