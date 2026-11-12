@@ -4,11 +4,32 @@ import { Palette, Sun, Moon, X, Pipette, Hash, RotateCcw } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { ACCENT_PRESETS } from '../types'
 
-export default function ThemeToggle() {
+interface ThemeToggleProps {
+  className?: string
+  align?: 'left' | 'right'
+  compact?: boolean
+}
+
+export default function ThemeToggle({
+  className = 'hidden md:block md:fixed md:top-6 md:right-8 md:z-50 select-none',
+  align = 'right',
+  compact = false,
+}: ThemeToggleProps) {
   const { theme, setTheme, accentColor, setAccentColor, isCustomAccent } = useTheme()
   const [paletteOpen, setPaletteOpen] = useState(false)
   const popoverRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
+
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.innerWidth < 640
+  })
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640)
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   // Find currently selected preset if any
   const matchedPreset = ACCENT_PRESETS.find(
@@ -48,9 +69,21 @@ export default function ThemeToggle() {
     }
   }, [paletteOpen])
 
+  const btnSizeClass = compact
+    ? 'h-7 w-7 sm:h-8 sm:w-8'
+    : 'h-8 w-8 sm:h-9 sm:w-9'
+  const iconSizeClass = compact
+    ? 'h-3.5 w-3.5 sm:h-4 sm:w-4'
+    : 'h-4 w-4 sm:h-[18px] sm:w-[18px]'
+
+  const popoverPosClass =
+    align === 'left'
+      ? 'sm:left-0 sm:right-auto sm:mt-3 sm:w-[305px]'
+      : 'sm:right-0 sm:left-auto sm:mt-3 sm:w-[305px]'
+
   return (
-    <div className="fixed top-2.5 right-[56px] md:top-6 md:right-8 z-50 select-none">
-      {/* Theme Switcher Icons (Container removed for a clean minimal layout) */}
+    <div className={className}>
+      {/* Theme Switcher Icons */}
       <div className="inline-flex items-center gap-0.5 sm:gap-1">
         {/* Custom Theme Color Palette Button */}
         <button
@@ -59,13 +92,13 @@ export default function ThemeToggle() {
           onClick={() => setPaletteOpen((o) => !o)}
           title="Customize theme color"
           aria-label="Customize theme color"
-          className={`relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
+          className={`relative flex ${btnSizeClass} items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
             paletteOpen || isCustomAccent
               ? 'bg-[var(--bg-pill)] text-[var(--accent-color)] shadow-xs scale-105'
               : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)]'
           }`}
         >
-          <Palette className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+          <Palette className={iconSizeClass} />
           {isCustomAccent && (
             <span
               className="absolute bottom-1 right-1 h-2 w-2 rounded-full ring-2 ring-[var(--bg-surface)]"
@@ -80,13 +113,13 @@ export default function ThemeToggle() {
           onClick={() => setTheme('light')}
           title="Light mode"
           aria-label="Light mode"
-          className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
+          className={`flex ${btnSizeClass} items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
             theme === 'light'
               ? 'bg-[var(--bg-pill)] text-[var(--text-primary)] shadow-xs scale-105'
               : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)]'
           }`}
         >
-          <Sun className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+          <Sun className={iconSizeClass} />
         </button>
 
         {/* Dark Mode Button */}
@@ -95,27 +128,65 @@ export default function ThemeToggle() {
           onClick={() => setTheme('dark')}
           title="Dark mode"
           aria-label="Dark mode"
-          className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
+          className={`flex ${btnSizeClass} items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
             theme === 'dark'
               ? 'bg-[var(--bg-pill)] text-[var(--text-primary)] shadow-xs scale-105'
               : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)]'
           }`}
         >
-          <Moon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+          <Moon className={iconSizeClass} />
         </button>
       </div>
 
-      {/* Terminal-Inspired Unique Popover matching reference */}
+      {/* Terminal-Inspired Unique Popover on Desktop / Bottom Sheet on Mobile */}
       <AnimatePresence>
         {paletteOpen && (
-          <motion.div
-            ref={popoverRef}
-            initial={{ opacity: 0, scale: 0.95, y: -6 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -6 }}
-            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-full right-[-48px] sm:right-0 mt-3 z-50 w-[300px] overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-surface)]/95 p-4 sm:p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] backdrop-blur-2xl"
-          >
+          <>
+            {/* Mobile dark backdrop overlay */}
+            {isMobile && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setPaletteOpen(false)}
+                className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-xs"
+              />
+            )}
+
+            {/* Bottom Sheet on Mobile / Dropdown on Desktop */}
+            <motion.div
+              ref={popoverRef}
+              initial={
+                isMobile
+                  ? { y: '100%' }
+                  : { opacity: 0, scale: 0.95, y: -6 }
+              }
+              animate={
+                isMobile
+                  ? { y: 0 }
+                  : { opacity: 1, scale: 1, y: 0 }
+              }
+              exit={
+                isMobile
+                  ? { y: '100%' }
+                  : { opacity: 0, scale: 0.95, y: -6 }
+              }
+              transition={
+                isMobile
+                  ? { type: 'spring', damping: 28, stiffness: 300 }
+                  : { duration: 0.18, ease: [0.16, 1, 0.3, 1] }
+              }
+              className={
+                isMobile
+                  ? 'fixed inset-x-0 bottom-0 z-[70] w-full max-w-lg mx-auto overflow-hidden rounded-t-[28px] border-t border-[var(--border-strong)] bg-[var(--bg-surface)] p-5 pb-8 shadow-[0_-20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl'
+                  : `absolute top-full z-50 overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-surface)]/95 p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] backdrop-blur-2xl ${popoverPosClass}`
+              }
+            >
+              {/* Drag handle pill on mobile bottom sheet */}
+              {isMobile && (
+                <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-[var(--border-strong)]" />
+              )}
             {/* Glowing top ambient line matching active accent */}
             <div
               className="absolute -top-[1px] left-8 right-8 h-[2px] opacity-90 blur-[0.5px]"
@@ -296,8 +367,9 @@ export default function ThemeToggle() {
               Pick your terminal accent — updates glow, buttons, links.
             </p>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </>
+      )}
+    </AnimatePresence>
     </div>
   )
 }

@@ -4,6 +4,7 @@ export const profile = {
   nickname: 'Ian',
   workspaceName: 'jesper-ian-portfolio',
   roles: ['Full Stack Developer', 'UI/UX Designer', 'Web Developer'],
+  email: 'jesperianbarila.202101066@gmail.com',
   phone: '09918547240',
   social: {
     github: { label: 'yansanity1998', url: 'https://github.com/yansanity1998' },

@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Phone, Send, Check } from 'lucide-react'
+import { ArrowUpRight, Phone, Mail, Send, Check } from 'lucide-react'
 import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa'
 import { profile } from '../data/profile'
 import { useTheme } from '../context/ThemeContext'
@@ -30,6 +30,13 @@ export default function ContactPage() {
   }
 
   const channels = [
+    {
+      label: 'Email',
+      value: profile.email,
+      href: `mailto:${profile.email}`,
+      Icon: Mail,
+      external: false,
+    },
     {
       label: 'Contact Number',
       value: profile.phone,
@@ -83,7 +90,7 @@ export default function ContactPage() {
           }
           className="font-mono text-3xl font-semibold tracking-tight text-[var(--text-primary)] transition-colors"
         >
-          contact
+          Contact
         </h1>
         <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--text-secondary)]">
           {profile.contactIntro}

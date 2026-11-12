@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   User,
   Cpu,
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { profile } from '../data/profile'
+import ThemeToggle from './ThemeToggle'
 import resumePdf from '../assets/docs/resume.pdf'
 
 interface NavItem {
@@ -50,7 +52,7 @@ export default function Sidebar() {
     <div className="flex h-full flex-col justify-between py-7 select-none">
       {/* Top brand + navigation */}
       <div className="flex min-h-0 flex-1 flex-col">
-        <div className="px-6">
+        <div className="px-6 flex items-center justify-between gap-2">
           <NavLink
             to="/"
             onClick={() => setMobileOpen(false)}
@@ -59,6 +61,9 @@ export default function Sidebar() {
           >
             {profile.shortName}
           </NavLink>
+
+          {/* Theme & Light/Dark Mode Controls inside sidebar (Only visible on mobile / small screen drawer) */}
+          <ThemeToggle align="left" compact className="relative select-none md:hidden" />
         </div>
 
         {/* Scrollable nav list */}
@@ -154,17 +159,27 @@ export default function Sidebar() {
 
       {/* Bottom reach out block */}
       <div className="px-6 mt-6 border-t border-[var(--border-subtle)] pt-4">
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <p className="text-[12px] leading-relaxed text-[var(--text-muted)]">
             For work, collabs &amp; everything else, reach me at
           </p>
-          <a
-            href={`tel:${profile.phone}`}
-            className="inline-flex items-center gap-2.5 font-mono text-[13px] font-medium text-[var(--text-primary)] hover:underline hover:text-[var(--accent-color)] transition-colors"
-          >
-            <Phone className="h-3.5 w-3.5 text-[var(--text-muted)]" />
-            <span>{profile.phone}</span>
-          </a>
+          <div className="flex flex-col gap-2">
+            <a
+              href={`mailto:${profile.email}`}
+              className="inline-flex items-center gap-2.5 font-mono text-[12px] font-medium text-[var(--text-primary)] hover:underline hover:text-[var(--accent-color)] transition-colors truncate"
+              title={profile.email}
+            >
+              <Mail className="h-3.5 w-3.5 shrink-0 text-[var(--text-muted)]" />
+              <span className="truncate">{profile.email}</span>
+            </a>
+            <a
+              href={`tel:${profile.phone}`}
+              className="inline-flex items-center gap-2.5 font-mono text-[12.5px] font-medium text-[var(--text-primary)] hover:underline hover:text-[var(--accent-color)] transition-colors"
+            >
+              <Phone className="h-3.5 w-3.5 shrink-0 text-[var(--text-muted)]" />
+              <span>{profile.phone}</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -196,18 +211,32 @@ export default function Sidebar() {
         </button>
       </header>
 
-      {/* Mobile drawer */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
-            onClick={() => setMobileOpen(false)}
-          />
-          <aside className="fixed inset-y-0 left-0 z-10 w-[250px] border-r border-[var(--border-subtle)] bg-[var(--bg-sidebar)] shadow-2xl">
-            {sidebarContent}
-          </aside>
-        </div>
-      )}
+      {/* Mobile animated drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <div className="fixed inset-0 z-50 md:hidden">
+            {/* Smooth fading backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-xs"
+              onClick={() => setMobileOpen(false)}
+            />
+            {/* Smooth sliding drawer with spring physics */}
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+              className="fixed inset-y-0 left-0 z-10 w-[275px] border-r border-[var(--border-subtle)] bg-[var(--bg-sidebar)] shadow-2xl flex flex-col justify-between"
+            >
+              {sidebarContent}
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

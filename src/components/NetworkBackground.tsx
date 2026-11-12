@@ -9,6 +9,7 @@ interface Node {
   radius: number
   isHub: boolean
   pulsePhase: number
+  connectedToMouse: number // 0 to 1 intensity
 }
 
 function hexToRgbValues(hex: string, isLight: boolean): [number, number, number] {
@@ -93,6 +94,7 @@ export default function NetworkBackground() {
           radius: isHub ? 2.5 : Math.random() * 1.3 + 1.2,
           isHub,
           pulsePhase: Math.random() * Math.PI * 2,
+          connectedToMouse: 0,
         })
       }
     }
@@ -113,7 +115,7 @@ export default function NetworkBackground() {
     let lastTime = performance.now()
     const maxDist = width < 768 ? 110 : 145
     const maxDistSq = maxDist * maxDist
-    const mouseRadius = 135
+    const mouseRadius = width < 768 ? 135 : 180
     const mouseRadiusSq = mouseRadius * mouseRadius
 
     const render = (time: number) => {
@@ -132,12 +134,31 @@ export default function NetworkBackground() {
         ? isLight ? 0.65 : 0.75
         : isLight ? 0.35 : 0.55
 
-      // 1. Update positions
+      // 1. Update positions & subtle magnetic mouse pull
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i]
         n.x += n.vx * (dt * 60)
         n.y += n.vy * (dt * 60)
         n.pulsePhase += dt * 1.5
+
+        // Check proximity to mouse
+        if (mouse.active) {
+          const mdx = mouse.x - n.x
+          const mdy = mouse.y - n.y
+          const mdSq = mdx * mdx + mdy * mdy
+          if (mdSq < mouseRadiusSq) {
+            const dist = Math.sqrt(mdSq)
+            const factor = 1 - dist / mouseRadius
+            n.connectedToMouse = factor
+            // Gentle magnetic attraction
+            n.x += mdx * 0.012 * factor
+            n.y += mdy * 0.012 * factor
+          } else {
+            n.connectedToMouse = Math.max(0, n.connectedToMouse - dt * 3)
+          }
+        } else {
+          n.connectedToMouse = Math.max(0, n.connectedToMouse - dt * 3)
+        }
 
         if (n.x < 5) {
           n.x = 5
@@ -176,36 +197,95 @@ export default function NetworkBackground() {
             ctx.stroke()
           }
         }
+      }
 
-        // Connect to mouse cursor when nearby
-        if (mouse.active) {
-          const mdx = mouse.x - a.x
-          const mdy = mouse.y - a.y
-          const mdSq = mdx * mdx + mdy * mdy
-          if (mdSq < mouseRadiusSq) {
-            const dist = Math.sqrt(mdSq)
-            const alpha = (1 - dist / mouseRadius) * (lineBaseAlpha * 1.3)
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+      // 3. Draw SHOWY connections to mouse cursor
+      if (mouse.active) {
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i]
+          if (n.connectedToMouse > 0.02) {
+            const factor = n.connectedToMouse
+
+            // Outer vibrant glow stroke
+            ctx.lineWidth = 2.4
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${factor * (isCustom ? 0.45 : 0.3)})`
             ctx.beginPath()
-            ctx.moveTo(a.x, a.y)
+            ctx.moveTo(n.x, n.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.stroke()
+
+            // Inner bright laser line
+            ctx.lineWidth = 1.3
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${factor * (isCustom ? 0.9 : 0.75)})`
+            ctx.beginPath()
+            ctx.moveTo(n.x, n.y)
             ctx.lineTo(mouse.x, mouse.y)
             ctx.stroke()
           }
         }
-      }
 
-      // 3. Draw nodes (dots and hub target rings)
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i]
+        // Draw interactive Cursor Beacon (Hub node at mouse position)
+        const mousePulse = Math.sin(time * 0.005) * 1.5
+        const beaconRing = 10 + mousePulse
 
-        // Center dot
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${nodeBaseAlpha})`
+        // Ambient radial glow behind cursor
+        const mouseGlow = ctx.createRadialGradient(mouse.x, mouse.y, 2, mouse.x, mouse.y, 45)
+        mouseGlow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${isCustom ? 0.4 : 0.25})`)
+        mouseGlow.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+        ctx.fillStyle = mouseGlow
         ctx.beginPath()
-        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2)
+        ctx.arc(mouse.x, mouse.y, 45, 0, Math.PI * 2)
         ctx.fill()
 
-        // Hub nodes with target ring (matching user reference)
-        if (n.isHub) {
+        // Outer beacon ring
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${isCustom ? 0.75 : 0.55})`
+        ctx.lineWidth = 1.2
+        ctx.beginPath()
+        ctx.arc(mouse.x, mouse.y, beaconRing, 0, Math.PI * 2)
+        ctx.stroke()
+
+        // Center beacon spark dot
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${isCustom ? 0.95 : 0.85})`
+        ctx.beginPath()
+        ctx.arc(mouse.x, mouse.y, 3.2, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      // 4. Draw nodes (dots, energized mouse-connected nodes, and hub target rings)
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i]
+        const factor = n.connectedToMouse
+
+        // Base or energized size
+        const currentRadius = n.radius + factor * 1.6
+        const currentAlpha = Math.min(1, nodeBaseAlpha + factor * 0.4)
+
+        // Center dot
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha})`
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, currentRadius, 0, Math.PI * 2)
+        ctx.fill()
+
+        // If energized by mouse hover, draw a showy target halo
+        if (factor > 0.15) {
+          ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${factor * (isCustom ? 0.85 : 0.65)})`
+          ctx.lineWidth = 1.2
+          ctx.beginPath()
+          ctx.arc(n.x, n.y, currentRadius + 5, 0, Math.PI * 2)
+          ctx.stroke()
+
+          // Subtle radial glow
+          const energizedGlow = ctx.createRadialGradient(n.x, n.y, 1, n.x, n.y, 14)
+          energizedGlow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${factor * 0.35})`)
+          energizedGlow.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+          ctx.fillStyle = energizedGlow
+          ctx.beginPath()
+          ctx.arc(n.x, n.y, 14, 0, Math.PI * 2)
+          ctx.fill()
+        }
+
+        // Hub nodes with concentric target ring
+        if (n.isHub && factor <= 0.15) {
           const ringPulse = Math.sin(n.pulsePhase) * 1.1
           const ringRadius = 6.5 + ringPulse
           const ringAlpha = (0.35 + Math.sin(n.pulsePhase) * 0.15) * (isCustom ? 0.9 : 0.6)
@@ -216,7 +296,6 @@ export default function NetworkBackground() {
           ctx.arc(n.x, n.y, ringRadius, 0, Math.PI * 2)
           ctx.stroke()
 
-          // Subtle ambient glow
           if (isCustom) {
             const grad = ctx.createRadialGradient(n.x, n.y, 1, n.x, n.y, 16)
             grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.18)`)

@@ -313,7 +313,7 @@ export default function MonkeytypeBio() {
     <div
       onClick={handleSkip}
       title="Click to skip typing animation"
-      className="mt-5 max-w-[580px] space-y-4 text-justify text-[15.5px] sm:text-[16px] leading-[2.05] select-text cursor-default"
+      className="mt-5 max-w-[580px] space-y-4 text-left sm:text-justify text-[15px] sm:text-[16px] leading-[1.9] sm:leading-[2.05] select-text cursor-default"
     >
       <p>{renderTokens(p1Tokens)}</p>
       <p>
