@@ -190,7 +190,7 @@ export default function Sidebar() {
           type="button"
           onClick={() => setMobileOpen((o) => !o)}
           aria-label="Toggle navigation menu"
-          className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--border-subtle)] text-[var(--text-primary)]"
+          className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)] transition-colors cursor-pointer"
         >
           {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>

@@ -80,16 +80,16 @@ export default function ProjectsPage() {
               onClick={() => openModal(project, 0)}
               className="group relative overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-7 transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-lg cursor-pointer"
             >
-              {/* Lighter, clearly visible project background image */}
+              {/* Project preview background image */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-cover bg-right-top sm:bg-right opacity-45 dark:opacity-50 group-hover:opacity-65 transition-all duration-500 scale-100 group-hover:scale-[1.02] pointer-events-none"
+                className="absolute inset-0 bg-cover bg-right-top sm:bg-right opacity-40 dark:opacity-45 group-hover:opacity-60 transition-all duration-500 scale-100 group-hover:scale-[1.02] pointer-events-none"
                 style={{ backgroundImage: `url(${project.images[0]})` }}
               />
-              {/* Soft directional gradient: protects text contrast on the left, completely clear and light on the right */}
+              {/* Protective directional gradient: solid on the left half to prevent screenshot text collision, fading to transparent on the right */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] via-[var(--bg-surface)]/70 to-transparent pointer-events-none"
+                className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] from-35% via-[var(--bg-surface)]/85 via-60% to-transparent pointer-events-none"
               />
 
               <div className="relative z-10 max-w-2xl">

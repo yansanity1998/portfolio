@@ -8,13 +8,13 @@ export interface AccentPreset {
 }
 
 export const ACCENT_PRESETS: AccentPreset[] = [
-  { id: 'default', label: 'Monochrome' },
-  { id: 'emerald', label: 'Emerald', color: '#10b981' },
-  { id: 'violet', label: 'Violet', color: '#8b5cf6' },
-  { id: 'sky', label: 'Sky Blue', color: '#0ea5e9' },
-  { id: 'amber', label: 'Amber', color: '#f59e0b' },
+  { id: 'green', label: 'Green', color: '#22c55e' },
+  { id: 'yellow', label: 'Yellow', color: '#eab308' },
+  { id: 'purple', label: 'Purple', color: '#a855f7' },
+  { id: 'cyan', label: 'Cyan', color: '#06b6d4' },
+  { id: 'default', label: 'Default', color: '' },
   { id: 'rose', label: 'Rose', color: '#f43f5e' },
-  { id: 'teal', label: 'Teal', color: '#14b8a6' },
+  { id: 'orange', label: 'Orange', color: '#f97316' },
 ]
 
 export interface Project {
