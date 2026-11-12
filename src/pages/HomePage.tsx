@@ -149,7 +149,7 @@ export default function HomePage() {
                 St. Peter&apos;s College
               </div>
               <div className="mt-0.5 font-mono text-[10.5px] sm:text-[11px] tracking-wider uppercase text-[var(--text-muted)]">
-                PROJECT DEVELOPMENT
+                BS INFORMATION TECHNOLOGY
               </div>
             </div>
           </Link>
