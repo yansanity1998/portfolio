@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { galleryImages } from '../data/gallery'
 import { useTheme } from '../context/ThemeContext'
 
@@ -44,46 +44,29 @@ export default function GalleryPage() {
           }
           className="font-mono text-3xl font-semibold tracking-tight text-[var(--text-primary)] transition-colors"
         >
-          gallery
+          Gallery
         </h1>
         <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--text-secondary)]">
           A collection of moments from my journey as a developer and creator — building projects, exploring new technologies, and constantly pushing creative boundaries.
         </p>
       </header>
 
-      {/* Section Label */}
-      <div className="mt-12 font-mono text-[11px] font-medium tracking-widest uppercase text-[var(--text-muted)]">
-        SNAPSHOTS ({galleryImages.length})
-      </div>
-
-      {/* Clean Grid matching bryllim.com cards */}
-      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Clean Grid with Edge-to-Edge Images */}
+      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {galleryImages.map(({ name, url }, index) => (
           <button
             key={name}
             type="button"
             onClick={() => setSelectedIndex(index)}
-            className="group flex flex-col rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3 text-left transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-hover)] cursor-pointer"
+            aria-label={`View photo ${index + 1}`}
+            className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-all duration-200 hover:border-[var(--border-strong)] hover:shadow-lg cursor-pointer"
           >
-            <div className="aspect-[4/3] w-full overflow-hidden rounded-lg bg-zinc-900">
-              <img
-                src={url}
-                alt={`Snapshot ${index + 1}`}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="mt-3 flex items-center justify-between px-0.5">
-              <div>
-                <div className="font-mono text-[13px] font-medium text-[var(--text-primary)]">
-                  Snapshot {String(index + 1).padStart(2, '0')}
-                </div>
-                <div className="font-mono text-[11px] text-[var(--text-muted)]">
-                  {name}
-                </div>
-              </div>
-              <ArrowUpRight className="h-3.5 w-3.5 text-[var(--text-muted)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--text-primary)]" />
-            </div>
+            <img
+              src={url}
+              alt={name}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           </button>
         ))}
       </div>

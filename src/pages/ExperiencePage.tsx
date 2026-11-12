@@ -88,7 +88,7 @@ export default function ExperiencePage() {
             }
             className="font-mono text-3xl font-semibold tracking-tight text-[var(--text-primary)] transition-colors"
           >
-            experience
+            Experience
           </h1>
           <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--text-secondary)]">
             Milestones, roles, and hands-on experience from my journey in software development.
