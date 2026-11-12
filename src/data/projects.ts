@@ -46,7 +46,7 @@ export const projects: Project[] = [
     images: [linamon1, linamon2, linamon3],
     description: "A centralized CMS website built specifically for disaster risk reduction and management in the municipality of Linamon. Citizens can directly request training aids and dispatch ambulances through the platform during emergencies, drastically improving response times.\n\nThe system includes role-based access control, allowing administrators to manage incoming emergency requests, track resources, and publish critical news updates directly to the public portal. Built with a scalable Laravel backend and a responsive TSX frontend, it ensures critical services remain online when they are needed most.",
     github: "https://github.com/yansanity1998",
-    demo: "https://mdrrmo-linamon.pixzeldigital.app/"
+    demo: "https://mdrrmolinamon.com/"
   },
   {
     title: "CebuTop Aviation",

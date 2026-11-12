@@ -77,25 +77,24 @@ export default function ProjectsPage() {
           return (
             <article
               key={project.title}
-              className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-7 transition-colors hover:border-[var(--border-strong)]"
+              onClick={() => openModal(project, 0)}
+              className="group relative overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-7 transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-lg cursor-pointer"
             >
-              {/* Top Row: App Icon Thumbnail + Badges + Title + Description */}
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
-                {/* Rounded App Icon Thumbnail */}
-                <button
-                  type="button"
-                  onClick={() => openModal(project, 0)}
-                  className="group relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-zinc-900 cursor-pointer"
-                  title={`Preview ${project.title}`}
-                >
-                  <img
-                    src={project.images[0]}
-                    alt={project.title}
-                    className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-110"
-                  />
-                </button>
+              {/* Lighter, clearly visible project background image */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-cover bg-right-top sm:bg-right opacity-45 dark:opacity-50 group-hover:opacity-65 transition-all duration-500 scale-100 group-hover:scale-[1.02] pointer-events-none"
+                style={{ backgroundImage: `url(${project.images[0]})` }}
+              />
+              {/* Soft directional gradient: protects text contrast on the left, completely clear and light on the right */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] via-[var(--bg-surface)]/70 to-transparent pointer-events-none"
+              />
 
-                <div className="min-w-0 flex-1">
+              <div className="relative z-10 max-w-2xl">
+                {/* Top: Badges + Title + Description */}
+                <div>
                   {/* Badges Row */}
                   <div className="flex flex-wrap items-center gap-1.5">
                     {/* Highlighted Role Pill like ⟨ #1 FINANCE APP ⟩ */}
@@ -121,8 +120,7 @@ export default function ProjectsPage() {
 
                   {/* Project Title */}
                   <h2
-                    onClick={() => openModal(project, 0)}
-                    className="mt-3 font-mono text-xl font-medium tracking-tight text-[var(--text-primary)] cursor-pointer hover:underline hover:text-[var(--accent-color)] transition-colors"
+                    className="mt-3 font-mono text-xl font-medium tracking-tight text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-color)]"
                   >
                     {project.title}
                   </h2>
@@ -130,74 +128,50 @@ export default function ProjectsPage() {
                     {firstParagraph}
                   </p>
                 </div>
-              </div>
 
-              {/* Action Buttons Row */}
-              <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                {hasDemo && (
-                  <a
-                    href={demoHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={isCustomAccent ? { borderColor: 'var(--accent-color)', color: 'var(--accent-color)' } : undefined}
-                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-page)] px-4 py-2 font-mono text-[12px] font-medium text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-pill)]"
-                  >
-                    <span>Live Demo</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </a>
-                )}
-
-                {hasGithub && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-page)] px-4 py-2 font-mono text-[12px] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
-                  >
-                    <FaGithub className="h-3.5 w-3.5" />
-                    <span>GitHub</span>
-                    <ArrowUpRight className="h-3 w-3 opacity-70" />
-                  </a>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => openModal(project, 0)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-page)] px-4 py-2 font-mono text-[12px] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] cursor-pointer"
-                >
-                  <Images className="h-3.5 w-3.5" />
-                  <span>
-                    Case Study &amp; Screenshots ({project.images.length})
-                  </span>
-                </button>
-              </div>
-
-              {/* Bottom Divider + Preview Strip (like FEATURED IN row) */}
-              <div className="mt-6 border-t border-[var(--border-subtle)] pt-4 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px]">
-                  <span className="tracking-widest uppercase text-[var(--text-muted)]">
-                    PREVIEW
-                  </span>
-                  {project.images.slice(0, 4).map((img, idx) => (
-                    <button
-                      key={img}
-                      type="button"
-                      onClick={() => openModal(project, idx)}
-                      className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer"
+                {/* Action Buttons Row */}
+                <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                  {hasDemo && (
+                    <a
+                      href={demoHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      style={isCustomAccent ? { borderColor: 'var(--accent-color)', color: 'var(--accent-color)' } : undefined}
+                      className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-page)]/90 px-4 py-2 font-mono text-[12px] font-medium text-[var(--text-primary)] backdrop-blur-xs transition-colors hover:bg-[var(--bg-pill)]"
                     >
-                      <span>Screen 0{idx + 1}</span>
-                      <ArrowUpRight className="h-3 w-3 opacity-60" />
-                    </button>
-                  ))}
-                  {project.images.length > 4 && (
-                    <button
-                      type="button"
-                      onClick={() => openModal(project, 4)}
-                      className="text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
-                    >
-                      +{project.images.length - 4} more ↗
-                    </button>
+                      <span>Live Demo</span>
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
                   )}
+
+                  {hasGithub && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-page)]/90 px-4 py-2 font-mono text-[12px] text-[var(--text-secondary)] backdrop-blur-xs transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+                    >
+                      <FaGithub className="h-3.5 w-3.5" />
+                      <span>GitHub</span>
+                      <ArrowUpRight className="h-3 w-3 opacity-70" />
+                    </a>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      openModal(project, 0)
+                    }}
+                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-page)]/90 px-4 py-2 font-mono text-[12px] text-[var(--text-secondary)] backdrop-blur-xs transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] cursor-pointer"
+                  >
+                    <Images className="h-3.5 w-3.5" />
+                    <span>
+                      Case Study &amp; Screenshots ({project.images.length})
+                    </span>
+                  </button>
                 </div>
               </div>
             </article>
