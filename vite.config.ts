@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 function copyPreviewImage() {
-  const src = path.resolve(__dirname, 'src/assets/ian.jpg');
+  const src = path.resolve(__dirname, 'src/assets/profile/ian.jpg');
   const dest = path.resolve(__dirname, 'public/ian.jpg');
   try {
     if (fs.existsSync(src) && !fs.existsSync(dest)) {
