@@ -28,7 +28,7 @@ export default function HomePage() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-[calc(100vh-3.5rem)] md:min-h-screen max-w-[960px] flex-col justify-center px-6 py-12 sm:px-10 md:py-16"
+      className="relative z-10 mx-auto flex min-h-[calc(100vh-3.5rem)] md:min-h-screen max-w-[960px] flex-col justify-center px-6 py-12 sm:px-10 md:py-16"
     >
       {/* Top Hero Section: Portrait Left, Bio Right */}
       <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-[280px_1fr] lg:grid-cols-[300px_1fr] lg:gap-14">

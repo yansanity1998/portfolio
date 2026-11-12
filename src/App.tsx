@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from './context/ThemeContext'
 import Sidebar from './components/Sidebar'
 import ThemeToggle from './components/ThemeToggle'
+import NetworkBackground from './components/NetworkBackground'
 import HomePage from './pages/HomePage'
 import SkillsPage from './pages/SkillsPage'
 import ExperiencePage from './pages/ExperiencePage'
@@ -32,7 +33,10 @@ function Layout() {
   }, [location.pathname])
 
   return (
-    <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] relative">
+    <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] relative isolate">
+      {/* Dynamic Geometric Constellation / Plexus Network Overlay */}
+      <NetworkBackground />
+
       {/* Subtle top-right dot matrix texture like bryllim.com */}
       <div
         aria-hidden
