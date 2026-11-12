@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowUpRight,
@@ -24,6 +25,9 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     if (!activeProject) return
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setActiveProject(null)
       else if (e.key === 'ArrowRight') {
@@ -33,7 +37,10 @@ export default function ProjectsPage() {
       }
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onKey)
+    }
   }, [activeProject])
 
   return (
@@ -56,7 +63,7 @@ export default function ProjectsPage() {
           }
           className="font-mono text-3xl font-semibold tracking-tight text-[var(--text-primary)] transition-colors"
         >
-          projects
+          Projects
         </h1>
         <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--text-secondary)]">
           A collection of digital experiences combining robust backends with immersive frontends — spanning web platforms, institutional systems, and UI/UX prototypes.
@@ -180,134 +187,139 @@ export default function ProjectsPage() {
       </div>
 
       {/* Full Case Study & Screenshots Lightbox Modal */}
-      <AnimatePresence>
-        {activeProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveProject(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 sm:p-6 backdrop-blur-md"
-          >
-            <motion.div
-              initial={{ scale: 0.96, opacity: 0, y: 12 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.96, opacity: 0, y: 12 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-surface)] md:flex-row shadow-2xl"
-            >
-              {/* Left Image Viewer */}
-              <div className="relative flex h-64 sm:h-80 md:h-auto md:w-[56%] shrink-0 items-center justify-center bg-black overflow-hidden border-b md:border-b-0 md:border-r border-[var(--border-subtle)]">
-                <img
-                  src={activeProject.images[imageIndex]}
-                  alt={`${activeProject.title} preview ${imageIndex + 1}`}
-                  className="h-full w-full object-cover object-top"
-                />
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {activeProject && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setActiveProject(null)}
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 sm:p-6 md:p-8 backdrop-blur-md"
+              >
+                <motion.div
+                  initial={{ scale: 0.96, opacity: 0, y: 12 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.96, opacity: 0, y: 12 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative flex h-[78vh] sm:h-[82vh] md:h-[620px] max-h-[calc(100dvh-3.5rem)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-surface)] md:flex-row shadow-2xl my-auto"
+                >
+                  {/* Left Image Viewer */}
+                  <div className="relative flex h-48 sm:h-64 md:h-full md:w-[54%] shrink-0 items-center justify-center bg-black overflow-hidden border-b md:border-b-0 md:border-r border-[var(--border-subtle)]">
+                    <img
+                      src={activeProject.images[imageIndex]}
+                      alt={`${activeProject.title} preview ${imageIndex + 1}`}
+                      className="h-full w-full object-cover object-top"
+                    />
 
-                {activeProject.images.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setImageIndex(
-                          (i) =>
-                            (i - 1 + activeProject.images.length) %
-                            activeProject.images.length,
-                        )
-                      }
-                      aria-label="Previous image"
-                      className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setImageIndex((i) => (i + 1) % activeProject.images.length)
-                      }
-                      aria-label="Next image"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/70 px-3 py-1 font-mono text-[11px] text-white backdrop-blur-xs">
-                      {imageIndex + 1} / {activeProject.images.length}
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* Right Details Column */}
-              <div className="flex flex-1 flex-col overflow-y-auto p-6 sm:p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)]">
-                      {activeProject.role}
-                    </span>
-                    <h2 className="mt-1 font-mono text-2xl font-medium text-[var(--text-primary)]">
-                      {activeProject.title}
-                    </h2>
+                    {activeProject.images.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setImageIndex(
+                              (i) =>
+                                (i - 1 + activeProject.images.length) %
+                                activeProject.images.length,
+                            )
+                          }
+                          aria-label="Previous image"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setImageIndex((i) => (i + 1) % activeProject.images.length)
+                          }
+                          aria-label="Next image"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/70 text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/70 px-3 py-1 font-mono text-[11px] text-white backdrop-blur-xs">
+                          {imageIndex + 1} / {activeProject.images.length}
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setActiveProject(null)}
-                    aria-label="Close modal"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
 
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {activeProject.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-pill)] px-2.5 py-0.5 font-mono text-[11px] text-[var(--text-primary)]"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                  {/* Right Details Column */}
+                  <div className="flex flex-1 flex-col overflow-y-auto overscroll-contain p-5 sm:p-7 md:p-8">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)]">
+                          {activeProject.role}
+                        </span>
+                        <h2 className="mt-1 font-mono text-xl sm:text-2xl font-medium text-[var(--text-primary)]">
+                          {activeProject.title}
+                        </h2>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setActiveProject(null)}
+                        aria-label="Close modal"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-pill)] transition-colors cursor-pointer"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
 
-                <div className="mt-5 space-y-3 text-[13.5px] leading-relaxed text-[var(--text-secondary)]">
-                  {activeProject.description.split('\n\n').map((para, idx) => (
-                    <p key={idx}>{para}</p>
-                  ))}
-                </div>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {activeProject.techStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-pill)] px-2.5 py-0.5 font-mono text-[11px] text-[var(--text-primary)]"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
 
-                <div className="mt-6 flex flex-wrap gap-2.5 border-t border-[var(--border-subtle)] pt-5">
-                  {activeProject.demo !== '#' && (
-                    <a
-                      href={
-                        /^https?:\/\//.test(activeProject.demo)
-                          ? activeProject.demo
-                          : `https://${activeProject.demo}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-[var(--text-primary)] px-4 py-2 font-mono text-[12px] font-medium text-[var(--bg-page)] hover:opacity-90"
-                    >
-                      <span>Live Demo</span>
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
-                  )}
-                  {activeProject.github !== '#' && (
-                    <a
-                      href={activeProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-strong)] px-4 py-2 font-mono text-[12px] text-[var(--text-primary)] hover:bg-[var(--bg-pill)]"
-                    >
-                      <FaGithub className="h-3.5 w-3.5" />
-                      <span>GitHub Repo</span>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+                    <div className="mt-5 space-y-3 text-[13.5px] leading-relaxed text-[var(--text-secondary)]">
+                      {activeProject.description.split('\n\n').map((para, idx) => (
+                        <p key={idx}>{para}</p>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap gap-2.5 border-t border-[var(--border-subtle)] pt-5">
+                      {activeProject.demo !== '#' && (
+                        <a
+                          href={
+                            /^https?:\/\//.test(activeProject.demo)
+                              ? activeProject.demo
+                              : `https://${activeProject.demo}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-lg bg-[var(--text-primary)] px-4 py-2 font-mono text-[12px] font-medium text-[var(--bg-page)] hover:opacity-90"
+                        >
+                          <span>Live Demo</span>
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                      {activeProject.github !== '#' && (
+                        <a
+                          href={activeProject.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-strong)] px-4 py-2 font-mono text-[12px] text-[var(--text-primary)] hover:bg-[var(--bg-pill)]"
+                        >
+                          <FaGithub className="h-3.5 w-3.5" />
+                          <span>GitHub Repo</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </motion.div>
   )
 }

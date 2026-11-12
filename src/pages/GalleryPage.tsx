@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { galleryImages } from '../data/gallery'
@@ -10,6 +11,9 @@ export default function GalleryPage() {
 
   useEffect(() => {
     if (selectedIndex === null) return
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedIndex(null)
       else if (e.key === 'ArrowRight') {
@@ -21,7 +25,10 @@ export default function GalleryPage() {
       }
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onKey)
+    }
   }, [selectedIndex])
 
   return (
@@ -72,64 +79,68 @@ export default function GalleryPage() {
       </div>
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {selectedIndex !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedIndex(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="relative flex max-h-[88vh] max-w-4xl flex-col items-center"
-            >
-              <img
-                src={galleryImages[selectedIndex].url}
-                alt={galleryImages[selectedIndex].name}
-                className="max-h-[80vh] w-auto rounded-xl border border-white/15 object-contain shadow-2xl"
-              />
-              <div className="mt-3 flex items-center gap-4 font-mono text-[12px] text-zinc-300">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setSelectedIndex(
-                      (selectedIndex - 1 + galleryImages.length) % galleryImages.length,
-                    )
-                  }
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20 cursor-pointer"
-                  aria-label="Previous photo"
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {selectedIndex !== null && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedIndex(null)}
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
+              >
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative flex max-h-[85vh] max-w-4xl flex-col items-center my-auto"
                 >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <span>
-                  {String(selectedIndex + 1).padStart(2, '0')} /{' '}
-                  {String(galleryImages.length).padStart(2, '0')}
-                </span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setSelectedIndex((selectedIndex + 1) % galleryImages.length)
-                  }
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20 cursor-pointer"
-                  aria-label="Next photo"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedIndex(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20 cursor-pointer"
-                  aria-label="Close lightbox"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
+                  <img
+                    src={galleryImages[selectedIndex].url}
+                    alt={galleryImages[selectedIndex].name}
+                    className="max-h-[75vh] w-auto rounded-xl border border-white/15 object-contain shadow-2xl"
+                  />
+                  <div className="mt-3 flex items-center gap-4 font-mono text-[12px] text-zinc-300">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelectedIndex(
+                          (selectedIndex - 1 + galleryImages.length) % galleryImages.length,
+                        )
+                      }
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20 cursor-pointer"
+                      aria-label="Previous photo"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <span>
+                      {String(selectedIndex + 1).padStart(2, '0')} /{' '}
+                      {String(galleryImages.length).padStart(2, '0')}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelectedIndex((selectedIndex + 1) % galleryImages.length)
+                      }
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20 cursor-pointer"
+                      aria-label="Next photo"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedIndex(null)}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20 cursor-pointer"
+                      aria-label="Close lightbox"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </motion.div>
   )
 }
