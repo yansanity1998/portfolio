@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -13,10 +13,12 @@ import {
   Menu,
   X,
   ArrowUpRight,
+  Gamepad2,
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { profile } from '../data/profile'
 import ThemeToggle from './ThemeToggle'
+import DinoGameModal from './DinoGameModal'
 import resumePdf from '../assets/docs/resume.pdf'
 
 interface NavItem {
@@ -39,6 +41,19 @@ export default function Sidebar() {
   const { isCustomAccent } = useTheme()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [dinoOpen, setDinoOpen] = useState(false)
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setMobileOpen(false)
+        setDinoOpen((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [])
 
   const mainItems = navItems.filter((i) => i.section === 'main')
   const workItems = navItems.filter((i) => i.section === 'work')
@@ -154,6 +169,45 @@ export default function Sidebar() {
               <ArrowUpRight className="h-3.5 w-3.5 opacity-50 group-hover:opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
+
+          {/* Mini Game block */}
+          <div className="pt-4 border-t border-[var(--border-subtle)] space-y-0.5">
+            <div className="px-6 pb-2 font-mono text-[10.5px] font-medium tracking-widest uppercase text-[var(--text-muted)]">
+              PLAY
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setMobileOpen(false)
+                setDinoOpen(true)
+              }}
+              style={
+                dinoOpen && isCustomAccent
+                  ? {
+                      backgroundColor: 'rgba(var(--accent-rgb), 0.14)',
+                      color: 'var(--accent-color)',
+                    }
+                  : undefined
+              }
+              className={`group flex items-center justify-between w-full px-6 py-2.5 text-[14px] transition-all duration-150 cursor-pointer ${
+                dinoOpen
+                  ? 'bg-[var(--bg-pill)] text-[var(--text-primary)] font-medium'
+                  : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-hover)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              <span className="flex items-center gap-3.5">
+                <Gamepad2
+                  className={`h-4 w-4 shrink-0 transition-opacity ${
+                    dinoOpen ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                  }`}
+                />
+                <span>Dino Runner</span>
+              </span>
+              <kbd className="rounded border border-[var(--border-subtle)] bg-[var(--bg-pill)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors">
+                Ctrl+K
+              </kbd>
+            </button>
+          </div>
         </nav>
       </div>
 
@@ -237,6 +291,8 @@ export default function Sidebar() {
           </div>
         )}
       </AnimatePresence>
+
+      <DinoGameModal open={dinoOpen} onClose={() => setDinoOpen(false)} />
     </>
   )
 }
