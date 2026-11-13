@@ -1,10 +1,16 @@
 import { createContext, useContext, useLayoutEffect, useState, type ReactNode } from 'react'
+import { flushSync } from 'react-dom'
 import type { ResolvedTheme } from '../types'
+
+export interface ThemeTransitionOrigin {
+  x: number
+  y: number
+}
 
 interface ThemeContextType {
   theme: ResolvedTheme
-  setTheme: (theme: ResolvedTheme) => void
-  toggleTheme: () => void
+  setTheme: (theme: ResolvedTheme, origin?: ThemeTransitionOrigin) => void
+  toggleTheme: (origin?: ThemeTransitionOrigin) => void
   accentColor: string
   setAccentColor: (color: string) => void
   isCustomAccent: boolean
@@ -65,8 +71,70 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [theme, accentColor])
 
-  const setTheme = (next: ResolvedTheme) => setThemeState(next)
-  const toggleTheme = () => setThemeState((prev) => (prev === 'light' ? 'dark' : 'light'))
+  const applyThemeWithTransition = (
+    next: ResolvedTheme,
+    origin?: ThemeTransitionOrigin,
+  ) => {
+    if (next === theme) return
+
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const doc = document as Document & {
+      startViewTransition?: (callback: () => void) => {
+        ready: Promise<void>
+      }
+    }
+
+    if (typeof doc.startViewTransition === 'function' && !prefersReducedMotion) {
+      const x = origin?.x ?? window.innerWidth / 2
+      const y = origin?.y ?? window.innerHeight / 2
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+      )
+
+      const transition = doc.startViewTransition(() => {
+        flushSync(() => {
+          setThemeState(next)
+        })
+      })
+
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 600,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          },
+        )
+      })
+      return
+    }
+
+    // Smooth CSS fallback when View Transitions API is unavailable
+    if (!prefersReducedMotion) {
+      document.documentElement.classList.add('theme-transition')
+      window.setTimeout(() => {
+        document.documentElement.classList.remove('theme-transition')
+      }, 450)
+    }
+    setThemeState(next)
+  }
+
+  const setTheme = (next: ResolvedTheme, origin?: ThemeTransitionOrigin) =>
+    applyThemeWithTransition(next, origin)
+
+  const toggleTheme = (origin?: ThemeTransitionOrigin) =>
+    applyThemeWithTransition(theme === 'light' ? 'dark' : 'light', origin)
+
   const setAccentColor = (color: string) => setAccentColorState(color)
 
   return (

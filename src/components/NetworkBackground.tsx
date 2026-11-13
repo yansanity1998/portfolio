@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useTheme } from '../context/ThemeContext'
 
 interface Node {
@@ -44,7 +44,7 @@ export default function NetworkBackground() {
     isLight: theme === 'light',
   })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     colorRef.current = {
       rgb: hexToRgbValues(accentColor, theme === 'light'),
       isCustom: isCustomAccent,

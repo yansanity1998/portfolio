@@ -110,7 +110,13 @@ export default function ThemeToggle({
         {/* Light Mode Button */}
         <button
           type="button"
-          onClick={() => setTheme('light')}
+          onClick={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            setTheme('light', {
+              x: rect.left + rect.width / 2,
+              y: rect.top + rect.height / 2,
+            })
+          }}
           title="Light mode"
           aria-label="Light mode"
           className={`flex ${btnSizeClass} items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
@@ -125,7 +131,13 @@ export default function ThemeToggle({
         {/* Dark Mode Button */}
         <button
           type="button"
-          onClick={() => setTheme('dark')}
+          onClick={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            setTheme('dark', {
+              x: rect.left + rect.width / 2,
+              y: rect.top + rect.height / 2,
+            })
+          }}
           title="Dark mode"
           aria-label="Dark mode"
           className={`flex ${btnSizeClass} items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${

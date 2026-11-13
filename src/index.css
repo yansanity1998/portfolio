@@ -94,3 +94,30 @@ html, body {
 .animate-float-slow {
   animation: floatSlow 3.6s ease-in-out infinite;
 }
+
+/* Circular spreading View Transition for light/dark mode */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Smooth fallback transition for browsers without View Transitions API */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    fill 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 0.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
