@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { RotateCcw, X, ArrowUp, ArrowDown, Pause, Play } from 'lucide-react'
+import { RotateCcw, X, ArrowUp, ArrowDown, Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 interface DinoGameModalProps {
@@ -43,6 +43,7 @@ const DINO_DUCK_H = 24
 const GRAVITY = 0.68
 const JUMP_VELOCITY = -12.4
 const HIGH_SCORE_KEY = 'portfolio-dino-high-score'
+const MUTED_KEY = 'portfolio-dino-muted'
 
 function readComputedVar(name: string, fallback: string): string {
   if (typeof window === 'undefined') return fallback
@@ -57,12 +58,97 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
   const [status, setStatus] = useState<GameStatus>('idle')
   const [countdown, setCountdown] = useState(3)
   const [score, setScore] = useState(0)
+  const [muted, setMuted] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem(MUTED_KEY) === 'true'
+  })
   const [highScore, setHighScore] = useState<number>(() => {
     if (typeof window === 'undefined') return 0
     const saved = Number(localStorage.getItem(HIGH_SCORE_KEY) || '0')
     return Number.isFinite(saved) ? saved : 0
   })
   const countdownTimerRef = useRef<number | null>(null)
+  const audioCtxRef = useRef<AudioContext | null>(null)
+  const mutedRef = useRef(muted)
+
+  useEffect(() => {
+    mutedRef.current = muted
+    localStorage.setItem(MUTED_KEY, String(muted))
+  }, [muted])
+
+  const playSound = useCallback(
+    (type: 'jump' | 'score' | 'gameover' | 'tick' | 'go') => {
+      if (mutedRef.current || typeof window === 'undefined') return
+      try {
+        const AudioCtx =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext?: typeof AudioContext })
+            .webkitAudioContext
+        if (!AudioCtx) return
+        if (!audioCtxRef.current) {
+          audioCtxRef.current = new AudioCtx()
+        }
+        const ctx = audioCtxRef.current
+        if (ctx.state === 'suspended') {
+          void ctx.resume()
+        }
+
+        const now = ctx.currentTime
+
+        if (type === 'jump') {
+          const osc = ctx.createOscillator()
+          const gain = ctx.createGain()
+          osc.type = 'square'
+          osc.frequency.setValueAtTime(240, now)
+          osc.frequency.exponentialRampToValueAtTime(560, now + 0.085)
+          gain.gain.setValueAtTime(0.06, now)
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.095)
+          osc.connect(gain)
+          gain.connect(ctx.destination)
+          osc.start(now)
+          osc.stop(now + 0.1)
+        } else if (type === 'score') {
+          const osc = ctx.createOscillator()
+          const gain = ctx.createGain()
+          osc.type = 'square'
+          osc.frequency.setValueAtTime(660, now)
+          osc.frequency.setValueAtTime(880, now + 0.07)
+          gain.gain.setValueAtTime(0.055, now)
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.19)
+          osc.connect(gain)
+          gain.connect(ctx.destination)
+          osc.start(now)
+          osc.stop(now + 0.2)
+        } else if (type === 'gameover') {
+          const osc = ctx.createOscillator()
+          const gain = ctx.createGain()
+          osc.type = 'sawtooth'
+          osc.frequency.setValueAtTime(210, now)
+          osc.frequency.exponentialRampToValueAtTime(75, now + 0.24)
+          gain.gain.setValueAtTime(0.08, now)
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26)
+          osc.connect(gain)
+          gain.connect(ctx.destination)
+          osc.start(now)
+          osc.stop(now + 0.27)
+        } else if (type === 'tick' || type === 'go') {
+          const osc = ctx.createOscillator()
+          const gain = ctx.createGain()
+          osc.type = 'triangle'
+          osc.frequency.setValueAtTime(type === 'go' ? 780 : 480, now)
+          gain.gain.setValueAtTime(0.07, now)
+          gain.gain.exponentialRampToValueAtTime(0.001, now + (type === 'go' ? 0.14 : 0.07))
+          osc.connect(gain)
+          gain.connect(ctx.destination)
+          osc.start(now)
+          osc.stop(now + (type === 'go' ? 0.15 : 0.08))
+        }
+      } catch {
+        // Ignore audio errors if blocked by browser policy
+      }
+    },
+    [],
+  )
 
   // Mutable game state for 60fps loop
   const gameRef = useRef({
@@ -172,21 +258,24 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
     gameRef.current.status = 'countdown'
     setCountdown(3)
     setStatus('countdown')
+    playSound('tick')
 
     let remaining = 3
     countdownTimerRef.current = window.setInterval(() => {
       remaining -= 1
       if (remaining > 0) {
         setCountdown(remaining)
+        playSound('tick')
       } else {
         clearCountdownTimer()
         if (gameRef.current.status === 'countdown') {
           gameRef.current.status = 'playing'
           setStatus('playing')
+          playSound('go')
         }
       }
     }, 1000)
-  }, [clearCountdownTimer])
+  }, [clearCountdownTimer, playSound])
 
   const triggerJump = useCallback(() => {
     const g = gameRef.current
@@ -194,6 +283,7 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
       resetAndStart()
       g.dinoVy = JUMP_VELOCITY
       g.isJumping = true
+      playSound('jump')
       return
     }
     if (g.status === 'paused') {
@@ -213,8 +303,9 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
     if (!g.isJumping && !g.isDucking) {
       g.dinoVy = JUMP_VELOCITY
       g.isJumping = true
+      playSound('jump')
     }
-  }, [resetAndStart, resumeWithCountdown])
+  }, [resetAndStart, resumeWithCountdown, playSound])
 
   const setDuck = useCallback((ducking: boolean) => {
     const g = gameRef.current
@@ -439,6 +530,9 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
 
         const newScore = Math.floor(g.distance / 8)
         if (newScore !== g.score) {
+          if (newScore > 0 && Math.floor(newScore / 100) > Math.floor(g.score / 100)) {
+            playSound('score')
+          }
           g.score = newScore
           setScore(newScore)
         }
@@ -570,6 +664,7 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
             g.status = 'gameover'
             g.gameOverAt = performance.now()
             setStatus('gameover')
+            playSound('gameover')
             if (g.score > g.highScore) {
               g.highScore = g.score
               setHighScore(g.score)
@@ -634,7 +729,7 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
 
     rafId = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafId)
-  }, [open])
+  }, [open, playSound])
 
   if (typeof document === 'undefined') return null
 
@@ -676,6 +771,19 @@ export default function DinoGameModal({ open, onClose }: DinoGameModalProps) {
                 <kbd className="hidden sm:inline-flex items-center rounded border border-[var(--border-subtle)] bg-[var(--bg-pill)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--text-muted)]">
                   Ctrl+K
                 </kbd>
+                <button
+                  type="button"
+                  onClick={() => setMuted((m) => !m)}
+                  title={muted ? 'Unmute sound' : 'Mute sound'}
+                  aria-label={muted ? 'Unmute sound' : 'Mute sound'}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-pill)] transition-colors cursor-pointer"
+                >
+                  {muted ? (
+                    <VolumeX className="h-4 w-4" />
+                  ) : (
+                    <Volume2 className="h-4 w-4" />
+                  )}
+                </button>
                 <button
                   type="button"
                   onClick={onClose}
