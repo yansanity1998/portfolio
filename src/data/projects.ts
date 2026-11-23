@@ -31,13 +31,13 @@ const osasImages = Object.entries(
 
 export const projects: Project[] = [
   {
-    title: "Jobmarket Iligan",
+    title: "Iligan E-Trabaho",
     role: "Full Stack Developer",
     techStack: ["React", "JSX", "Laravel", "MySQL"],
     images: [jobmarket2, jobmarket1],
     description: "A comprehensive digital platform where users can easily apply for jobs and seamlessly modify their profiles with relevant information. The system utilizes advanced matching algorithms to align candidates with opportunities perfectly suited to their roles and expertise.\n\nDeveloped to streamline the recruitment process, it features a highly interactive user dashboard, real-time job tracking, and an extensive administration panel. The backend is powered by Laravel, ensuring robust security and fast database queries, while the frontend leverages modern JSX for a smooth, app-like experience.",
     github: "https://github.com/yansanity1998",
-    demo: "#"
+    demo: "https://pesoiligan.com/"
   },
   {
     title: "MDRRMO Linamon",

@@ -85,18 +85,18 @@ export default function ProjectsPage() {
             <article
               key={project.title}
               onClick={() => openModal(project, 0)}
-              className="group relative overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-7 transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-lg cursor-pointer"
+              className="group relative overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-black p-6 sm:p-7 transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-lg cursor-pointer"
             >
-              {/* Project preview background image */}
+              {/* Full-bleed darkened project preview background image */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-cover bg-right-top sm:bg-right opacity-40 dark:opacity-45 group-hover:opacity-60 transition-all duration-500 scale-100 group-hover:scale-[1.02] pointer-events-none"
+                className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-45 transition-all duration-500 scale-100 group-hover:scale-[1.02] pointer-events-none"
                 style={{ backgroundImage: `url(${project.images[0]})` }}
               />
-              {/* Protective directional gradient: solid on the left half to prevent screenshot text collision, fading to transparent on the right */}
+              {/* Uniform dark scrim so bright screenshots remain dark and content stays readable */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-r from-[var(--bg-surface)] from-35% via-[var(--bg-surface)]/85 via-60% to-transparent pointer-events-none"
+                className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/55 pointer-events-none"
               />
 
               <div className="relative z-10 max-w-2xl">
@@ -104,10 +104,10 @@ export default function ProjectsPage() {
                 <div>
                   {/* Badges Row */}
                   <div className="flex flex-wrap items-center gap-1.5">
-                    {/* Highlighted Role Pill like ⟨ #1 FINANCE APP ⟩ */}
+                    {/* Highlighted Role Pill */}
                     <span
                       style={isCustomAccent ? { backgroundColor: 'var(--accent-color)' } : undefined}
-                      className="inline-flex items-center gap-1 rounded-full bg-[var(--text-primary)] px-2 py-[2px] font-mono text-[9.5px] font-semibold tracking-wider uppercase text-[var(--bg-page)] transition-colors"
+                      className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-[2px] font-mono text-[9.5px] font-semibold tracking-wider uppercase text-zinc-950 transition-colors"
                     >
                       <span>‹</span>
                       <span>{project.role}</span>
@@ -118,7 +118,7 @@ export default function ProjectsPage() {
                     {project.techStack.map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-pill)] px-2 py-[2px] font-mono text-[9.5px] tracking-wider uppercase text-[var(--text-secondary)]"
+                        className="rounded-full border border-white/15 bg-black/50 px-2 py-[2px] font-mono text-[9.5px] tracking-wider uppercase text-zinc-200 backdrop-blur-xs"
                       >
                         {tech}
                       </span>
@@ -127,11 +127,11 @@ export default function ProjectsPage() {
 
                   {/* Project Title */}
                   <h2
-                    className="mt-3 font-mono text-xl font-medium tracking-tight text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-color)]"
+                    className="mt-3 font-mono text-xl font-medium tracking-tight text-white transition-colors group-hover:text-[var(--accent-color)]"
                   >
                     {project.title}
                   </h2>
-                  <p className="mt-2 text-[13.5px] leading-relaxed text-[var(--text-secondary)]">
+                  <p className="mt-2 text-[13.5px] leading-relaxed text-zinc-300">
                     {firstParagraph}
                   </p>
                 </div>
@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
                       style={isCustomAccent ? { borderColor: 'var(--accent-color)', color: 'var(--accent-color)' } : undefined}
-                      className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-strong)] bg-[var(--bg-page)]/90 px-4 py-2 font-mono text-[12px] font-medium text-[var(--text-primary)] backdrop-blur-xs transition-colors hover:bg-[var(--bg-pill)]"
+                      className="inline-flex items-center gap-2 rounded-lg border border-white/25 bg-black/60 px-4 py-2 font-mono text-[12px] font-medium text-white backdrop-blur-xs transition-colors hover:bg-white/15"
                     >
                       <span>Live Demo</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -158,7 +158,7 @@ export default function ProjectsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-page)]/90 px-4 py-2 font-mono text-[12px] text-[var(--text-secondary)] backdrop-blur-xs transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+                      className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-black/60 px-4 py-2 font-mono text-[12px] text-zinc-200 backdrop-blur-xs transition-colors hover:border-white/35 hover:text-white"
                     >
                       <FaGithub className="h-3.5 w-3.5" />
                       <span>GitHub</span>
@@ -172,7 +172,7 @@ export default function ProjectsPage() {
                       e.stopPropagation()
                       openModal(project, 0)
                     }}
-                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-page)]/90 px-4 py-2 font-mono text-[12px] text-[var(--text-secondary)] backdrop-blur-xs transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] cursor-pointer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-black/60 px-4 py-2 font-mono text-[12px] text-zinc-200 backdrop-blur-xs transition-colors hover:border-white/35 hover:text-white cursor-pointer"
                   >
                     <Images className="h-3.5 w-3.5" />
                     <span>
